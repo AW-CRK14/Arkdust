@@ -1,0 +1,15 @@
+{
+  "parent": "item/generated",
+  "painter": "",
+  "textures": {
+    "layer0": "arkdust:item/otherthings/medical_kit"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "arkdust:life": 15
+      },
+      "model": "arkdust:item/medical_kit2"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "0 0",
+    "010",
+    "1 1"
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:iron_ingot"
+    },
+    "1": {
+      "item": "arkdust:compressed_iron_ingot"
+    }
+  },
+  "result": {
+    "item": "arkdust:iron_structure_frame"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "arkdust:pau_ingot"
+    }
+  ],
+  "result": {
+    "item": "arkdust:pau_nugget",
+    "count": 9
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "painter": "Landis",
+  "textures": {
+    "layer0": "arkdust:item/wmaterial/e_t_experiment_data_d"
+  }
+}

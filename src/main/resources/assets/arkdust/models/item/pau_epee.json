@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "painter": "ningmeng,Landis",
+  "textures": {
+    "layer0": "arkdust:tool/pure_gold/pau_epee"
+  }
+}

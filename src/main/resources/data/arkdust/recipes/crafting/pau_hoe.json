@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "## ",
+    " ! ",
+    " ! "
+  ],
+  "key": {
+    "#": {
+      "item": "arkdust:pau_ingot"
+    },
+    "!":{
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "arkdust:pau_hoe",
+    "count": 1
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "parent": "block/cube_bottom_top",
+  "painter": "landis",
+  "textures": {
+    "bottom": "arkdust:blocks/main_world_blocks/common_food_box/common_food_box_bottom",
+    "top": "arkdust:blocks/main_world_blocks/common_food_box/common_food_box_top",
+    "side": "arkdust:blocks/main_world_blocks/common_food_box/common_food_box_side",
+    "particle": "arkdust:blocks/main_world_blocks/common_food_box/common_food_box_top"
+  }
+}

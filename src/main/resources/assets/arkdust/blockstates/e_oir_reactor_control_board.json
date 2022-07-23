@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,working=false": {
+      "model": "arkdust:block/e_oir_reactor_control_board"
+    },
+    "facing=east,working=false": {
+      "model": "arkdust:block/e_oir_reactor_control_board",
+      "y": 90
+    },
+    "facing=south,working=false": {
+      "model": "arkdust:block/e_oir_reactor_control_board",
+      "y": 180
+    },
+    "facing=west,working=false": {
+      "model": "arkdust:block/e_oir_reactor_control_board",
+      "y": 270
+    },
+    "facing=north,working=true": {
+      "model": "arkdust:block/e_oir_reactor_control_board_on"
+    },
+    "facing=east,working=true": {
+      "model": "arkdust:block/e_oir_reactor_control_board_on",
+      "y": 90
+    },
+    "facing=south,working=true": {
+      "model": "arkdust:block/e_oir_reactor_control_board_on",
+      "y": 180
+    },
+    "facing=west,working=true": {
+      "model": "arkdust:block/e_oir_reactor_control_board_on",
+      "y": 270
+    }
+  }
+}

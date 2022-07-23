@@ -1,0 +1,11 @@
+{
+  "parent": "block/orientable_with_bottom",
+  "painter": "landis",
+  "textures": {
+    "side": "arkdust:blocks/terra_energy/e_oir_reactor_control_board/e_oir_reactor_control_board_side",
+    "front": "arkdust:blocks/terra_energy/e_oir_reactor_control_board/e_oir_reactor_control_board_front_off",
+    "bottom": "arkdust:blocks/terra_energy/e_oir_reactor_control_board/e_oir_reactor_control_board_bottom",
+    "top": "arkdust:blocks/terra_energy/e_oir_reactor_control_board/e_oir_reactor_control_board_top",
+    "particle": "arkdust:blocks/terra_energy/e_oir_reactor_control_board/e_oir_reactor_control_board_front_on"
+  }
+}

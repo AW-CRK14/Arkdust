@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "light=0": {
+      "model": "arkdust:block/blue_crystal_a"
+    },
+    "light=1": {
+      "model": "arkdust:block/blue_crystal_b"
+    },
+    "light=2": {
+      "model": "arkdust:block/blue_crystal_c"
+    },
+    "light=3": {
+      "model": "arkdust:block/blue_crystal_d"
+    },
+    "light=4": {
+      "model": "arkdust:block/blue_crystal_e"
+    },
+    "light=5": {
+      "model": "arkdust:block/blue_crystal_f"
+    },
+    "light=6": {
+      "model": "arkdust:block/blue_crystal_g"
+    },
+    "light=7": {
+      "model": "arkdust:block/blue_crystal_h"
+    }
+  }
+}

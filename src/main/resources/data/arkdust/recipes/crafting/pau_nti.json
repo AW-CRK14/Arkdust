@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "arkdust:pau_nugget"
+    }
+  },
+  "result": {
+    "item": "arkdust:pau_ingot",
+    "count": 1
+  }
+}

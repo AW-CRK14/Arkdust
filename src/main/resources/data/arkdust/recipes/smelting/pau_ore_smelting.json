@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "experience": 3.2,
+  "cookingtime": 120,
+  "ingredient": {
+    "item": "arkdust:pau_ore"
+  },
+  "result": {
+    "item": "arkdust:pau_ingot"
+  }
+}

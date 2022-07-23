@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "painter": "xiaoxiaosheng",
+  "textures": {
+    "layer0": "arkdust:item/cmaterial/damaged_device"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "experience": 10,
+  "cookingtime": 300,
+  "ingredient": {
+    "item": "arkdust:iron_structure_frame"
+  },
+  "result": {
+    "item": "arkdust:compressed_iron_ingot"
+  }
+}

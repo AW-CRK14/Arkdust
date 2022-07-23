@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#0#",
+    "1!1",
+    "#1#"
+  ],
+  "key": {
+    "#": {
+      "item": "arkdust:pau_ingot"
+    },
+    "!": {
+      "item": "minecraft:glass"
+    },
+    "1": {
+      "item": "minecraft:gold_ingot"
+    },
+    "0": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "arkdust:pau_fluorescence_glass",
+    "count": 1
+  }
+}
