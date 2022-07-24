@@ -1,6 +1,6 @@
 package com.ardc.arkdust.items.blocks;
 
-import com.ardc.arkdust.code_migration.Material;
+import com.ardc.arkdust.CodeMigration.Material;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;

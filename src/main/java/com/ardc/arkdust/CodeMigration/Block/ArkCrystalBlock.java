@@ -1,4 +1,4 @@
-package com.ardc.arkdust.code_migration.Block;
+package com.ardc.arkdust.CodeMigration.Block;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.AbstractGlassBlock;
@@ -7,8 +7,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;

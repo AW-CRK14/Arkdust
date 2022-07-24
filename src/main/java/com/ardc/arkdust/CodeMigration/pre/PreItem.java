@@ -1,4 +1,4 @@
-package com.ardc.arkdust.code_migration.pre;
+package com.ardc.arkdust.CodeMigration.pre;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;

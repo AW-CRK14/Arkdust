@@ -1,8 +1,8 @@
 package com.ardc.arkdust;
 
-import com.ardc.arkdust.code_migration.MaterialTier;
-import com.ardc.arkdust.code_migration.pre.PreBlockItem;
-import com.ardc.arkdust.code_migration.pre.PreItem;
+import com.ardc.arkdust.CodeMigration.MaterialTier;
+import com.ardc.arkdust.CodeMigration.pre.PreBlockItem;
+import com.ardc.arkdust.CodeMigration.pre.PreItem;
 import com.ardc.arkdust.items.items.Bc;
 import com.ardc.arkdust.items.items.sugar.*;
 import net.minecraft.item.*;
@@ -18,10 +18,10 @@ public class ItemRegistry {
 
     //TerraCommonMaterial泰拉普料 注册
     public static final RegistryObject<Item> originium = ITEMS.register("originium", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),true));//源石
-    public static final RegistryObject<Item> originium_dust = ITEMS.register("originium_dust", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//源石尘
+    public static final RegistryObject<Item> originium_dust = ITEMS.register("originium_dust", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//源石尘e1
     public static final RegistryObject<Item> originium_shard = ITEMS.register("originium_shard", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//源石碎片
     public static final RegistryObject<Item> poor_originium = ITEMS.register("poor_originium", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//贫瘠源石
-    public static final RegistryObject<Item> ester = ITEMS.register("ester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//一级酯
+    public static final RegistryObject<Item> ester = ITEMS.register("ester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//一1级酯
     public static final RegistryObject<Item> polyester = ITEMS.register("polyester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//二级酯
     public static final RegistryObject<Item> polyester_pack = ITEMS.register("polyester_pack", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//三级酯
     public static final RegistryObject<Item> polyester_lump = ITEMS.register("polyester_lump", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//四级酯
@@ -78,9 +78,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> e_t_theory_data = ITEMS.register("e_t_theory_data", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//末地-泰拉折跃理论数据
     public static final RegistryObject<Item> medical_kit = ITEMS.register("medical_kit", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//医疗包
     public static final RegistryObject<Item> common_food_bag = ITEMS.register("common_food_bag", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物包
-    public static final RegistryObject<Item> common_food_box = ITEMS.register("common_food_box",()->new PreBlockItem(BlockRegistry.common_food_box.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物盒子
     public static final RegistryObject<Item> blue_crystal = ITEMS.register("blue_crystal",()->new PreBlockItem(BlockRegistry.blue_crystal.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金辉光玻璃
     public static final RegistryObject<Item> blaze_rod_plant = ITEMS.register("blaze_rod_plant",()->new PreBlockItem(BlockRegistry.blaze_rod_plant.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//烈焰苗
+    public static final RegistryObject<Item> common_food_box = ITEMS.register("common_food_box",()->new PreBlockItem(BlockRegistry.common_food_box.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物盒子
 
     //TerraTools泰拉工具工具 注册
     public static final RegistryObject<Item> unnamed_sword = ITEMS.register("unnamed_sword", ()->new SwordItem(MaterialTier.PURE_GOLD, 24, -1.6F, new Item.Properties().fireResistant().tab(ModGroupRegistry.terraTools)));//不知名的刀
@@ -92,11 +92,12 @@ public class ItemRegistry {
     public static final RegistryObject<Item> pau_shovel = ITEMS.register("pau_shovel", ()->new ShovelItem(MaterialTier.PURE_GOLD, -2, -2.1F, new Item.Properties().tab(ModGroupRegistry.terraTools)));//赤金铲
 
     //TerraEnergy泰拉能源 注册
-    public static final RegistryObject<Item> e_oir_reactor_control_board = ITEMS.register("e_oir_reactor_control_board",()->new PreBlockItem(BlockRegistry.e_oir_reactor_control_board.get(), new Item.Properties().tab(ModGroupRegistry.terraEnergy)));//普通食物盒子
+    public static final RegistryObject<Item> e_oir_reactor_control_board = ITEMS.register("e_oir_reactor_control_board",()->new PreBlockItem(BlockRegistry.e_oir_reactor_control_board.get(), new Item.Properties().tab(ModGroupRegistry.terraEnergy)));//E类源石反应堆控制面板
 
     //TerraIndustrialMaterial泰拉工业材料 注册
     public static final RegistryObject<Item> compressed_iron_ingot = ITEMS.register("compressed_iron_ingot", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraIndustrialMaterial)));//压缩铁
     public static final RegistryObject<Item> iron_structure_frame = ITEMS.register("iron_structure_frame",()->new PreBlockItem(BlockRegistry.iron_structure_frame.get(), new Item.Properties().tab(ModGroupRegistry.terraIndustrialMaterial)));//铁质结构框架
+    public static final RegistryObject<Item> iron_structure_frame_creator = ITEMS.register("iron_structure_frame_creator",()->new PreBlockItem(BlockRegistry.iron_structure_frame_creator.get(), new Item.Properties().tab(ModGroupRegistry.terraIndustrialMaterial)));//铁质结构框架搭建器
 
 
 //    //test

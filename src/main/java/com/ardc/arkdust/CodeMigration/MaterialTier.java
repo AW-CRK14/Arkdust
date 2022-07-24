@@ -1,4 +1,4 @@
-package com.ardc.arkdust.code_migration;
+package com.ardc.arkdust.CodeMigration;
 
 import com.ardc.arkdust.ItemRegistry;
 import net.minecraft.item.IItemTier;

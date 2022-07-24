@@ -1,4 +1,4 @@
-package com.ardc.arkdust.code_migration;
+package com.ardc.arkdust.CodeMigration;
 
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;

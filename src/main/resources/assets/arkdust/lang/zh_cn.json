@@ -1,5 +1,7 @@
 {
   "basmes.way_to_get": "获得方式:",
+  "mec.SFBlockCrer.add": "放入了对应物品，数量:%d",
+  "mec.SFBlockCrer.now_count": "当前内部数量:%d",
   "block.arkdust.common_food_box": "普通食物补给盒",
   "block.arkdust.e_oir_reactor_control_board": "E型源石反应堆控制面板",
   "block.arkdust.pau_ore": "赤金矿",

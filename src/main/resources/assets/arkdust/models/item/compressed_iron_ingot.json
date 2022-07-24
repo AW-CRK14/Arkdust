@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "painter": "landis",
+  "textures": {
+    "layer0": "arkdust:item/terra_industrial_material/compressed_iron_ingot"
+  }
+}

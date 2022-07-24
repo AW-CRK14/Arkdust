@@ -1,4 +1,4 @@
-package com.ardc.arkdust;
+package com.ardc.arkdust.CodeMigration;
 
 import com.ardc.arkdust.BlockRegistry;
 import net.minecraft.client.renderer.RenderType;

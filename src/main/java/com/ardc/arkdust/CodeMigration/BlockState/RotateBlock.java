@@ -1,6 +1,6 @@
-package com.ardc.arkdust.code_migration.BlockState;
+package com.ardc.arkdust.CodeMigration.BlockState;
 
-import com.ardc.arkdust.code_migration.pre.PreBlock;
+import com.ardc.arkdust.CodeMigration.pre.PreBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;

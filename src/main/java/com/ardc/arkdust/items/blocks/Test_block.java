@@ -1,8 +1,7 @@
 package com.ardc.arkdust.items.blocks;
 
-import com.ardc.arkdust.code_migration.Material;
-import com.ardc.arkdust.code_migration.pre.PreBlock;
-import net.minecraft.block.Block;
+import com.ardc.arkdust.CodeMigration.Material;
+import com.ardc.arkdust.CodeMigration.pre.PreBlock;
 
 public class Test_block extends PreBlock {
     public Test_block(){

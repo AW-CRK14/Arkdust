@@ -1,7 +1,7 @@
 package com.ardc.arkdust.items.blocks.terra_energy;
 
 
-import com.ardc.arkdust.code_migration.BlockState.RotateBlock;
+import com.ardc.arkdust.CodeMigration.BlockState.RotateBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;

@@ -1,4 +1,4 @@
-package com.ardc.arkdust.code_migration.Block;
+package com.ardc.arkdust.CodeMigration.Block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
