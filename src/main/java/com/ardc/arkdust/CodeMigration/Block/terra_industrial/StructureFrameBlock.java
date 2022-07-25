@@ -77,12 +77,12 @@ public class StructureFrameBlock extends IndustrialBlock implements IWaterLoggab
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
-//    @Override//掉落物为一个自己
-//    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-//
-//        List<ItemStack> dropsOriginal = super.getDrops(state, builder);
-//        if (!dropsOriginal.isEmpty())
-//            return dropsOriginal;
-//        return Collections.singletonList(new ItemStack(this, 1));
-//    }
+    @Override//掉落物为一个自己
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+
+        List<ItemStack> dropsOriginal = super.getDrops(state, builder);
+        if (!dropsOriginal.isEmpty())
+            return dropsOriginal;
+        return Collections.singletonList(new ItemStack(this, 1));
+    }
 }

@@ -1,4 +1,4 @@
-package com.ardc.arkdust.CodeMigration;
+package com.ardc.arkdust;
 
 import com.ardc.arkdust.BlockRegistry;
 import net.minecraft.client.renderer.RenderType;
@@ -14,6 +14,7 @@ public class BlockRenderType {
         public static void onRenderTypeSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
                 RenderTypeLookup.setRenderLayer(BlockRegistry.pau_fluorescence_glass.get(), RenderType.translucent());
+                RenderTypeLookup.setRenderLayer(BlockRegistry.iron_structure_frame_creator.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.blue_crystal.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.iron_structure_frame.get(), RenderType.cutout());
             });

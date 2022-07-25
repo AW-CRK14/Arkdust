@@ -8,9 +8,7 @@ import net.minecraft.util.LazyValue;
 import java.util.function.Supplier;
 
 public enum MaterialTier implements IItemTier {
-    PURE_GOLD(3,656,4.0F,7.0F,19,()->{
-        return Ingredient.of(ItemRegistry.pau_ingot.get());
-    });
+    PURE_GOLD(3,656,4.0F,7.0F,19,()->Ingredient.of(ItemRegistry.pau_ingot.get()));
 
     private final int level;
     private final int uses;

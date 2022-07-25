@@ -33,7 +33,7 @@ public class BlockRegistry {
 
     //Ì©À­¹¤Òµ
     public static final RegistryObject<Block> iron_structure_frame = BLOCKS.register("iron_structure_frame",()->new StructureFrameBlock(AbstractBlock.Properties.of(Material.HEAVY_METAL).strength(5,40).noOcclusion().harvestLevel(3).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(), TechMaterial.C_IRON));
-    public static final RegistryObject<Block> iron_structure_frame_creator = BLOCKS.register("iron_structure_frame_creator",()->new SFBlockCreator(TechMaterial.C_IRON,BlockRegistry.iron_structure_frame.get().asItem()));
+    public static final RegistryObject<Block> iron_structure_frame_creator = BLOCKS.register("iron_structure_frame_creator",SFBlockCreator::new);
 
 
 //    //test
