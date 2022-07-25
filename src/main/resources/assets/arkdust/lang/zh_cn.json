@@ -7,6 +7,7 @@
   "block.arkdust.pau_ore": "赤金矿",
   "block.arkdust.pau_fluorescence_glass": "赤金光辉玻璃",
   "block.arkdust.iron_structure_frame": "铁质结构框架",
+  "block.arkdust.iron_structure_frame_creator": "铁质结构框架制造器",
   "block.arkdust.blue_crystal": "蓝水晶",
   "explain.exp.item.arkdust.originium": "泰拉世界最常见的一种源石。危险性较小，储备量极高，但如果在未曾有源石灾害出现的地区发现，请务必保持警惕并上报当局。",
   "explain.get.item.arkdust.originium": "末地外岛，泰拉大陆全境",
