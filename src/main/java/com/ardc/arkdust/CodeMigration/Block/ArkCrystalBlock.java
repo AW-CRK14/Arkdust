@@ -6,8 +6,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -22,10 +24,17 @@ public class ArkCrystalBlock extends AbstractGlassBlock{
     }
 
     //当方块周围更新时，获取内容
+    @Override
     public void neighborChanged(BlockState blockstate, World world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
         lightChanging(blockstate, world, pos);
         super.neighborChanged(blockstate, world, pos, neighborBlock, fromPos, moving);
     }
+
+//    @Override
+//    public BlockState updateShape(BlockState blockState, Direction p_196271_2_, BlockState p_196271_3_, IWorld world, BlockPos pos, BlockPos p_196271_6_) {
+//        int lightin = world.getMaxLocalRawBrightness(pos) / 2;//由于light只能取到最高14，这里+2以保证可以获得State4
+//        return blockState.setValue(LIGHT_LEVEL,lightin);
+//    }
 
     //当方块放置时，获取内容
     public void onPlace(BlockState blockstate, World world, BlockPos pos, BlockState neighborBlock, boolean moving) {

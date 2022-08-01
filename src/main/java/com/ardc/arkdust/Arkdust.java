@@ -10,8 +10,8 @@ public class Arkdust {
     public static final Logger LOGGER = LogManager.getLogger(Arkdust.class);
 
     public Arkdust(){
-        BlockRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());//blocks类注册入mod主线
         ItemRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());//items类注册入mod主线
+        BlockRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());//blocks类注册入mod主线
         TileEntityTypeRegistry.TE.register(FMLJavaModLoadingContext.get().getModEventBus());//方块实体注册入mod主线
     }
 }

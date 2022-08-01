@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "arkdust:blocks/main_world_blocks/blackstone_lamp_stone_lamp",
+		"particle": "arkdust:blocks/main_world_blocks/blackstone_lamp_stone_lamp"
+	},
+	"elements": [
+		{
+			"from": [5, 3, 5],
+			"to": [11, 12, 11],
+			"faces": {
+				"north": {"uv": [0, 0.5, 3, 5], "texture": "#0"},
+				"east": {"uv": [0, 0.5, 3, 5], "texture": "#0"},
+				"south": {"uv": [0, 0.5, 3, 5], "texture": "#0"},
+				"west": {"uv": [0, 0.5, 3, 5], "texture": "#0"},
+				"up": {"uv": [3, 0, 6, 3], "texture": "#0"},
+				"down": {"uv": [3, 0, 6, 3], "texture": "#0"}
+			}
+		}
+	]
+}

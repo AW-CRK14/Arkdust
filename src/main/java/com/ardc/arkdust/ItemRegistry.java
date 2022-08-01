@@ -3,8 +3,8 @@ package com.ardc.arkdust;
 import com.ardc.arkdust.CodeMigration.MaterialTier;
 import com.ardc.arkdust.CodeMigration.pre.PreBlockItem;
 import com.ardc.arkdust.CodeMigration.pre.PreItem;
-import com.ardc.arkdust.items.items.Bc;
-import com.ardc.arkdust.items.items.sugar.*;
+import com.ardc.arkdust.Items.items.Bc;
+import com.ardc.arkdust.Items.items.sugar.*;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -76,11 +76,12 @@ public class ItemRegistry {
     public static final RegistryObject<Item> pau_fluorescence_glass = ITEMS.register("pau_fluorescence_glass",()->new BlockItem(BlockRegistry.pau_fluorescence_glass.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金辉光玻璃
     public static final RegistryObject<Item> e_t_experiment_data = ITEMS.register("e_t_experiment_data", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//末地-泰拉折跃实验数据
     public static final RegistryObject<Item> e_t_theory_data = ITEMS.register("e_t_theory_data", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//末地-泰拉折跃理论数据
-    public static final RegistryObject<Item> medical_kit = ITEMS.register("medical_kit", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//医疗包
     public static final RegistryObject<Item> common_food_bag = ITEMS.register("common_food_bag", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物包
     public static final RegistryObject<Item> blue_crystal = ITEMS.register("blue_crystal",()->new PreBlockItem(BlockRegistry.blue_crystal.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金辉光玻璃
-    public static final RegistryObject<Item> blaze_rod_plant = ITEMS.register("blaze_rod_plant",()->new PreBlockItem(BlockRegistry.blaze_rod_plant.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//烈焰苗
+//    public static final RegistryObject<Item> blaze_rod_plant = ITEMS.register("blaze_rod_plant",()->new PreBlockItem(BlockRegistry.blaze_rod_plant.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//烈焰苗
     public static final RegistryObject<Item> common_food_box = ITEMS.register("common_food_box",()->new PreBlockItem(BlockRegistry.common_food_box.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物盒子
+    public static final RegistryObject<Item> blackstone_lamp = ITEMS.register("blackstone_lamp",()->new PreBlockItem(BlockRegistry.blackstone_lamp.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石灯
+    public static final RegistryObject<Item> blackstone_sand = ITEMS.register("blackstone_sand",()->new PreBlockItem(BlockRegistry.blackstone_sand.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石灯
 
     //TerraTools泰拉工具工具 注册
     public static final RegistryObject<Item> unnamed_sword = ITEMS.register("unnamed_sword", ()->new SwordItem(MaterialTier.PURE_GOLD, 24, -1.6F, new Item.Properties().fireResistant().tab(ModGroupRegistry.terraTools)));//不知名的刀

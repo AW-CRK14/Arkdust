@@ -1,7 +1,7 @@
 package com.ardc.arkdust.CodeMigration.Block.terra_industrial;
 
 import com.ardc.arkdust.CodeMigration.pre.PreBlock;
-import com.ardc.arkdust.type.TechMaterial;
+import com.ardc.arkdust.Enums.TechMaterial;
 
 public class IndustrialBlock extends PreBlock {
     public final TechMaterial material;

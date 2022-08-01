@@ -1,0 +1,17 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "arkdust:block/blackstone_lamp_main"
+      }
+    },
+    {
+      "when": {
+        "light": "true"
+      },
+      "apply": {
+        "model": "arkdust:block/blackstone_lamp_lamp"
+      }
+    }
+  ]
+}

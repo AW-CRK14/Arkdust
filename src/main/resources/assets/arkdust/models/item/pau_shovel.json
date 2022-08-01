@@ -1,5 +1,5 @@
 {
-  "parent": "item/generated",
+  "parent": "item/handheld",
   "painter": "ningmeng",
   "textures": {
     "layer0": "arkdust:tool/pure_gold/pau_shovel"

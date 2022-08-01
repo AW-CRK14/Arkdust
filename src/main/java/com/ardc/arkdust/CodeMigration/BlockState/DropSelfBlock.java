@@ -21,12 +21,6 @@ public class DropSelfBlock extends PreBlock {
         dropNumber = number;
     }
 
-
-    @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-        return new ItemStack(Blocks.BRICKS);
-    }
-
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 

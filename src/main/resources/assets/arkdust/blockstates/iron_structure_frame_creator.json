@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": { "model": "arkdust:block/iron_structure_frame_creator_0" }
+    "facing=north": { "model": "arkdust:block/iron_structure_frame_creator_0" },
+    "facing=south": { "model": "arkdust:block/iron_structure_frame_creator_0","y": 180 },
+    "facing=east": { "model": "arkdust:block/iron_structure_frame_creator_0","y": 90 },
+    "facing=west": { "model": "arkdust:block/iron_structure_frame_creator_0","y": 270}
   }
 }

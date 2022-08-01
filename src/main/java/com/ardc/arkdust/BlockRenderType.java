@@ -17,6 +17,7 @@ public class BlockRenderType {
                 RenderTypeLookup.setRenderLayer(BlockRegistry.iron_structure_frame_creator.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.blue_crystal.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.iron_structure_frame.get(), RenderType.cutout());
+                RenderTypeLookup.setRenderLayer(BlockRegistry.blackstone_lamp.get(), RenderType.translucent());
             });
         }
 }

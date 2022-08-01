@@ -1,5 +1,5 @@
 {
-  "parent": "item/generated",
+  "parent": "item/handheld",
   "painter": "xiaoxiaosheng",
   "textures": {
     "layer0": "arkdust:item/otherthings/x"

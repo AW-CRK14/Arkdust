@@ -1,48 +1,69 @@
-package com.ardc.arkdust.CodeMigration.Block.terra_industrial;
+package com.ardc.arkdust.Items.blocks;
 
-import com.ardc.arkdust.Enums.TechMaterial;
+import com.ardc.arkdust.CodeMigration.BlockState.DropSelfBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
+import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 
-public class StructureFrameBlock extends IndustrialBlock implements IWaterLoggable {
+public class Blackstone_lamp extends DropSelfBlock implements IWaterLoggable {
     private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
+    private static BooleanProperty LIGHTING = BooleanProperty.create("light");
 
     private static final VoxelShape shape;
     static {
-        VoxelShape shape1;
-        shape1 = VoxelShapes.join(VoxelShapes.block() , Block.box(0,3,3,16,13,13), IBooleanFunction.ONLY_FIRST);
-        shape1 = VoxelShapes.join(shape1, Block.box(3,0,3,13,16,13), IBooleanFunction.ONLY_FIRST);
-        shape = VoxelShapes.join(shape1 , Block.box(3,3,0,13,13,16), IBooleanFunction.ONLY_FIRST);
+        VoxelShape shape1 = VoxelShapes.join(VoxelShapes.block() , Block.box(0,3,3,16,13,13), IBooleanFunction.ONLY_FIRST);
+        shape1 = VoxelShapes.join(shape1 , Block.box(3,3,0,13,13,16), IBooleanFunction.ONLY_FIRST);
+        shape = VoxelShapes.join(shape1 , Block.box(5,2,5,11,13,11), IBooleanFunction.OR);
     }
 
-    public StructureFrameBlock(Properties properties,TechMaterial material) {
-        super(properties,material);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false));
+    public Blackstone_lamp() {
+        super(Properties
+                .of(Material.STONE)
+                .harvestTool(ToolType.PICKAXE)
+                .strength(2,3)
+                .lightLevel((level)->(level.getBlockState().getValue(LIGHTING) ? 13 : 0))
+                .noOcclusion()
+                .requiresCorrectToolForDrops()
+                ,1);
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false).setValue(LIGHTING,false));
+    }
+
+    @Override
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if((player.getMainHandItem().getItem() == Items.COAL || player.getMainHandItem().getItem() == Items.TORCH || player.getMainHandItem().getItem() == Items.CHARCOAL) && !state.getValue(LIGHTING)) {
+            worldIn.setBlock(new BlockPos(pos), state.setValue(LIGHTING, true), 3);
+            player.getMainHandItem().shrink(1);
+            return ActionResultType.CONSUME;
+        }
+        return ActionResultType.PASS;
     }
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder){
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED,LIGHTING);
         super.createBlockStateDefinition(builder);
     }
 
@@ -75,14 +96,5 @@ public class StructureFrameBlock extends IndustrialBlock implements IWaterLoggab
     @Override
     public FluidState getFluidState(BlockState state){
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
-    }
-
-    @Override//掉落物为一个自己
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-
-        List<ItemStack> dropsOriginal = super.getDrops(state, builder);
-        if (!dropsOriginal.isEmpty())
-            return dropsOriginal;
-        return Collections.singletonList(new ItemStack(this, 1));
     }
 }
