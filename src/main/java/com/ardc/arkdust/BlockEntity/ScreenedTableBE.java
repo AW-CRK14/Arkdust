@@ -9,14 +9,14 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 
-public class HandScreenedTableBE extends TileEntity {
+public class ScreenedTableBE extends TileEntity {
     public int guarantee = 0;
     public boolean hasItem = false;
     public int dropNumUpgrade = 0;
     //0对标原物品，1对标返回物品
     public NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
-    public HandScreenedTableBE() {
-        super(TileEntityTypeRegistry.aSFBlockCreatorBE.get());
+    public ScreenedTableBE() {
+        super(TileEntityTypeRegistry.aScreenedTableBE.get());
     }
 
     //尝试放入方块
@@ -51,6 +51,14 @@ public class HandScreenedTableBE extends TileEntity {
         }
     }
 
+    public ItemStack getKeyItem(){
+        return items.get(0);
+    }
+
+    public ItemStack getLootItem(){
+        return items.get(1);
+    }
+
     //获取掉落数量
     public double getLootNum(){
         int doubleDrop;
@@ -71,6 +79,10 @@ public class HandScreenedTableBE extends TileEntity {
         dropNumUpgrade = Math.max(Math.min(nbt.getInt("dropNumUpgrade"), 12), 0);
         hasItem = nbt.getBoolean("hasItem");
         ItemStackHelper.loadAllItems(nbt,items);
+//        System.out.println("block on load with nbt:" + nbt);
+//        System.out.println("items:"+items);
+//        System.out.println("of0:"+items.get(0));
+//        System.out.println("of1:"+items.get(1));
         super.load(state, nbt);
     }
 

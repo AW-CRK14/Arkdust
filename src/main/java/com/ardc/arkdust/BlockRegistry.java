@@ -2,11 +2,9 @@ package com.ardc.arkdust;
 
 import com.ardc.arkdust.CodeMigration.Block.ArkCrystalBlock;
 import com.ardc.arkdust.CodeMigration.Block.HardGlassBlock;
-import com.ardc.arkdust.Items.blocks.Blackstone_lamp;
-import com.ardc.arkdust.Items.blocks.Iron_sfblock_creator;
+import com.ardc.arkdust.Items.blocks.*;
 import com.ardc.arkdust.CodeMigration.Block.terra_industrial.StructureFrameBlock;
 import com.ardc.arkdust.CodeMigration.pre.PreBlock;
-import com.ardc.arkdust.Items.blocks.Blaze_rod_plant;
 import com.ardc.arkdust.Items.blocks.ores.Pau_ore;
 import com.ardc.arkdust.Items.blocks.terra_energy.E_oir_reactor_control_board;
 import com.ardc.arkdust.Enums.TechMaterial;
@@ -32,6 +30,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> common_food_box = BLOCKS.register("common_food_box", ()->new PreBlock(AbstractBlock.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).strength(3)));//普通食物盒子
     public static final RegistryObject<Block> blackstone_lamp = BLOCKS.register("blackstone_lamp", Blackstone_lamp::new);//黑石灯
     public static final RegistryObject<Block> blackstone_sand = BLOCKS.register("blackstone_sand", ()->new GravelBlock(AbstractBlock.Properties.of(Material.SAND, MaterialColor.STONE).harvestTool(ToolType.SHOVEL).strength(1)));//黑石沙砾
+    public static final RegistryObject<Block> hang_screened_table = BLOCKS.register("hang_screened_table", Hand_screened_table::new);//简易筛矿台
 
     //泰拉能源
     public static final RegistryObject<Block> e_oir_reactor_control_board = BLOCKS.register("e_oir_reactor_control_board", E_oir_reactor_control_board::new);//E类源石反应堆控制方块

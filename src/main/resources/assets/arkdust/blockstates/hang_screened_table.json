@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "arkdust:block/hang_screened_table"
+      }
+    }
+  ]
+}

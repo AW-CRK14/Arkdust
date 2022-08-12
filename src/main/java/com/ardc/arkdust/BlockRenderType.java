@@ -1,6 +1,5 @@
 package com.ardc.arkdust;
 
-import com.ardc.arkdust.BlockRegistry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,6 +17,7 @@ public class BlockRenderType {
                 RenderTypeLookup.setRenderLayer(BlockRegistry.blue_crystal.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.iron_structure_frame.get(), RenderType.cutout());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.blackstone_lamp.get(), RenderType.translucent());
+                RenderTypeLookup.setRenderLayer(BlockRegistry.hang_screened_table.get(), RenderType.cutout());
             });
         }
 }

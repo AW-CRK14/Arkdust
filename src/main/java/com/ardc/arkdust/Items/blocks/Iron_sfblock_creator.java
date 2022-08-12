@@ -3,7 +3,7 @@ package com.ardc.arkdust.Items.blocks;
 import com.ardc.arkdust.BlockEntity.SFBlockCreatorBE;
 import com.ardc.arkdust.CodeMigration.BlockState.RotateBlock;
 import com.ardc.arkdust.ItemRegistry;
-import com.ardc.arkdust.Process.SFBlockCreator_Use;
+import com.ardc.arkdust.BlockEntity.Process.SFBlockCreator_Use;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;

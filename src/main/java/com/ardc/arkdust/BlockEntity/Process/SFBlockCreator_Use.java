@@ -1,4 +1,4 @@
-package com.ardc.arkdust.Process;
+package com.ardc.arkdust.BlockEntity.Process;
 
 import com.ardc.arkdust.BlockEntity.SFBlockCreatorBE;
 import net.minecraft.client.gui.screen.Screen;
@@ -15,7 +15,6 @@ public class SFBlockCreator_Use {
     public static ActionResultType runSFBlockCreator_Use(Item RETURN_ITEM, Item CAN_CREATE, World worldIn, BlockPos pos, PlayerEntity player) {
         //获取方块实体位置
         SFBlockCreatorBE SFBlockCrer = (SFBlockCreatorBE) worldIn.getBlockEntity(pos);
-        assert SFBlockCrer != null;
         //定义返回物
         ItemStack return_item = new ItemStack(RETURN_ITEM, 1);
         return_item.setCount(1);

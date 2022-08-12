@@ -21,7 +21,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> originium_dust = ITEMS.register("originium_dust", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//源石尘e1
     public static final RegistryObject<Item> originium_shard = ITEMS.register("originium_shard", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//源石碎片
     public static final RegistryObject<Item> poor_originium = ITEMS.register("poor_originium", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//贫瘠源石
-    public static final RegistryObject<Item> ester = ITEMS.register("ester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//一1级酯
+    public static final RegistryObject<Item> ester = ITEMS.register("ester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//一级酯
     public static final RegistryObject<Item> polyester = ITEMS.register("polyester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//二级酯
     public static final RegistryObject<Item> polyester_pack = ITEMS.register("polyester_pack", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//三级酯
     public static final RegistryObject<Item> polyester_lump = ITEMS.register("polyester_lump", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//四级酯
@@ -68,7 +68,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> bipolar_nanoflake = ITEMS.register("bipolar_nanoflake", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//纳米片
     public static final RegistryObject<Item> polymerization_preparation = ITEMS.register("polymerization_preparation", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//聚合剂
 
-    //WorldMaterial原世界材料 注册
+    //WorldMaterial闭环区物品 注册
     public static final RegistryObject<Item> dt_crystal = ITEMS.register("dt_crystal", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//静谧水晶
     public static final RegistryObject<Item> pau_ore = ITEMS.register("pau_ore",()->new PreBlockItem(BlockRegistry.pau_ore.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金矿石
     public static final RegistryObject<Item> pau_ingot = ITEMS.register("pau_ingot", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金锭
@@ -78,10 +78,12 @@ public class ItemRegistry {
     public static final RegistryObject<Item> e_t_theory_data = ITEMS.register("e_t_theory_data", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//末地-泰拉折跃理论数据
     public static final RegistryObject<Item> common_food_bag = ITEMS.register("common_food_bag", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物包
     public static final RegistryObject<Item> blue_crystal = ITEMS.register("blue_crystal",()->new PreBlockItem(BlockRegistry.blue_crystal.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金辉光玻璃
-//    public static final RegistryObject<Item> blaze_rod_plant = ITEMS.register("blaze_rod_plant",()->new PreBlockItem(BlockRegistry.blaze_rod_plant.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//烈焰苗
+    //    public static final RegistryObject<Item> blaze_rod_plant = ITEMS.register("blaze_rod_plant",()->new PreBlockItem(BlockRegistry.blaze_rod_plant.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//烈焰苗
     public static final RegistryObject<Item> common_food_box = ITEMS.register("common_food_box",()->new PreBlockItem(BlockRegistry.common_food_box.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物盒子
     public static final RegistryObject<Item> blackstone_lamp = ITEMS.register("blackstone_lamp",()->new PreBlockItem(BlockRegistry.blackstone_lamp.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石灯
-    public static final RegistryObject<Item> blackstone_sand = ITEMS.register("blackstone_sand",()->new PreBlockItem(BlockRegistry.blackstone_sand.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石灯
+    public static final RegistryObject<Item> blackstone_sand = ITEMS.register("blackstone_sand",()->new PreBlockItem(BlockRegistry.blackstone_sand.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石沙
+    public static final RegistryObject<Item> hang_screened_table = ITEMS.register("hang_screened_table",()->new PreBlockItem(BlockRegistry.hang_screened_table.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//简易筛矿台
+    public static final RegistryObject<Item> netherite_nugget = ITEMS.register("netherite_nugget", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//下届合金粒
 
     //TerraTools泰拉工具工具 注册
     public static final RegistryObject<Item> unnamed_sword = ITEMS.register("unnamed_sword", ()->new SwordItem(MaterialTier.PURE_GOLD, 24, -1.6F, new Item.Properties().fireResistant().tab(ModGroupRegistry.terraTools)));//不知名的刀
@@ -100,6 +102,8 @@ public class ItemRegistry {
     public static final RegistryObject<Item> iron_structure_frame = ITEMS.register("iron_structure_frame",()->new PreBlockItem(BlockRegistry.iron_structure_frame.get(), new Item.Properties().tab(ModGroupRegistry.terraIndustrialMaterial)));//铁质结构框架
     public static final RegistryObject<Item> iron_structure_frame_creator = ITEMS.register("iron_structure_frame_creator",()->new PreBlockItem(BlockRegistry.iron_structure_frame_creator.get(), new Item.Properties().tab(ModGroupRegistry.terraIndustrialMaterial)));//铁质结构框架搭建器
 
+    //TerraTechMaterial泰拉科技材料 注册
+    public static final RegistryObject<Item> muddy_silicon = ITEMS.register("muddy_silicon",()->new PreItem(new Item.Properties()));
 
 //    //test
 //    public static final RegistryObject<Item> test_block = ITEMS.register("test_block",()->new BlockItem(BlockRegistry.test_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//测试方块
