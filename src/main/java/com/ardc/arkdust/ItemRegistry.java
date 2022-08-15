@@ -1,6 +1,7 @@
 package com.ardc.arkdust;
 
 import com.ardc.arkdust.CodeMigration.MaterialTier;
+import com.ardc.arkdust.CodeMigration.pre.OIItem.PreOIItem;
 import com.ardc.arkdust.CodeMigration.pre.PreBlockItem;
 import com.ardc.arkdust.CodeMigration.pre.PreItem;
 import com.ardc.arkdust.Items.items.Bc;
@@ -71,6 +72,7 @@ public class ItemRegistry {
     //WorldMaterial闭环区物品 注册
     public static final RegistryObject<Item> dt_crystal = ITEMS.register("dt_crystal", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//静谧水晶
     public static final RegistryObject<Item> pau_ore = ITEMS.register("pau_ore",()->new PreBlockItem(BlockRegistry.pau_ore.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金矿石
+    public static final RegistryObject<Item> pau_block = ITEMS.register("pau_block",()->new PreBlockItem(BlockRegistry.pau_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金矿石
     public static final RegistryObject<Item> pau_ingot = ITEMS.register("pau_ingot", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金锭
     public static final RegistryObject<Item> pau_nugget = ITEMS.register("pau_nugget", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金粒
     public static final RegistryObject<Item> pau_fluorescence_glass = ITEMS.register("pau_fluorescence_glass",()->new BlockItem(BlockRegistry.pau_fluorescence_glass.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金辉光玻璃
@@ -82,8 +84,10 @@ public class ItemRegistry {
     public static final RegistryObject<Item> common_food_box = ITEMS.register("common_food_box",()->new PreBlockItem(BlockRegistry.common_food_box.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物盒子
     public static final RegistryObject<Item> blackstone_lamp = ITEMS.register("blackstone_lamp",()->new PreBlockItem(BlockRegistry.blackstone_lamp.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石灯
     public static final RegistryObject<Item> blackstone_sand = ITEMS.register("blackstone_sand",()->new PreBlockItem(BlockRegistry.blackstone_sand.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石沙
+    public static final RegistryObject<Item> blackstone_medical_point = ITEMS.register("blackstone_medical_point",()->new PreBlockItem(BlockRegistry.blackstone_medical_point.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石沙
     public static final RegistryObject<Item> hang_screened_table = ITEMS.register("hang_screened_table",()->new PreBlockItem(BlockRegistry.hang_screened_table.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//简易筛矿台
     public static final RegistryObject<Item> netherite_nugget = ITEMS.register("netherite_nugget", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//下届合金粒
+    public static final RegistryObject<Item> oitest_item = ITEMS.register("oitest_item", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial),true,2,3,0));//测试物品
 
     //TerraTools泰拉工具工具 注册
     public static final RegistryObject<Item> unnamed_sword = ITEMS.register("unnamed_sword", ()->new SwordItem(MaterialTier.PURE_GOLD, 24, -1.6F, new Item.Properties().fireResistant().tab(ModGroupRegistry.terraTools)));//不知名的刀

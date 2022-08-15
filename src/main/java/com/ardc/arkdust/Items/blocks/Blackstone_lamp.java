@@ -35,7 +35,7 @@ import java.util.UUID;
 
 public class Blackstone_lamp extends DropSelfBlock implements IWaterLoggable {
     private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
-    private static BooleanProperty LIGHTING = BooleanProperty.create("light");
+    private static final BooleanProperty LIGHTING = BooleanProperty.create("light");
 
     private static final VoxelShape shape;
     static {

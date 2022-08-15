@@ -1,5 +1,6 @@
 package com.ardc.arkdust;
 
+import com.ardc.arkdust.BlockEntity.PhonographBE;
 import com.ardc.arkdust.BlockEntity.SFBlockCreatorBE;
 import com.ardc.arkdust.BlockEntity.ScreenedTableBE;
 import net.minecraft.tileentity.TileEntityType;
@@ -12,4 +13,5 @@ public class TileEntityTypeRegistry {
 
     public static final RegistryObject<TileEntityType<SFBlockCreatorBE>> aSFBlockCreatorBE = TE.register("structure_frame_block_creator",()->TileEntityType.Builder.of(SFBlockCreatorBE::new,BlockRegistry.iron_structure_frame_creator.get()).build(null));
     public static final RegistryObject<TileEntityType<ScreenedTableBE>> aScreenedTableBE = TE.register("screened_table",()->TileEntityType.Builder.of(ScreenedTableBE::new,BlockRegistry.hang_screened_table.get()).build(null));
+    public static final RegistryObject<TileEntityType<PhonographBE>> aPhonographBE = TE.register("phonograph",()->TileEntityType.Builder.of(PhonographBE::new,BlockRegistry.blackstone_medical_point.get()).build(null));
 }

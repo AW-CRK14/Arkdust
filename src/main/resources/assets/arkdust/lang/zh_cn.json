@@ -216,7 +216,11 @@
   "itemGroup.terra_world_common_material": "泰拉-原型材料",
   "mec.SFBlockCrer.add": "放入了对应物品，数量:%d",
   "mec.SFBlockCrer.now_count": "当前内部数量:%d",
-  "pma.oi.worldOIOn": "某处稠密的夜色中，绝望踏着浓雾在大地上行进。来吧，来吧，朋友，那个时代最终的屏障已在至暗中溶解。至于，你面对的是残阳或是新日……这一切，取决于你的抉择。",
+  "mes.bs_medical_point.activation": "[ArD]你激活了一个黑石愈疗点。",
+  "mes.bs_medical_point.inactivation": "[ArD]黑石愈疗点无法运行。它的下方缺少赤金块。",
+  "pma.oi.getOIItem": "[ArD]§4你感到一阵刺痛，伴随着恐惧流遍全身。现在还不是拿起它的时候。",
+  "pma.oi.OIInfo": "源石感染等级:%d",
+  "pma.oi.worldOIOn": "[ArD]某处稠密的夜色中，绝望踏着浓雾在大地上行进。来吧，来吧，朋友，那个时代最终的屏障已在至暗中溶解。至于，你面对的是残阳或是新日……这一切，取决于你的抉择。",
   "pma.oi.worldOIState.false": "世界源石感染状态：§2关闭",
   "pma.oi.worldOIState.true": "世界源石感染状态：§4开启",
   "pma.oi.wholeOILevel": "世界源石感染总值：§1%d"
