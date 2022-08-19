@@ -7,6 +7,11 @@ import net.minecraft.item.ItemStack;
 
 public class PreBlockItem extends BlockItem {
 
+    public PreBlockItem(Block block, Item.Properties properties, boolean exp){
+        super(block,properties);
+
+    }
+
     public PreBlockItem(Block block, Item.Properties properties){
         super(block,properties);
 

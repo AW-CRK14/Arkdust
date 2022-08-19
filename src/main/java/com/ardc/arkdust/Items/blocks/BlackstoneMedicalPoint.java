@@ -1,9 +1,9 @@
 package com.ardc.arkdust.Items.blocks;
 
 import com.ardc.arkdust.BlockEntity.PhonographBE;
-import com.ardc.arkdust.BlockRegistry;
+import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.CodeMigration.BlockState.DropSelfBlock;
-import com.ardc.arkdust.Enums.Camp;
+import com.ardc.arkdust.NewPlayingMethod.camp.Camp;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -53,7 +53,7 @@ public class BlackstoneMedicalPoint extends DropSelfBlock {
         ActionResultType reType = ActionResultType.SUCCESS;
         if (!blockBE.ifDefaultSet()) {//检查方块数据是否初始化
             //初始化方块并发送信息
-            blockBE.setDefaultValue(0, 2.5F, 1, 60, 10, false, false, true,false,6, PhonographBE.mode.BSMP);
+            blockBE.setDefaultValue(0, 4.5F, 1, 60, 100, false, false, true,false,6, PhonographBE.mode.BSMP);
             blockBE.setCampBelong(Collections.singletonList(Camp.PLAYER));
             blockBE.setBelongUs(true);
             if(!worldIn.isClientSide()) player.displayClientMessage(new TranslationTextComponent("mes.bs_medical_point.activation").withStyle(TextFormatting.GREEN), false);

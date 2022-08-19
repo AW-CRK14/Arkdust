@@ -11,13 +11,9 @@ public interface IOIItem{
 
     int guaranteeDamage();//造成的保底伤害
 
-    default double playerOILevelAdd(){//为玩家提高实体感染等级
-        return 0;
-    }
+    int playerOIPointAdd();//为玩家提高实体感染等级
 
-    default double guaranteePlayerOILevelAdd(){//不论玩家是否能接受物品，提高感染等级
-        return 0;
-    }
+    int guaranteePlayerOIPointAdd();//不论玩家是否能接受物品，提高感染等级
 
     default boolean ifThrow(){//是否在不能接受后迅速丢弃
         return true;

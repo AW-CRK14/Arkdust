@@ -20,11 +20,6 @@ public class HardGlassBlock extends GlassBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-        return new ItemStack(Blocks.BRICKS);
-    }
-
-    @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 
         List<ItemStack> dropsOriginal = super.getDrops(state, builder);

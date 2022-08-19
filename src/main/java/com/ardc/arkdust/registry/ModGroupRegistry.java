@@ -1,4 +1,4 @@
-package com.ardc.arkdust;
+package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.ModGroup.*;
 import net.minecraft.item.ItemGroup;

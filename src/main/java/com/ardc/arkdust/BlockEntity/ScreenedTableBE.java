@@ -1,6 +1,6 @@
 package com.ardc.arkdust.BlockEntity;
 
-import com.ardc.arkdust.TileEntityTypeRegistry;
+import com.ardc.arkdust.registry.TileEntityTypeRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;

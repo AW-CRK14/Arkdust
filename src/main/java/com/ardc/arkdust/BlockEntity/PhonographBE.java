@@ -1,21 +1,20 @@
 package com.ardc.arkdust.BlockEntity;
 
-import com.ardc.arkdust.BlockRegistry;
-import com.ardc.arkdust.CodeMigration.RunHelper.CampHelper;
-import com.ardc.arkdust.Enums.Camp;
 import com.ardc.arkdust.Items.blocks.BlackstoneMedicalPoint;
-import com.ardc.arkdust.TileEntityTypeRegistry;
+import com.ardc.arkdust.NewPlayingMethod.camp.Camp;
+import com.ardc.arkdust.NewPlayingMethod.camp.CampHelper;
+import com.ardc.arkdust.registry.BlockRegistry;
+import com.ardc.arkdust.registry.TileEntityTypeRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.command.arguments.ParticleArgument;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.server.ServerWorld;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -103,32 +102,33 @@ public class PhonographBE extends TileEntity implements ITickableTileEntity {
     //TODO 耐久损失模块
 
     public void tick() {
-        if (level != null && !level.isClientSide()) {
-            BlockState blockState = level.getBlockState(worldPosition);
-            if (!(blockState.getValue(BlackstoneMedicalPoint.RUNNING_STATE) == 3) || !activation) return;
+        if (level != null && !level.isClientSide()) {//前置判断
+            BlockState blockState = level.getBlockState(worldPosition);//获取方块
+            if (!(blockState.getValue(BlackstoneMedicalPoint.RUNNING_STATE) == 3) || !activation) return;//获取方块状态是否为运行中,否则返回
+            //创建治疗范围aabb盒
             AxisAlignedBB rangeAABB = new AxisAlignedBB(worldPosition.getX() - workingRange, worldPosition.getY() - workingRange, worldPosition.getZ() - workingRange, worldPosition.getX() + workingRange, worldPosition.getY() + workingRange, worldPosition.getZ() + workingRange);
-            if (setMode == mode.BSMP && level.getBlockState(worldPosition.below()).getBlock() != BlockRegistry.pau_block.get()) {
-//            working = false;
-                level.setBlock(worldPosition, blockState.setValue(BlackstoneMedicalPoint.RUNNING_STATE, 2), 1);
+            if (setMode == mode.BSMP && level.getBlockState(worldPosition.below()).getBlock() != BlockRegistry.pau_block.get()) {//在BSMP模式下且下方的方块不是赤金块时
+                level.setBlock(worldPosition, blockState.setValue(BlackstoneMedicalPoint.RUNNING_STATE, 2), 1);//将方块状态设置为缺少反应物
                 return;
             }
 
-            if (treatFriendly) {
-                if (treatTimer < funcTick.get(1)) treatTimer++;
-                else {
-                    List<LivingEntity> entityList = level.getEntitiesOfClass(LivingEntity.class, rangeAABB);
-                    List<LivingEntity> goalEntityList = new ArrayList<>();
-                    for (LivingEntity entity : entityList) {
-                        if (CampHelper.ifEntityBelongToCamp(campBelong, entity) && entity.getHealth() < entity.getMaxHealth()) { //TODO 阵营切换
+            if (treatFriendly) {//如果治疗友好单位模块激活
+                if (treatTimer < funcTick.get(1)) treatTimer++;//医疗程序计时
+                else {//当医疗程序达到目标时间
+                    List<LivingEntity> entityList = level.getEntitiesOfClass(LivingEntity.class, rangeAABB);//获取范围内实体
+                    List<LivingEntity> goalEntityList = new ArrayList<>();//创建空的,目标实体列表
+                    for (LivingEntity entity : entityList) {//遍历实体
+                        if (CampHelper.ifEntityBelongToCamp(campBelong, entity) && entity.getHealth() < entity.getMaxHealth()) { //如果实体属于此阵营且血量不是满的 TODO 阵营切换
 //                            System.out.printf(entity+"%n  heal before:" + entity.getHealth());
-                            goalEntityList.add(entity);
-                            entity.heal(funcValue.get(1));
+                            goalEntityList.add(entity);//在目标实体内添加实体
+                            entity.heal(funcValue.get(1));//治疗实体
 //                            System.out.printf("%n  heal after:" + entity.getHealth());
-                            addHappyVillagerParticle(entity.getX(),entity.getY(),entity.getZ());
+                            addHappyVillagerParticle(entity.getX(),entity.getY(),entity.getZ());//添加粒子
                         }
                     }
-                    if(!goalEntityList.isEmpty()) treatTimer = 0;
-                    pauBlockChange(goalEntityList.size());
+                    setChanged();
+                    if(!goalEntityList.isEmpty()) treatTimer = 0;//如果治疗了实体,将计时重置
+                    pauBlockChange(goalEntityList.size());//根据治疗的人数判断是否清除赤金块
                 }
             }
             if (attackUnfriendly) {
@@ -138,15 +138,57 @@ public class PhonographBE extends TileEntity implements ITickableTileEntity {
     }
 
     private void addHappyVillagerParticle(double x,double y,double z){
-        if(level instanceof ServerWorld) ((ServerWorld)level).sendParticles(ParticleTypes.HAPPY_VILLAGER,x,y,z,32,3,3,3,1);
+        if(level instanceof ServerWorld) ((ServerWorld)level).sendParticles(ParticleTypes.HAPPY_VILLAGER,x,y,z,32,2,2,2,1);
     }
 
     private void pauBlockChange(int size){
         if(setMode == mode.BSMP && level!= null && size > 0) {
             Random r = new Random();
             int i = r.nextInt(damage);
-            if(i <= size) level.setBlock(worldPosition.below(), Blocks.GOLD_BLOCK.defaultBlockState(),1);
+            if(i <= size) level.setBlock(worldPosition.below(), Blocks.GOLD_BLOCK.defaultBlockState(),3);
+
         }
     }
 
+    @Override
+    public void load(BlockState state, CompoundNBT nbt) {
+        workingRange = nbt.getInt("workingRange");
+        damage = nbt.getInt("damage");
+        funcTick.set(0,nbt.getInt("attackTick"));
+        funcTick.set(1,nbt.getInt("treatTick"));
+        funcValue.set(0,nbt.getFloat("attackValue"));
+        funcValue.set(1,nbt.getFloat("treatValue"));
+        activation = nbt.getBoolean("activation");
+        attackNeutrality = nbt.getBoolean("attackNeutrality");
+        attackUnfriendly = nbt.getBoolean("attackUnfriendly");
+        treatFriendly = nbt.getBoolean("treatFriendly");
+        canBeHurt = nbt.getBoolean("canBeHurt");
+        belongUs = nbt.getBoolean("belongUs");
+        belonging = nbt.getBoolean("belonging");
+        campBelong = CampHelper.loadCampDataFromNBT("belong",nbt);
+        campHate = CampHelper.loadCampDataFromNBT("hate",nbt);
+//        System.out.println(nbt);
+        super.load(state, nbt);
+    }
+
+    @Override
+    public CompoundNBT save(CompoundNBT nbt) {
+        nbt.putInt("workingRange", workingRange);
+        nbt.putInt("damage", damage);
+        nbt.putInt("attackTick", funcTick.get(0));
+        nbt.putInt("treatTick", funcTick.get(1));
+        nbt.putFloat("attackValue", funcValue.get(0));
+        nbt.putFloat("treatValue", funcValue.get(1));
+        nbt.putBoolean("activation", activation);
+        nbt.putBoolean("attackNeutrality", attackNeutrality);
+        nbt.putBoolean("attackUnfriendly", attackUnfriendly);
+        nbt.putBoolean("treatFriendly", treatFriendly);
+        nbt.putBoolean("canBeHurt", canBeHurt);
+        nbt.putBoolean("belongUs", belongUs);
+        nbt.putBoolean("belonging", belonging);
+        CampHelper.saveCampDataToNBT("belong", nbt, campBelong);
+        CampHelper.saveCampDataToNBT("hate", nbt, campHate);
+//        System.out.println(nbt);
+        return super.save(nbt);
+    }
 }

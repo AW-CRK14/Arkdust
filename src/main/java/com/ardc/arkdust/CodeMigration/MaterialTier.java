@@ -1,6 +1,6 @@
 package com.ardc.arkdust.CodeMigration;
 
-import com.ardc.arkdust.ItemRegistry;
+import com.ardc.arkdust.registry.ItemRegistry;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;

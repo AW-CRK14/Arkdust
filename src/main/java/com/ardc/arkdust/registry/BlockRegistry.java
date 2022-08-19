@@ -1,13 +1,16 @@
-package com.ardc.arkdust;
+package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.CodeMigration.Block.ArkCrystalBlock;
+import com.ardc.arkdust.CodeMigration.Block.CreepOIBlock;
 import com.ardc.arkdust.CodeMigration.Block.HardGlassBlock;
+import com.ardc.arkdust.CodeMigration.pre.OIItem.PreOIBlock;
 import com.ardc.arkdust.Items.blocks.*;
 import com.ardc.arkdust.CodeMigration.Block.terra_industrial.StructureFrameBlock;
 import com.ardc.arkdust.CodeMigration.pre.PreBlock;
 import com.ardc.arkdust.Items.blocks.ores.Pau_ore;
 import com.ardc.arkdust.Items.blocks.terra_energy.E_oir_reactor_control_board;
 import com.ardc.arkdust.Enums.TechMaterial;
+import com.ardc.arkdust.Utils;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.GravelBlock;
@@ -20,7 +23,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockRegistry {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,Utils.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Utils.MOD_ID);
 
     //闭环区方块
     public static final RegistryObject<Block> pau_ore = BLOCKS.register("pau_ore", Pau_ore::new);//赤金矿石
@@ -33,6 +36,8 @@ public class BlockRegistry {
     public static final RegistryObject<Block> blackstone_sand = BLOCKS.register("blackstone_sand", ()->new GravelBlock(AbstractBlock.Properties.of(Material.SAND, MaterialColor.STONE).harvestTool(ToolType.SHOVEL).strength(1)));//黑石沙砾
     public static final RegistryObject<Block> hang_screened_table = BLOCKS.register("hang_screened_table", Hand_screened_table::new);//简易筛矿台
     public static final RegistryObject<Block> blackstone_medical_point = BLOCKS.register("blackstone_medical_point", BlackstoneMedicalPoint::new);//黑石基座
+    public static final RegistryObject<Block> c_originium_block = BLOCKS.register("c_originium_block", ()->new CreepOIBlock(AbstractBlock.Properties.of(Material.METAL).randomTicks().sound(SoundType.METAL).strength(1,2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(),2,3,true));//c源石
+    public static final RegistryObject<Block> d_originium_block = BLOCKS.register("d_originium_block", ()->new PreOIBlock(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(2,5).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(),1,0));//d源石
 
     //泰拉能源
     public static final RegistryObject<Block> e_oir_reactor_control_board = BLOCKS.register("e_oir_reactor_control_board", E_oir_reactor_control_board::new);//E类源石反应堆控制方块

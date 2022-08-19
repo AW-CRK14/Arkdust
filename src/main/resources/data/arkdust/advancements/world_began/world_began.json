@@ -1,0 +1,36 @@
+{
+  "display": {
+    "background": "arkdust:textures/blocks/main_world_blocks/blackstone_sand.png",
+    "icon": {
+      "item": "arkdust:pau_block"
+    },
+    "title": {
+      "translate": "advancements.world_began.t"
+    },
+    "description": {
+      "translate": "advancements.world_began.d"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "from": "minecraft:the_end"
+      }
+    },
+    "b": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:dragon_egg"
+          }
+        ]
+      }
+    }
+  }
+}

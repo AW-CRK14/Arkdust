@@ -1,4 +1,4 @@
-package com.ardc.arkdust;
+package com.ardc.arkdust.registry;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;

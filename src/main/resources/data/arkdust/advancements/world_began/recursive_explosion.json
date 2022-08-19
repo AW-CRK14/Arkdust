@@ -1,0 +1,30 @@
+{
+  "parent": "arkdust:world_began/i_camouflage",
+  "display": {
+    "icon": {
+      "item": "arkdust:c_originium_block"
+    },
+    "title": {
+      "translate": "advancements.recursive_explosion.t"
+    },
+    "description": {
+      "translate": "advancements.recursive_explosion.d"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arkdust:c_originium_block"
+          }
+        ]
+      }
+    }
+  }
+}

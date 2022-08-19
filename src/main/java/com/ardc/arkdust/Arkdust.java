@@ -1,5 +1,8 @@
 package com.ardc.arkdust;
 
+import com.ardc.arkdust.registry.BlockRegistry;
+import com.ardc.arkdust.registry.ItemRegistry;
+import com.ardc.arkdust.registry.TileEntityTypeRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;

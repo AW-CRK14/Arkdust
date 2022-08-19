@@ -1,6 +1,6 @@
 package com.ardc.arkdust.Enums.BlockEntityAbout;
 
-import com.ardc.arkdust.ItemRegistry;
+import com.ardc.arkdust.registry.ItemRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 

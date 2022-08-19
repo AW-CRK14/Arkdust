@@ -1,4 +1,4 @@
-package com.ardc.arkdust.Enums;
+package com.ardc.arkdust.NewPlayingMethod.camp;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;

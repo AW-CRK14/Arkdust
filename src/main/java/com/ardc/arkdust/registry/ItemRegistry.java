@@ -1,11 +1,13 @@
-package com.ardc.arkdust;
+package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.CodeMigration.MaterialTier;
+import com.ardc.arkdust.CodeMigration.pre.OIItem.PreOIBlockItem;
 import com.ardc.arkdust.CodeMigration.pre.OIItem.PreOIItem;
 import com.ardc.arkdust.CodeMigration.pre.PreBlockItem;
 import com.ardc.arkdust.CodeMigration.pre.PreItem;
 import com.ardc.arkdust.Items.items.Bc;
 import com.ardc.arkdust.Items.items.sugar.*;
+import com.ardc.arkdust.Utils;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -13,15 +15,15 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemRegistry {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,Utils.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Utils.MOD_ID);
     public static final RegistryObject<Item> bc = ITEMS.register("bc_block", Bc::new);//注册物品bc_block
 
 
     //TerraCommonMaterial泰拉普料 注册
-    public static final RegistryObject<Item> originium = ITEMS.register("originium", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),true));//源石
-    public static final RegistryObject<Item> originium_dust = ITEMS.register("originium_dust", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//源石尘e1
-    public static final RegistryObject<Item> originium_shard = ITEMS.register("originium_shard", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//源石碎片
-    public static final RegistryObject<Item> poor_originium = ITEMS.register("poor_originium", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//贫瘠源石
+    public static final RegistryObject<Item> originium = ITEMS.register("originium", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),true,2,2,3,12,4));//源石
+    public static final RegistryObject<Item> originium_dust = ITEMS.register("originium_dust", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),false,1,0,1,32,8));//源石尘e1
+    public static final RegistryObject<Item> originium_shard = ITEMS.register("originium_shard", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),false,1,1,0,4,1));//源石碎片
+    public static final RegistryObject<Item> poor_originium = ITEMS.register("poor_originium", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),false,0,0,0,0,2));//贫瘠源石
     public static final RegistryObject<Item> ester = ITEMS.register("ester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//一级酯
     public static final RegistryObject<Item> polyester = ITEMS.register("polyester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//二级酯
     public static final RegistryObject<Item> polyester_pack = ITEMS.register("polyester_pack", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//三级酯
@@ -87,7 +89,10 @@ public class ItemRegistry {
     public static final RegistryObject<Item> blackstone_medical_point = ITEMS.register("blackstone_medical_point",()->new PreBlockItem(BlockRegistry.blackstone_medical_point.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石沙
     public static final RegistryObject<Item> hang_screened_table = ITEMS.register("hang_screened_table",()->new PreBlockItem(BlockRegistry.hang_screened_table.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//简易筛矿台
     public static final RegistryObject<Item> netherite_nugget = ITEMS.register("netherite_nugget", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//下届合金粒
-    public static final RegistryObject<Item> oitest_item = ITEMS.register("oitest_item", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial),true,2,3,0));//测试物品
+    public static final RegistryObject<Item> oitest_item = ITEMS.register("oitest_item", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,3,0,2,0));//测试物品
+    public static final RegistryObject<Item> c_originium_block = ITEMS.register("c_originium_block", ()->new PreOIBlockItem(BlockRegistry.c_originium_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,2,0,5,2));//测试物品
+    public static final RegistryObject<Item> d_originium_block = ITEMS.register("d_originium_block", ()->new PreOIBlockItem(BlockRegistry.d_originium_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,2,0,3,0));//测试物品
+    //TODO 源石疫苗物品
 
     //TerraTools泰拉工具工具 注册
     public static final RegistryObject<Item> unnamed_sword = ITEMS.register("unnamed_sword", ()->new SwordItem(MaterialTier.PURE_GOLD, 24, -1.6F, new Item.Properties().fireResistant().tab(ModGroupRegistry.terraTools)));//不知名的刀

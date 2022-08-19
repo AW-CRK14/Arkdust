@@ -1,8 +1,9 @@
-package com.ardc.arkdust;
+package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.BlockEntity.PhonographBE;
 import com.ardc.arkdust.BlockEntity.SFBlockCreatorBE;
 import com.ardc.arkdust.BlockEntity.ScreenedTableBE;
+import com.ardc.arkdust.Utils;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

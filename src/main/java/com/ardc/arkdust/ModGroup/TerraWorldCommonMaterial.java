@@ -1,6 +1,6 @@
 package com.ardc.arkdust.ModGroup;
 
-import com.ardc.arkdust.ItemRegistry;
+import com.ardc.arkdust.registry.ItemRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 

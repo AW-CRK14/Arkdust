@@ -1,7 +1,8 @@
-package com.ardc.arkdust.NewPlayingMethod.OriInfection;
+package com.ardc.arkdust.CodeMigration;
 
 import net.minecraft.util.DamageSource;
 
-public class OIDamage{
+public class Damage {
     public static final DamageSource ORIROCK_INFECTION = (new DamageSource("orirockInfection")).setMagic();
+    public static final DamageSource ORIROCK_DEATH = (new DamageSource("orirockDeath"));
 }

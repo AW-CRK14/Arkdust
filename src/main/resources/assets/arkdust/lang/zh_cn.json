@@ -1,4 +1,14 @@
 {
+  "advancements.world_began.t": "起点",
+  "advancements.world_began.d": "现在，什么也无法阻止我们了。",
+  "advancements.world_began.ah.t": "这是甚么",
+  "advancements.world_began.ah.d": "好像混入了什么奇怪的东西！",
+  "advancements.world_began.i_cry.t": "我哭了",
+  "advancements.world_began.i_cry.d": "捡到一个危险的源石物品(流泪猫猫头.png)",
+  "advancements.world_began.i_camouflage.t": "我装的",
+  "advancements.world_began.i_camouflage.d": "捡到一个危险但不完全危险的源石物品(龙脸.png)",
+  "advancements.recursive_explosion.t": "递归爆炸！",
+  "advancements.recursive_explosion.d": "获得一块C源石\n睿智的java感到疑惑并向您丢出一个§4StackOverflowError§2。\n§6感谢cm大佬帮忙寻找与解决问题qwq",
   "basmes.way_to_get": "获得方式:",
   "block.arkdust.blackstone_lamp": "黑石灯盏",
   "block.arkdust.blackstone_sand": "黑石沙",
@@ -10,6 +20,10 @@
   "block.arkdust.iron_structure_frame_creator": "铁质结构框架制造器",
   "block.arkdust.pau_fluorescence_glass": "赤金光辉玻璃",
   "block.arkdust.pau_ore": "赤金矿",
+  "block.arkdust.c_originium_block": "C型扩散源石",
+  "block.arkdust.d_originium_block": "D型静态源石",
+  "death.attack.orirockInfection": "%1$s 在源石中凝固为结晶",
+  "death.attack.orirockDeath": "%1$s 死于急性源石感染",
   "explain.exp.item.arkdust.aketon": "酮凝集组",
   "explain.exp.item.arkdust.bipolar_nanoflake": "双极纳米片",
   "explain.exp.item.arkdust.blue_crystal": "蓝水晶",
@@ -219,9 +233,11 @@
   "mes.bs_medical_point.activation": "[ArD]你激活了一个黑石愈疗点。",
   "mes.bs_medical_point.inactivation": "[ArD]黑石愈疗点无法运行。它的下方缺少赤金块。",
   "pma.oi.getOIItem": "[ArD]§4你感到一阵刺痛，伴随着恐惧流遍全身。现在还不是拿起它的时候。",
+  "pma.oi.getAdvancement": "[ArD]§4在喜悦之余，你察觉到细微的恐惧从你的身体流入大地。或许得加紧了。如果它连续出现了多次的话……",
   "pma.oi.OIInfo": "源石感染等级:%d",
+  "pma.oi.playerOIInfo": "感染等级:%d\n感染点数:%d\n溢出感染点数:%d\n提高等级需要的点数:%d\n级感染容量:%d\n感染抗性:%d",
   "pma.oi.worldOIOn": "[ArD]某处稠密的夜色中，绝望踏着浓雾在大地上行进。来吧，来吧，朋友，那个时代最终的屏障已在至暗中溶解。至于，你面对的是残阳或是新日……这一切，取决于你的抉择。",
   "pma.oi.worldOIState.false": "世界源石感染状态：§2关闭",
   "pma.oi.worldOIState.true": "世界源石感染状态：§4开启",
-  "pma.oi.wholeOILevel": "世界源石感染总值：§1%d"
+  "pma.oi.worldOILevel": "世界源石感染总值：§1%d\n世界源石感染常量%d\n世界源石感染变量%d"
 }

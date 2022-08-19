@@ -1,7 +1,6 @@
 package com.ardc.arkdust.Items.items.sugar;
 
-import com.ardc.arkdust.ModGroupRegistry;
-import com.ardc.arkdust.NewPlayingMethod.OriInfection.IOIItem;
+import com.ardc.arkdust.registry.ModGroupRegistry;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 
