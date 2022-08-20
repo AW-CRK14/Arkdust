@@ -24,7 +24,7 @@ public class Test_block extends PreBlock {
         if(!worldIn.isClientSide()) {
             WorldOIData data = WorldOIData.get(worldIn);
             if (data.getWorldOIState()) {
-                data.worldOIReset(worldIn);
+                data.worldOIReset();
                 if (!worldIn.isClientSide())
                     player.displayClientMessage(new StringTextComponent("§2世界感染状态已重置"), false);
                 return ActionResultType.SUCCESS;

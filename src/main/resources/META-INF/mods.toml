@@ -19,25 +19,27 @@ modId="arkdust" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 # ${file.jarVersion} will substitute the value of the Implementation-Version as read from the mod's JAR file metadata
 # see the associated build.gradle script for how to populate this completely automatically during a build
-version="0.0.1" #mandatory
+version="Alpha0.4" #mandatory
  # A display name for the mod
-displayName="Arkdust Mian Mod for Test" #mandatory
+displayName="舟尘:长夜末章" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="examplemod.png" #optional
+logoFile="arkdust_loge_0.png" #optional
 # A text field displayed in the mod UI
-credits="Thanks for this example mod goes to Java" #optional
+credits="minecraft开发讨论群的各位热心大佬，每一位支持此mod的朋友们，在此表示由衷感谢！" #optional
 # A text field displayed in the mod UI
-authors="Landis" #optional
+authors="(排名不分先后顺序，仅按录入时间) landis(代码+摸鱼), xx_sheng(美工), ning_meng(美工)" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Welcom to Terra
+Welcome to Terra......
+好吧，如你所见，这是arkdust的Alpha0.系列版本即[Arkdust:长夜末章]。虽然它还有许多不完善——准确而言是没有什么完善的地方，你或许也能从中看出一点......
+决心，信心，亦或是野心？
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.examplemod]] #optional
+[[dependencies.arkdust]] #optional
     # the modid of the dependency
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
@@ -49,7 +51,7 @@ Welcom to Terra
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
 # Here's another dependency
-[[dependencies.examplemod]]
+[[dependencies.arkdust]]
     modId="minecraft"
     mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version

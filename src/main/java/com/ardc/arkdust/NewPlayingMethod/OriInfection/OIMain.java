@@ -56,21 +56,26 @@ public class OIMain {
         }
     }
 
-
     public static class EntityOI{//玩家源石相关
         //获取玩家源石抗性
         public int getPlayerOIResistanceLevel(PlayerEntity entity,World world){
             if(!world.isClientSide()) {
                 WorldOIData data = WorldOIData.get(world);
-                data.getPlayerOIRLevel(entity);
+                return data.getPlayerOIRLevel(entity);
             }
             return 0;
         }
-        @Deprecated
+
+
         //设置玩家源石抗性
-        public void setPlayerOIResistanceLevel(PlayerEntity entity,int level){
-            entity.serializeNBT().putInt("OIResistanceLevel",level);
+        public void setPlayerOIResistanceLevel(PlayerEntity entity,int level,World worldIn){
+            level = Math.max(0,level);
+            if(!worldIn.isClientSide()){
+                WorldOIData data = WorldOIData.get(worldIn);
+                data.setPlayerOIRLevel(entity,level);
+            }
         }
+
         @Deprecated
         //提高玩家源石抗性
         public void addPlayerOIResistanceLevel(PlayerEntity entity,int addLevel){

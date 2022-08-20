@@ -13,8 +13,8 @@ import java.util.Random;
 
 public class CreepOIBlock extends PreOIBlock {
     private final boolean toOriD;
-    public CreepOIBlock(Properties properties, float touchTickDamage,int tickPlayerOILevelAdd,boolean toOriD) {
-        super(properties,touchTickDamage,tickPlayerOILevelAdd);
+    public CreepOIBlock(Properties properties, float touchTickDamage,int tickPlayerOILevelAdd,int needOIRLevel,boolean toOriD) {
+        super(properties,touchTickDamage,tickPlayerOILevelAdd,needOIRLevel);
         this.toOriD = toOriD;
     }
 

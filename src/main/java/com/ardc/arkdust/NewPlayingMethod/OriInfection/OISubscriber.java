@@ -19,6 +19,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -95,6 +96,7 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
         if (rtest.equals(new ResourceLocation("arkdust:world_began/world_began"))) {
             WorldOIData data = WorldOIData.get(world);
             data.worldOIBegin(world);
+            new OIMain.EntityOI().setPlayerOIResistanceLevel(event.getPlayer(),1,world);
         }
         if (r.nextInt(32) > 3 && !new OIMain.WorldOI().ifWorldOIRun(world)) return;
         BlockPos pos = PosHelper.entityPosToBlock(event.getPlayer());
@@ -116,8 +118,9 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
     }
 
     //TODO 源石环境变量自动衰减
-    @SubscribeEvent//玩家死亡时的源石变动
-    public static void onPlayerDie(LivingDeathEvent event) {
+
+    @SubscribeEvent//玩家重生时的源石变动
+    public static void onPlayerDie(PlayerSetSpawnEvent event) {
         World worldIn = event.getEntity().level;
         Entity entity = event.getEntity();
         if (entity instanceof PlayerEntity && !worldIn.isClientSide()) {
@@ -129,11 +132,11 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
                 data.setPlayerOIPoint((PlayerEntity) entity, new OIMain.EntityOI().getBoundary(rLevel - 1, 3));
             if (aOIPoint < new OIMain.EntityOI().getBoundary(rLevel, 2))
                 data.addPlayerOIPoint((PlayerEntity) entity, (int) (rLevel * 2.5 - level + 3.5));
-            else data.addPlayerOIRLevel((PlayerEntity) entity, (int) (-rLevel * 1.5 - level));
+            else data.addPlayerOIPoint((PlayerEntity) entity, (int) (-rLevel * 1.5 - level));
         }
     }
 
-    @SubscribeEvent//TODO 玩家感染量阈值系统
+    @SubscribeEvent//玩家感染量阈值系统
     public static void onPlayerBeHurt(LivingAttackEvent event) {
         Entity entity = event.getEntity();
         World world = event.getEntity().level;
@@ -150,8 +153,8 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
             OIMain.EntityOI main = new OIMain.EntityOI();
             int a = main.getBoundary(playerOIRLevel, 3);
             if (playerOIPoint > a) {
-                System.out.println("超感染触发");
                 playerEntity.hurt(Damage.ORIROCK_DEATH,Float.MAX_VALUE);
+                //TODO 创建结晶
             }
             if (playerOIPoint > main.getBoundary(playerOIRLevel, 1)) {
                 System.out.println("随机效果触发");

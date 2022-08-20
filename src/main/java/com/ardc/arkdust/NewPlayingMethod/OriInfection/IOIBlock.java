@@ -9,5 +9,7 @@ public interface IOIBlock{
 
     int tickPlayerOILevelAdd();
 
+    int needOIRLevel();
+
 //    int tickPlayerOILevelAddProbability();
 }
