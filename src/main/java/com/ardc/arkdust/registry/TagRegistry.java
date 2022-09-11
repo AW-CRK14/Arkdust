@@ -9,7 +9,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
-public class TagRegistryAdd
+public class TagRegistry
 {
     public static void init ()
     {

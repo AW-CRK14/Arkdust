@@ -1,6 +1,6 @@
 package com.ardc.arkdust.Items.blocks;
 
-import com.ardc.arkdust.BlockEntity.PhonographBE;
+import com.ardc.arkdust.BlockEntity.BlackstoneMedicalPointBE;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.CodeMigration.BlockState.DropSelfBlock;
 import com.ardc.arkdust.NewPlayingMethod.camp.Camp;
@@ -25,7 +25,6 @@ import java.util.Collections;
 
 public class BlackstoneMedicalPoint extends DropSelfBlock {
     public static final IntegerProperty RUNNING_STATE = IntegerProperty.create("running_state", 0, 3);
-
     /**
      * RUNNING_STATE中:
      * 0->未激活
@@ -44,16 +43,16 @@ public class BlackstoneMedicalPoint extends DropSelfBlock {
     }
 
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new PhonographBE();
+        return new BlackstoneMedicalPointBE();
     }
 
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        PhonographBE blockBE = (PhonographBE) worldIn.getBlockEntity(pos);//获取方块实体
+        BlackstoneMedicalPointBE blockBE = (BlackstoneMedicalPointBE) worldIn.getBlockEntity(pos);//获取方块实体
         if (blockBE == null) return ActionResultType.FAIL;
         ActionResultType reType = ActionResultType.SUCCESS;
         if (!blockBE.ifDefaultSet()) {//检查方块数据是否初始化
             //初始化方块并发送信息
-            blockBE.setDefaultValue(0, 4.5F, 1, 60, 100, false, false, true,false,6, PhonographBE.mode.BSMP);
+            blockBE.setDefaultValue(0, 4.5F, 1, 60, 100, false, false, true,false,6, BlackstoneMedicalPointBE.mode.BSMP);
             blockBE.setCampBelong(Collections.singletonList(Camp.PLAYER));
             blockBE.setBelongUs(true);
             if(!worldIn.isClientSide()) player.displayClientMessage(new TranslationTextComponent("mes.bs_medical_point.activation").withStyle(TextFormatting.GREEN), false);

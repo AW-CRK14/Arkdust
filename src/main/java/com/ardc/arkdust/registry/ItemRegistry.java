@@ -113,6 +113,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> compressed_iron_ingot = ITEMS.register("compressed_iron_ingot", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraIndustrialMaterial)));//压缩铁
     public static final RegistryObject<Item> iron_structure_frame = ITEMS.register("iron_structure_frame",()->new PreBlockItem(BlockRegistry.iron_structure_frame.get(), new Item.Properties().tab(ModGroupRegistry.terraIndustrialMaterial)));//铁质结构框架
     public static final RegistryObject<Item> iron_structure_frame_creator = ITEMS.register("iron_structure_frame_creator",()->new PreBlockItem(BlockRegistry.iron_structure_frame_creator.get(), new Item.Properties().tab(ModGroupRegistry.terraIndustrialMaterial)));//铁质结构框架搭建器
+//    public static final RegistryObject<Item> projection_block = ITEMS.register("projection_block",()->new PreBlockItem(BlockRegistry.projection_block.get(), new Item.Properties().tab(ModGroupRegistry.terraIndustrialMaterial)));//投影方块
 
     //TerraTechMaterial泰拉科技材料 注册
     public static final RegistryObject<Item> muddy_silicon = ITEMS.register("muddy_silicon",()->new PreItem(new Item.Properties()));

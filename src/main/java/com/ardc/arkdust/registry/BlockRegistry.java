@@ -11,6 +11,7 @@ import com.ardc.arkdust.Items.blocks.ores.Pau_ore;
 import com.ardc.arkdust.Items.blocks.terra_energy.E_oir_reactor_control_board;
 import com.ardc.arkdust.Enums.TechMaterial;
 import com.ardc.arkdust.Utils;
+import com.ardc.arkdust.model.modelblock.LifeBlockModel;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.GravelBlock;
@@ -34,7 +35,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> common_food_box = BLOCKS.register("common_food_box", ()->new PreBlock(AbstractBlock.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).strength(3)));//普通食物盒子
     public static final RegistryObject<Block> blackstone_lamp = BLOCKS.register("blackstone_lamp", Blackstone_lamp::new);//黑石灯
     public static final RegistryObject<Block> blackstone_sand = BLOCKS.register("blackstone_sand", ()->new GravelBlock(AbstractBlock.Properties.of(Material.SAND, MaterialColor.STONE).harvestTool(ToolType.SHOVEL).strength(1)));//黑石沙砾
-    public static final RegistryObject<Block> hang_screened_table = BLOCKS.register("hang_screened_table", Hand_screened_table::new);//简易筛矿台
+    public static final RegistryObject<Block> hang_screened_table = BLOCKS.register("hang_screened_table", HangScreenedTable::new);//简易筛矿台
     public static final RegistryObject<Block> blackstone_medical_point = BLOCKS.register("blackstone_medical_point", BlackstoneMedicalPoint::new);//黑石基座
     public static final RegistryObject<Block> c_originium_block = BLOCKS.register("c_originium_block", ()->new CreepOIBlock(AbstractBlock.Properties.of(Material.METAL).randomTicks().sound(SoundType.METAL).strength(1,2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(),2,3,3,true));//c源石
     public static final RegistryObject<Block> d_originium_block = BLOCKS.register("d_originium_block", ()->new PreOIBlock(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(2,5).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(),1,0,2));//d源石
@@ -45,6 +46,10 @@ public class BlockRegistry {
     //泰拉工业
     public static final RegistryObject<Block> iron_structure_frame = BLOCKS.register("iron_structure_frame",()->new StructureFrameBlock(AbstractBlock.Properties.of(Material.HEAVY_METAL).strength(5,40).noOcclusion().harvestLevel(3).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(), TechMaterial.C_IRON));
     public static final RegistryObject<Block> iron_structure_frame_creator = BLOCKS.register("iron_structure_frame_creator", Iron_sfblock_creator::new);
+
+    //渲染用方块
+    public static final RegistryObject<Block> life_model = BLOCKS.register("life_model", LifeBlockModel::new);
+//    public static final RegistryObject<Block> projection_block = BLOCKS.register("projection_block", ProjectionBlock::new);
 
 
 //    //test

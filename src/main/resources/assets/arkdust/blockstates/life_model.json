@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "color=1": {
+      "model": "arkdust:block/life_model_0"
+    },
+    "color=2": {
+      "model": "arkdust:block/life_model_1"
+    },
+    "color=3": {
+      "model": "arkdust:block/life_model_2"
+    }
+
+  }
+}

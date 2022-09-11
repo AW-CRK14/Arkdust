@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class PhonographBE extends TileEntity implements ITickableTileEntity {
+public class BlackstoneMedicalPointBE extends TileEntity implements ITickableTileEntity {
 //    public boolean working;//是否处于工作状态
     public int workingRange;//工作有效范围
     public boolean activation;//激活与否
@@ -43,8 +43,8 @@ public class PhonographBE extends TileEntity implements ITickableTileEntity {
     public int attackTimer = 0;
     public int treatTimer = 0;
 
-    public PhonographBE() {
-        super(TileEntityTypeRegistry.aPhonographBE.get());
+    public BlackstoneMedicalPointBE() {
+        super(TileEntityTypeRegistry.aBlackstoneMedicalPointBE.get());
     }
 
     public boolean ifDefaultSet() {
@@ -96,7 +96,11 @@ public class PhonographBE extends TileEntity implements ITickableTileEntity {
 //        this.working = working;
 //    }
     
-    
+    public int blackstoneMedicalPointState(){
+        if(level==null)
+            return 0;
+        return level.getBlockState(worldPosition).getValue(BlackstoneMedicalPoint.RUNNING_STATE);
+    }
 
     //TODO 战术更替模块
     //TODO 耐久损失模块
@@ -145,8 +149,8 @@ public class PhonographBE extends TileEntity implements ITickableTileEntity {
         if(setMode == mode.BSMP && level!= null && size > 0) {
             Random r = new Random();
             int i = r.nextInt(damage);
-            if(i <= size) level.setBlock(worldPosition.below(), Blocks.GOLD_BLOCK.defaultBlockState(),3);
-
+            if(i <= size)
+                level.setBlock(worldPosition.below(), Blocks.GOLD_BLOCK.defaultBlockState(),11);
         }
     }
 

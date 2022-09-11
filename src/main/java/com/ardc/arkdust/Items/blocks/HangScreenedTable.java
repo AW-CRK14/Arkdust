@@ -25,10 +25,10 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public class Hand_screened_table extends PreBlock {
+public class HangScreenedTable extends PreBlock {
     public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 
-    public Hand_screened_table() {
+    public HangScreenedTable() {
         super(Properties.of(Material.WOOD).strength(2, 120).harvestTool(ToolType.PICKAXE).noOcclusion());
         this.registerDefaultState(this.defaultBlockState().setValue(HAS_ITEM,false));
     }
