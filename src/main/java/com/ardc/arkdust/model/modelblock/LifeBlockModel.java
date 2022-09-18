@@ -1,6 +1,6 @@
 package com.ardc.arkdust.model.modelblock;
 
-import com.ardc.arkdust.CodeMigration.pre.PreBlock;
+import com.ardc.arkdust.preobject.pre.PreBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;

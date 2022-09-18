@@ -1,6 +1,6 @@
-package com.ardc.arkdust.CodeMigration.Block;
+package com.ardc.arkdust.preobject.Block;
 
-import com.ardc.arkdust.CodeMigration.pre.OIItem.PreOIBlock;
+import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.registry.TagRegistry;
 import net.minecraft.block.BlockState;

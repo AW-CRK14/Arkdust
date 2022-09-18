@@ -1,6 +1,5 @@
-package com.ardc.arkdust.CodeMigration.pre;
+package com.ardc.arkdust.preobject.pre;
 
-import com.ardc.arkdust.NewPlayingMethod.OriInfection.IOIItem;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;

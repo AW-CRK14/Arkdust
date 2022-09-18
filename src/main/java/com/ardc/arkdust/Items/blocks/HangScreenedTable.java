@@ -1,7 +1,7 @@
 package com.ardc.arkdust.Items.blocks;
 
 import com.ardc.arkdust.BlockEntity.ScreenedTableBE;
-import com.ardc.arkdust.CodeMigration.pre.PreBlock;
+import com.ardc.arkdust.preobject.pre.PreBlock;
 import com.ardc.arkdust.BlockEntity.Process.OreScreened_Use;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

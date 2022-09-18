@@ -1,4 +1,4 @@
-package com.ardc.arkdust.CodeMigration.pre;
+package com.ardc.arkdust.preobject.pre;
 
 import net.minecraft.block.Block;
 

@@ -1,5 +1,6 @@
 package com.ardc.arkdust.worldgen.feature.structure_piece;
 
+import com.ardc.arkdust.CodeMigration.resourcelocation.ArdLootTable;
 import com.ardc.arkdust.worldgen.feature.StructurePieceTypeAdd;
 import net.minecraft.block.Blocks;
 import net.minecraft.loot.LootTables;
@@ -9,7 +10,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.structure.IStructurePieceType;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 import net.minecraft.world.gen.feature.template.TemplateManager;
@@ -18,11 +19,9 @@ import java.util.Random;
 
 public class BluePrintBoxPiece {
     public static class Piece extends StructurePiece {
-        private int possibility = 32;
 
-        public Piece(BlockPos setPos,int possibility) {
+        public Piece(BlockPos setPos) {
             super(StructurePieceTypeAdd.BLUE_PRINT_BOX,0);
-            this.possibility = possibility;
             this.boundingBox = new MutableBoundingBox(setPos.getX(),setPos.getY(),setPos.getZ(),setPos.getX(),setPos.getY(),setPos.getZ());
         }
 
@@ -36,11 +35,12 @@ public class BluePrintBoxPiece {
 
         @Override
         public boolean postProcess(ISeedReader iSeedReader, StructureManager structureManager, ChunkGenerator chunkGenerator, Random random, MutableBoundingBox mutableBoundingBox, ChunkPos chunkPos, BlockPos blockPos) {
-            BlockPos.Mutable pos = new BlockPos.Mutable(boundingBox.x0,boundingBox.y0,boundingBox.z0);
-            iSeedReader.setBlock(pos, Blocks.CHEST.defaultBlockState(), 3);
-            int c = random.nextInt();
-            if(c < this.possibility)
-                return this.createChest(iSeedReader,mutableBoundingBox,random,pos.immutable(), LootTables.CAT_MORNING_GIFT,Blocks.CHEST.defaultBlockState());
+            int i = iSeedReader.getHeight(Heightmap.Type.OCEAN_FLOOR_WG, this.boundingBox.x0, this.boundingBox.z0);
+            BlockPos.Mutable pos = new BlockPos.Mutable(boundingBox.x0,Math.max(boundingBox.y0 + i - 64,5),boundingBox.z0);
+            System.out.println("box load! In" + pos.immutable());
+//            iSeedReader.setBlock(pos, Blocks.CHEST.defaultBlockState(), 3);
+            if(random.nextBoolean())
+                return this.createChest(iSeedReader,mutableBoundingBox,random,pos.immutable(), ArdLootTable.CW_BLUEPRINT_BOX,Blocks.CHEST.defaultBlockState());
             return this.createChest(iSeedReader,mutableBoundingBox,random,pos.immutable(), LootTables.DESERT_PYRAMID,Blocks.CHEST.defaultBlockState());
         }
     }

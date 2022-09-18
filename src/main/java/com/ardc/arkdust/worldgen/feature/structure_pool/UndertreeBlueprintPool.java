@@ -16,7 +16,7 @@ public class UndertreeBlueprintPool {
                     ImmutableList.of(Pair.of(JigsawPiece.legacy(
                             Utils.MOD_ID + ":cworld/undertree_blueprint/undertree_blueprint_1",
                             ProcessorLists.MOSSIFY_70_PERCENT),1)),
-                    JigsawPattern.PlacementBehaviour.TERRAIN_MATCHING
+                    JigsawPattern.PlacementBehaviour.RIGID
             );
 
 //    public JigsawPattern poolB = DynamicRegistries.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)

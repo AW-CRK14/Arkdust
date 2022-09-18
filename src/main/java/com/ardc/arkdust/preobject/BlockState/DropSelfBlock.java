@@ -1,14 +1,9 @@
-package com.ardc.arkdust.CodeMigration.BlockState;
+package com.ardc.arkdust.preobject.BlockState;
 
-import com.ardc.arkdust.CodeMigration.pre.PreBlock;
+import com.ardc.arkdust.preobject.pre.PreBlock;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockReader;
 
 import java.util.Collections;
 import java.util.List;

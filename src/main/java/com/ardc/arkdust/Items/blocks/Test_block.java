@@ -1,17 +1,20 @@
 package com.ardc.arkdust.Items.blocks;
 
 import com.ardc.arkdust.CodeMigration.Material;
-import com.ardc.arkdust.CodeMigration.pre.PreBlock;
-import com.ardc.arkdust.NewPlayingMethod.OriInfection.OIMain;
-import com.ardc.arkdust.NewPlayingMethod.OriInfection.WorldOIData;
+import com.ardc.arkdust.CodeMigration.resourcelocation.ArdLootTable;
+import com.ardc.arkdust.preobject.pre.PreBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class Test_block extends PreBlock {
     public Test_block(){
@@ -21,15 +24,13 @@ public class Test_block extends PreBlock {
 
     @Override
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit){
-        if(!worldIn.isClientSide()) {
-            WorldOIData data = WorldOIData.get(worldIn);
-            if (data.getWorldOIState()) {
-                data.worldOIReset();
-                if (!worldIn.isClientSide())
-                    player.displayClientMessage(new StringTextComponent("§2世界感染状态已重置"), false);
-                return ActionResultType.SUCCESS;
+        if(!worldIn.isClientSide() && worldIn.getBlockState(pos.above()).getBlock().equals(Blocks.AIR)) {
+            worldIn.setBlock(pos.above(),Blocks.CHEST.defaultBlockState(),3);
+            TileEntity tileEntity = worldIn.getBlockEntity(pos.above());
+            if(tileEntity instanceof ChestTileEntity){
+                Random r = new Random();
+                ((ChestTileEntity) tileEntity).setLootTable(ArdLootTable.CW_BLUEPRINT_BOX,r.nextLong());
             }
-            data.worldOIBegin(worldIn);
         }
         return ActionResultType.SUCCESS;
     }

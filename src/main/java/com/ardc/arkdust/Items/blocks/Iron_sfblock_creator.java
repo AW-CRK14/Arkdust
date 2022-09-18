@@ -1,7 +1,7 @@
 package com.ardc.arkdust.Items.blocks;
 
 import com.ardc.arkdust.BlockEntity.SFBlockCreatorBE;
-import com.ardc.arkdust.CodeMigration.BlockState.RotateBlock;
+import com.ardc.arkdust.preobject.BlockState.RotateBlock;
 import com.ardc.arkdust.registry.ItemRegistry;
 import com.ardc.arkdust.BlockEntity.Process.SFBlockCreator_Use;
 import net.minecraft.block.BlockState;

@@ -2,7 +2,7 @@ package com.ardc.arkdust.Items.blocks;
 
 import com.ardc.arkdust.BlockEntity.BlackstoneMedicalPointBE;
 import com.ardc.arkdust.registry.BlockRegistry;
-import com.ardc.arkdust.CodeMigration.BlockState.DropSelfBlock;
+import com.ardc.arkdust.preobject.BlockState.DropSelfBlock;
 import com.ardc.arkdust.NewPlayingMethod.camp.Camp;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -1,4 +1,4 @@
-package com.ardc.arkdust.CodeMigration.Block.terra_industrial;
+package com.ardc.arkdust.preobject.Block.terra_industrial;
 
 import com.ardc.arkdust.Enums.TechMaterial;
 import net.minecraft.block.Block;

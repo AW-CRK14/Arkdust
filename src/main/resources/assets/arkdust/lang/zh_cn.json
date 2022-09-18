@@ -185,7 +185,7 @@
   "item.arkdust.keton_colloid": "酮阵列",
   "item.arkdust.loxic_kohl": "扭转醇",
   "item.arkdust.l1_oir_vaccine_a": "一阶α型源石抑制剂",
-  "item.arkdust.l1_oir_vaccine_a": "二阶α型源石抑制剂",
+  "item.arkdust.l2_oir_vaccine_a": "二阶α型源石抑制剂",
   "item.arkdust.manganese_ore": "轻锰矿",
   "item.arkdust.manganese_trihydrate": "三水锰矿",
   "item.arkdust.muddy_silicon": "浑浊硅",
@@ -226,6 +226,7 @@
   "item.arkdust.sugar_substitute": "代糖",
   "item.arkdust.unnamed_sword": "\"X\"",
   "item.arkdust.white_horse_kohl": "白马醇",
+  "item.arkdust.l1_empty_blueprint": "一阶空白蓝图",
   "itemGroup.main_world_material": "泰拉-闭环区",
   "itemGroup.terra_energy": "泰拉-能源",
   "itemGroup.terra_industrial_material": "泰拉-工业材料",
@@ -248,5 +249,7 @@
   "pma.oi.OIReset": "感染点数已重置。",
   "pma.oi.vaccineLevelTooHigh": "你尝试注入它们，而恐惧束缚了你的行为。它对你而言似乎过于危险了。",
   "pma.oi.worldOIState.true": "世界源石感染状态：§4开启",
-  "pma.oi.worldOILevel": "世界源石感染总值：§1%d\n世界源石感染常量%d\n世界源石感染变量%d"
+  "pma.oi.worldOILevel": "世界源石感染总值：§1%d\n世界源石感染常量%d\n世界源石感染变量%d",
+  "pma.bp.baseBPLevel": "蓝图等级:%d",
+  "pma.bp.BPPiece": "蓝图碎片"
 }

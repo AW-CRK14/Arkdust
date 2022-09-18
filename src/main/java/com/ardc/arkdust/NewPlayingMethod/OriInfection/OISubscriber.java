@@ -1,6 +1,6 @@
 package com.ardc.arkdust.NewPlayingMethod.OriInfection;
 
-import com.ardc.arkdust.CodeMigration.Damage;
+import com.ardc.arkdust.CodeMigration.resourcelocation.Damage;
 import com.ardc.arkdust.CodeMigration.RunHelper.AdvancementHelper;
 import com.ardc.arkdust.CodeMigration.RunHelper.PosHelper;
 import com.ardc.arkdust.registry.BlockRegistry;

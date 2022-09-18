@@ -1,4 +1,4 @@
-package com.ardc.arkdust.CodeMigration;
+package com.ardc.arkdust.CodeMigration.resourcelocation;
 
 import net.minecraft.util.DamageSource;
 

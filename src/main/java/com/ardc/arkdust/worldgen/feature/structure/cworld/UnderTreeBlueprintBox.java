@@ -73,24 +73,24 @@ public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements
         int landHeight = chunkGenerator.getBaseHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Type.WORLD_SURFACE_WG);//获取指定坐标的高度
 
         IBlockReader columnOfBlocks = chunkGenerator.getBaseColumn(centerOfChunk.getX(), centerOfChunk.getZ());
-        BlockState topBlock = columnOfBlocks.getBlockState(centerOfChunk.above(landHeight));//获取此位置的地表坐标
+        BlockState topBlock = columnOfBlocks.getBlockState(centerOfChunk.above(Math.max(landHeight-1,5)));//获取此位置的地表坐标
 
         return topBlock.getFluidState().isEmpty() && biome.getBaseTemperature() <= 1.2F;//获取此位置是否为流体（防止生成在水上）
     }
 
     @Override
     public int spacing() {
-        return 100;
+        return 45;
     }
 
     @Override
     public int separation() {
-        return 50;
+        return 20;
     }
 
     @Override
     public int salt() {
-        return 114514;
+        return 2496268;
     }
 
 
@@ -155,7 +155,7 @@ public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements
                     false, //特殊的村庄边界调整。它……难以描述，将此值设置为false使你的生成结构不会相互交错。
                     // 不相交或完全包含会使子结构保持完好。这样更加简单。
                     true);  //是否放置在地表。将此值设置为false以使结构生成在传入的y位置。在下届生成结构时一定要将此值设为false，否则高度的自动运算会将其放置在顶层基岩上方。
-            this.pieces.add(new BluePrintBoxPiece.Piece(centerPos.offset(3,3,3),16));//TODO 蓝图宝箱结构片区
+            this.pieces.add(new BluePrintBoxPiece.Piece(new BlockPos(centerPos.getX(),64,centerPos.getZ())));//TODO 蓝图宝箱结构片区
 
             // **以下两行是可选的**
             //
@@ -171,8 +171,8 @@ public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements
             //
             // By lifting the house up by 1 and lowering the bounding box, the land at bottom of house will now be
             // flush with the surrounding terrain without blocking off the doorstep.
-            this.pieces.forEach(piece -> piece.move(0, 1, 0));
-            this.pieces.forEach(piece -> piece.getBoundingBox().y0 -= 1);
+//            this.pieces.forEach(piece -> piece.move(0, 1, 0));
+//            this.pieces.forEach(piece -> piece.getBoundingBox().y0 -= 1);
 
             // 在默认情况下，一个结构会产生在起始坐标的一个角上并会围着这个角随机旋转。
             // and will randomly rotate around that corner, we will center the piece on centerPos instead.
@@ -180,19 +180,15 @@ public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements
             // Whatever the offset done to center the start piece, that offset is applied to all other pieces
             // so the entire structure is shifted properly to the new spot.
             Vector3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
+            System.out.println("piece v3d" + structureCenter);
             int xOffset = centerPos.getX() - structureCenter.getX();
             int zOffset = centerPos.getZ() - structureCenter.getZ();
-            for (StructurePiece structurePiece : this.pieces) {
-                structurePiece.move(xOffset, 0, zOffset);
-            }
+//            for (StructurePiece structurePiece : this.pieces) {
+//                structurePiece.move(xOffset, 0, zOffset);
+//            }
+            pieces.get(1).move(-xOffset,0,-zOffset);
 
             this.calculateBoundingBox();
-
-            //用作Debug，查看建筑生成的位置
-            LogManager.getLogger().log(Level.DEBUG, "Rundown House at " +
-                    this.pieces.get(0).getBoundingBox().x0 + " " +
-                    this.pieces.get(0).getBoundingBox().y0 + " " +
-                    this.pieces.get(0).getBoundingBox().z0);
         }
     }
 }

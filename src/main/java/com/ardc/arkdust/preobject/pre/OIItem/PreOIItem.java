@@ -1,9 +1,7 @@
-package com.ardc.arkdust.CodeMigration.pre.OIItem;
+package com.ardc.arkdust.preobject.pre.OIItem;
 
-import com.ardc.arkdust.CodeMigration.pre.PreBlockItem;
-import com.ardc.arkdust.CodeMigration.pre.PreItem;
+import com.ardc.arkdust.preobject.pre.PreItem;
 import com.ardc.arkdust.NewPlayingMethod.OriInfection.IOIItem;
-import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -13,14 +11,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-public class PreOIBlockItem extends PreBlockItem implements IOIItem {
+public class PreOIItem extends PreItem implements IOIItem {
     private final int OILevel;
     private final int damage;
     private final int gDamage;
     private final int playerOIPointAdd;
     private final int guaranteePlayerOIPointAdd;
-    public PreOIBlockItem(Block block,Properties properties, boolean exp, int OILevel, int damage, int gDamage,int playerOIPointAdd,int guaranteePlayerOIPointAdd) {
-        super(block,properties,exp);
+    public PreOIItem(Properties properties, boolean exp,int OILevel,int damage,int gDamage,int playerOIPointAdd,int guaranteePlayerOIPointAdd) {
+        super(properties, exp);
         this.OILevel = OILevel;
         this.damage = damage;
         this.gDamage = gDamage;

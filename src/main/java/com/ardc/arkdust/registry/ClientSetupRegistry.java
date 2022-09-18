@@ -18,7 +18,7 @@ public class ClientSetupRegistry {
     public static void setup(FMLClientSetupEvent event){//FMLClientSetupEvent客户端设置事件，大概是指定
         event.enqueueWork(()->{
             //物品材质变化
-            ItemModelsProperties.register(ItemRegistry.e_t_experiment_data.get(),new ResourceLocation(Utils.MOD_ID,"quantity"),(ItemStack, ClientWorld, LivingEntity)->ItemStack.getCount());
+//            ItemModelsProperties.register(ItemRegistry.e_t_experiment_data.get(),new ResourceLocation(Utils.MOD_ID,"quantity"),(ItemStack, ClientWorld, LivingEntity)->ItemStack.getCount());
 
             //方块实体额外渲染器
             ClientRegistry.bindTileEntityRenderer(TileEntityTypeRegistry.aScreenedTableBE.get(), HangScreenedTableRenderer::new);

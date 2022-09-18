@@ -1,11 +1,12 @@
 package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.CodeMigration.MaterialTier;
-import com.ardc.arkdust.CodeMigration.item.OIRVaccineItem;
-import com.ardc.arkdust.CodeMigration.pre.OIItem.PreOIBlockItem;
-import com.ardc.arkdust.CodeMigration.pre.OIItem.PreOIItem;
-import com.ardc.arkdust.CodeMigration.pre.PreBlockItem;
-import com.ardc.arkdust.CodeMigration.pre.PreItem;
+import com.ardc.arkdust.preobject.item.BaseBlueprintItem;
+import com.ardc.arkdust.preobject.item.OIRVaccineItem;
+import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlockItem;
+import com.ardc.arkdust.preobject.pre.OIItem.PreOIItem;
+import com.ardc.arkdust.preobject.pre.PreBlockItem;
+import com.ardc.arkdust.preobject.pre.PreItem;
 import com.ardc.arkdust.Items.items.Bc;
 import com.ardc.arkdust.Items.items.sugar.*;
 import com.ardc.arkdust.Utils;
@@ -117,6 +118,11 @@ public class ItemRegistry {
 
     //TerraTechMaterial泰拉科技材料 注册
     public static final RegistryObject<Item> muddy_silicon = ITEMS.register("muddy_silicon",()->new PreItem(new Item.Properties()));
+
+    //TerraBlueprintItem泰拉蓝图物品 注册（暂时归于工业）
+    public static final RegistryObject<Item> l1_empty_blueprint = ITEMS.register("l1_empty_blueprint",()->new BaseBlueprintItem(false,1,1));
+    public static final RegistryObject<Item> l1_blank_blueprint = ITEMS.register("l1_blank_blueprint",()->new BaseBlueprintItem(false,1,0));
+
 
 //    //test
 //    public static final RegistryObject<Item> test_block = ITEMS.register("test_block",()->new BlockItem(BlockRegistry.test_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//测试方块

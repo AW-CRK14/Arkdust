@@ -1,12 +1,12 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.CodeMigration.Block.ArkCrystalBlock;
-import com.ardc.arkdust.CodeMigration.Block.CreepOIBlock;
-import com.ardc.arkdust.CodeMigration.Block.HardGlassBlock;
-import com.ardc.arkdust.CodeMigration.pre.OIItem.PreOIBlock;
+import com.ardc.arkdust.preobject.Block.ArkCrystalBlock;
+import com.ardc.arkdust.preobject.Block.CreepOIBlock;
+import com.ardc.arkdust.preobject.Block.HardGlassBlock;
+import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
 import com.ardc.arkdust.Items.blocks.*;
-import com.ardc.arkdust.CodeMigration.Block.terra_industrial.StructureFrameBlock;
-import com.ardc.arkdust.CodeMigration.pre.PreBlock;
+import com.ardc.arkdust.preobject.Block.terra_industrial.StructureFrameBlock;
+import com.ardc.arkdust.preobject.pre.PreBlock;
 import com.ardc.arkdust.Items.blocks.ores.Pau_ore;
 import com.ardc.arkdust.Items.blocks.terra_energy.E_oir_reactor_control_board;
 import com.ardc.arkdust.Enums.TechMaterial;
@@ -53,7 +53,7 @@ public class BlockRegistry {
 
 
 //    //test
-//    public static final RegistryObject<Block> test_block = BLOCKS.register("test_block", Test_block::new);//≤‚ ‘∑ΩøÈ
+    public static final RegistryObject<Block> test_block = BLOCKS.register("test_block", Test_block::new);//≤‚ ‘∑ΩøÈ
 //    public static final RegistryObject<Block> test_block_b = BLOCKS.register("test_block_b", Test_block_b::new);//≤‚ ‘∑ΩøÈ
 //    public static final RegistryObject<Block> test_block_c = BLOCKS.register("test_block_c", Test_block_c::new);//≤‚ ‘∑ΩøÈ
 //    public static final RegistryObject<Block> test_block_d = BLOCKS.register("test_block_d", Test_block_d::new);//≤‚ ‘∑ΩøÈ

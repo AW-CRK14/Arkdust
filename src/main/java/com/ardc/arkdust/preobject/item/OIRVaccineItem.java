@@ -1,6 +1,6 @@
-package com.ardc.arkdust.CodeMigration.item;
+package com.ardc.arkdust.preobject.item;
 
-import com.ardc.arkdust.CodeMigration.pre.PreItem;
+import com.ardc.arkdust.preobject.pre.PreItem;
 import com.ardc.arkdust.NewPlayingMethod.OriInfection.OIMain;
 import com.ardc.arkdust.registry.ModGroupRegistry;
 import net.minecraft.client.util.ITooltipFlag;
