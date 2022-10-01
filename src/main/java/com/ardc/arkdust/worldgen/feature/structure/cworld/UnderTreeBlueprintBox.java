@@ -1,10 +1,16 @@
 package com.ardc.arkdust.worldgen.feature.structure.cworld;
 
+import com.ardc.arkdust.CodeMigration.RunHelper.DirectionHelper;
+import com.ardc.arkdust.CodeMigration.RunHelper.PosHelper;
+import com.ardc.arkdust.CodeMigration.RunHelper.StructureHelper;
 import com.ardc.arkdust.worldgen.feature.ArdStructureAddInfo;
 import com.ardc.arkdust.worldgen.feature.structure_piece.BluePrintBoxPiece;
 import com.ardc.arkdust.worldgen.feature.structure_pool.UndertreeBlueprintPool;
+import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -13,6 +19,7 @@ import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
@@ -23,6 +30,8 @@ import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
+
+import java.util.List;
 
 public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements ArdStructureAddInfo {
 
@@ -45,24 +54,24 @@ public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements
 //    }
 
 
-//    private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
-//            new MobSpawnInfo.Spawners(EntityType.ILLUSIONER, 10, 1, 4),
-//            new MobSpawnInfo.Spawners(EntityType.VINDICATOR, 10, 1, 4)
-//    );
-//
-//    private static final List<MobSpawnInfo.Spawners> STRUCTURE_CREATURES = ImmutableList.of(
-//            new MobSpawnInfo.Spawners(EntityType.SHEEP, 10, 1, 5),
-//            new MobSpawnInfo.Spawners(EntityType.RABBIT, 10, 1, 4)
-//    );
-//    @Override
-//    public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {//生成怪物列表
-//        return STRUCTURE_MONSTERS;
-//    }
-//
-//    @Override
-//    public List<MobSpawnInfo.Spawners> getDefaultCreatureSpawnList() {//生成生物列表
-//        return STRUCTURE_CREATURES;
-//    }
+    private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
+            new MobSpawnInfo.Spawners(EntityType.ILLUSIONER, 10, 1, 4),
+            new MobSpawnInfo.Spawners(EntityType.VINDICATOR, 10, 1, 4)
+    );
+
+    private static final List<MobSpawnInfo.Spawners> STRUCTURE_CREATURES = ImmutableList.of(
+            new MobSpawnInfo.Spawners(EntityType.SHEEP, 10, 1, 5),
+            new MobSpawnInfo.Spawners(EntityType.RABBIT, 10, 1, 4)
+    );
+    @Override
+    public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {//生成怪物列表
+        return STRUCTURE_MONSTERS;
+    }
+
+    @Override
+    public List<MobSpawnInfo.Spawners> getDefaultCreatureSpawnList() {//生成生物列表
+        return STRUCTURE_CREATURES;
+    }
 
 
     @Override
@@ -93,6 +102,11 @@ public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements
         return 2496268;
     }
 
+    @Override
+    public buildMode mode() {
+        return buildMode.OVERWORLD;
+    }
+
 
 //    @Override
 //    public boolean getDefaultRestrictsSpawnsToInside() {
@@ -119,13 +133,13 @@ public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements
              */
             BlockPos centerPos = new BlockPos(x, 0, z);
 
-            /*
-             * 如果你正在制造下届结构,你或许会想将结构生成在岩层上方(大概是指露出地表)
-             * 最好的方法是使用getBaseColumn方法(此方法在chuckGenerator下)来捕捉结构所在的x与z位置的方块竖列.
-             * 然后遍历以找到上方为空气方块的地面并将结构的y值设置为其.
-             * 确保将JigsawManager.addPieces中的布尔值设置为否(指的应该是p_242837_9_)
-             * 以使结构生成在方块坐标的y值而不是在基岩层.
-             */
+//            /*
+//             * 如果你正在制造下届结构,你或许会想将结构生成在岩层上方(大概是指露出地表)
+//             * 最好的方法是使用getBaseColumn方法(此方法在chuckGenerator下)来捕捉结构所在的x与z位置的方块竖列.
+//             * 然后遍历以找到上方为空气方块的地面并将结构的y值设置为其.
+//             * 确保将JigsawManager.addPieces中的布尔值设置为否(指的应该是p_242837_9_)
+//             * 以使结构生成在方块坐标的y值而不是在基岩层.
+//             */
             //IBlockReader blockReader = chunkGenerator.getBaseColumn(blockpos.getX(), blockpos.getZ());
             //结构所要做的就是调用这个方法从而将其变成一个拼图的基础
             JigsawManager.addPieces(
@@ -155,39 +169,53 @@ public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements
                     false, //特殊的村庄边界调整。它……难以描述，将此值设置为false使你的生成结构不会相互交错。
                     // 不相交或完全包含会使子结构保持完好。这样更加简单。
                     true);  //是否放置在地表。将此值设置为false以使结构生成在传入的y位置。在下届生成结构时一定要将此值设为false，否则高度的自动运算会将其放置在顶层基岩上方。
-            this.pieces.add(new BluePrintBoxPiece.Piece(new BlockPos(centerPos.getX(),64,centerPos.getZ())));//TODO 蓝图宝箱结构片区
-
-            // **以下两行是可选的**
-            //
-            // 在这里，你可以使用this.pieces做一些有趣的事
-            // 比如无故将中心五十个方块清除,清除结构重复部分
-            // 或添加其它结构使之只存在一个，诸如此类。但你没有每个片区的方块数据因为它只保存了
-            // 每个片区的大小和位置。方块不久后将会被放入JigsawManager。
-            //
-            // 既然如此，我们使用`piece.offset`(此处使用move)来让结构抬升一格使其生成在地面上方而非水中或沉入土地
-            // 然后使用`piece.getBoundingBox().y0让我们的边界框下降一格以使周围的土地下沉一些而不遮挡住门
-            // 你也可以抬高使结构被埋在地下。This bounding box stuff with land is only for structures
-            // that you added to Structure.NOISE_AFFECTING_FEATURES field handles adding land around the base of structures.
-            //
-            // By lifting the house up by 1 and lowering the bounding box, the land at bottom of house will now be
-            // flush with the surrounding terrain without blocking off the doorstep.
-//            this.pieces.forEach(piece -> piece.move(0, 1, 0));
-//            this.pieces.forEach(piece -> piece.getBoundingBox().y0 -= 1);
-
-            // 在默认情况下，一个结构会产生在起始坐标的一个角上并会围着这个角随机旋转。
-            // and will randomly rotate around that corner, we will center the piece on centerPos instead.
-            // This is so that our structure's start piece is now centered on the water check done in isFeatureChunk.
-            // Whatever the offset done to center the start piece, that offset is applied to all other pieces
-            // so the entire structure is shifted properly to the new spot.
+//            Direction direction = DirectionHelper.RandomDirection(DirectionHelper.direcList.HORIZON_DIRECTION,random);
+//
+//            StructurePiece piece = this.pieces.get(0);
+//            piece.setOrientation(direction);
+//            pieces.set(0, piece);
+            this.pieces.add(new BluePrintBoxPiece.Piece(new BlockPos(centerPos.getX(),64,centerPos.getZ())));
+//            /*以下两行是可选的**
+//
+//             在这里，你可以使用this.pieces做一些有趣的事
+//             比如无故将中心五十个方块清除,清除结构重复部分
+//             或添加其它结构使之只存在一个，诸如此类。但你没有每个片区的方块数据因为它只保存了
+//             每个片区的大小和位置。方块不久后将会被放入JigsawManager。
+//
+//             既然如此，我们使用`piece.offset`(此处使用move)来让结构抬升一格使其生成在地面上方而非水中或沉入土地
+//             然后使用`piece.getBoundingBox().y0让我们的边界框下降一格以使周围的土地下沉一些而不遮挡住门
+//             你也可以抬高使结构被埋在地下。This bounding box stuff with land is only for structures
+//             that you added to Structure.NOISE_AFFECTING_FEATURES field handles adding land around the base of structures.
+//
+//             By lifting the house up by 1 and lowering the bounding box, the land at bottom of house will now be
+//             flush with the surrounding terrain without blocking off the doorstep.
+//             this.pieces.forEach(piece -> piece.move(0, 1, 0));
+//             this.pieces.forEach(piece -> piece.getBoundingBox().y0 -= 1);
+//
+//             在默认情况下，一个结构会产生在起始坐标的一个角上并会围着这个角随机旋转。
+//             and will randomly rotate around that corner, we will center the piece on centerPos instead.
+//             This is so that our structure's start piece is now centered on the water check done in isFeatureChunk.
+//             Whatever the offset done to center the start piece, that offset is applied to all other pieces
+//             so the entire structure is shifted properly to the new spot.
+//             this.pieces.get(0).setOrientation();
+//             this.pieces.get(0).getOrientation();*/
             Vector3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
-            System.out.println("piece v3d" + structureCenter);
-            int xOffset = centerPos.getX() - structureCenter.getX();
-            int zOffset = centerPos.getZ() - structureCenter.getZ();
+//            /*System.out.println("Structure 0 test:\nRotation:" + this.pieces.get(0).getRotation() + "\nDirection:" + this.pieces.get(0).getOrientation());
+//            System.out.println("Structure 1 test:\nRotation:" + this.pieces.get(1).getRotation() + "\nDirection:" + this.pieces.get(1).getOrientation());
+//            System.out.println("piece v3d" + structureCenter);
+//            int xOffset = centerPos.getX() - structureCenter.getX();
+//            int zOffset = centerPos.getZ() - structureCenter.getZ();
+//            System.out.println("offSetPos:" + xOffset + "," + zOffset);
 //            for (StructurePiece structurePiece : this.pieces) {
 //                structurePiece.move(xOffset, 0, zOffset);
 //            }
-            pieces.get(1).move(-xOffset,0,-zOffset);
-
+//            pieces.get(1).move(-3,0,-3);
+//            pieces.get(1).move(-xOffset,0,-zOffset);
+//            System.out.println(pieces.get(0).getRotation());*/
+            PosHelper.PosMoveBag bag = DirectionHelper.PosDirectionRun(centerPos,structureCenter,new PosHelper.PosMoveBag(3,0,3),false);
+            bag.pieceMove(pieces.get(1));
+//            System.out.println("定义的方向:" + direction + "\n计算的方向:" + bag.direction + "\npiece0结果:" + pieces.get(0).getOrientation() + "\n起始点坐标:" + centerPos + "\n中点坐标:" +structureCenter);
+//            this.pieces.get(0).addChildren();
             this.calculateBoundingBox();
         }
     }

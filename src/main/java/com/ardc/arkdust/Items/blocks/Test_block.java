@@ -1,7 +1,7 @@
 package com.ardc.arkdust.Items.blocks;
 
 import com.ardc.arkdust.CodeMigration.Material;
-import com.ardc.arkdust.CodeMigration.resourcelocation.ArdLootTable;
+import com.ardc.arkdust.CodeMigration.resourcelocation.LootTable;
 import com.ardc.arkdust.preobject.pre.PreBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -29,7 +29,7 @@ public class Test_block extends PreBlock {
             TileEntity tileEntity = worldIn.getBlockEntity(pos.above());
             if(tileEntity instanceof ChestTileEntity){
                 Random r = new Random();
-                ((ChestTileEntity) tileEntity).setLootTable(ArdLootTable.CW_BLUEPRINT_BOX,r.nextLong());
+                ((ChestTileEntity) tileEntity).setLootTable(LootTable.CW_BLUEPRINT_BOX,r.nextLong());
             }
         }
         return ActionResultType.SUCCESS;

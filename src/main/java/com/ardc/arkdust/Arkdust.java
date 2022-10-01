@@ -18,9 +18,9 @@ public class Arkdust {
     public Arkdust(){
         final IEventBus BUS = FMLJavaModLoadingContext.get().getModEventBus();
         ItemRegistry.ITEMS.register(BUS);//items类注册入mod主线
-        BlockRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());//blocks类注册入mod主线
-        TileEntityTypeRegistry.TE.register(FMLJavaModLoadingContext.get().getModEventBus());//方块实体注册入mod主线
-        StructureRegistry.STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        BlockRegistry.BLOCKS.register(BUS);//blocks类注册入mod主线
+        TileEntityTypeRegistry.TE.register(BUS);//方块实体注册入mod主线
+        StructureRegistryHelper.STRUCTURES.register(BUS);//
         BUS.addListener(this::ardStructureRegistrySetup);
         MinecraftForge.EVENT_BUS.register(this);
 //        SurfaceBuilderInit.SURFACE_BUILDER.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -28,7 +28,7 @@ public class Arkdust {
 
     private void ardStructureRegistrySetup(final FMLCommonSetupEvent event){
         StructureRegistryHelper.DimensionSettingRegistry();
-        StructureRegistryHelper.JigsawRegistryList();
+        StructureRegistry.JigsawRegistryList();
         ConfiguredStructures.registryCfedStructure();
     }
 }

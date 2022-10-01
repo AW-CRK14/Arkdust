@@ -1,5 +1,6 @@
-package com.ardc.arkdust.registry;
+package com.ardc.arkdust.CodeMigration.resourcelocation;
 
+import com.ardc.arkdust.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
@@ -9,7 +10,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
-public class TagRegistry
+public class Tag
 {
     public static void init ()
     {
@@ -24,10 +25,11 @@ public class TagRegistry
 
 //        public static final net.minecraftforge.common.Tags.IOptionalNamedTag<Item> BARRELS = tag("barrels");
         public static final Tags.IOptionalNamedTag<Block> ALLOW_ORIROCK_SPREAD = tag("allow_originium_spread");
+        public static final Tags.IOptionalNamedTag<Block> NATURAL_BLOCK = tag("natural_blocks");
 
         private static net.minecraftforge.common.Tags.IOptionalNamedTag<Block> tag(String name)
         {
-            return BlockTags.createOptional(new ResourceLocation("arkdust", name));
+            return BlockTags.createOptional(new ResourceLocation(Utils.MOD_ID, name));
         }
     }
 
@@ -40,7 +42,7 @@ public class TagRegistry
 
         private static net.minecraftforge.common.Tags.IOptionalNamedTag<Item> tag(String name)
         {
-            return ItemTags.createOptional(new ResourceLocation("arkdust", name));
+            return ItemTags.createOptional(new ResourceLocation(Utils.MOD_ID, name));
         }
     }
 
@@ -52,7 +54,7 @@ public class TagRegistry
 
         private static net.minecraftforge.common.Tags.IOptionalNamedTag<Fluid> tag(String name)
         {
-            return FluidTags.createOptional(new ResourceLocation("arkdust", name));
+            return FluidTags.createOptional(new ResourceLocation(Utils.MOD_ID, name));
         }
     }
 }

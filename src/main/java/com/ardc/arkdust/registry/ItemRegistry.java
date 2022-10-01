@@ -1,6 +1,7 @@
 package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.CodeMigration.MaterialTier;
+import com.ardc.arkdust.Items.items.EnderEnergyRadar;
 import com.ardc.arkdust.preobject.item.BaseBlueprintItem;
 import com.ardc.arkdust.preobject.item.OIRVaccineItem;
 import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlockItem;
@@ -92,10 +93,12 @@ public class ItemRegistry {
     public static final RegistryObject<Item> hang_screened_table = ITEMS.register("hang_screened_table",()->new PreBlockItem(BlockRegistry.hang_screened_table.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//简易筛矿台
     public static final RegistryObject<Item> netherite_nugget = ITEMS.register("netherite_nugget", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//下届合金粒
 //    public static final RegistryObject<Item> oitest_item = ITEMS.register("oitest_item", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,3,0,2,0));//测试物品
-    public static final RegistryObject<Item> c_originium_block = ITEMS.register("c_originium_block", ()->new PreOIBlockItem(BlockRegistry.c_originium_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,2,0,5,2));//测试物品
-    public static final RegistryObject<Item> d_originium_block = ITEMS.register("d_originium_block", ()->new PreOIBlockItem(BlockRegistry.d_originium_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,2,0,3,0));//测试物品
-    public static final RegistryObject<Item> l1_oir_vaccine_a = ITEMS.register("l1_oir_vaccine_a", ()->new OIRVaccineItem(false,1,0.8F));//测试物品
-    public static final RegistryObject<Item> l2_oir_vaccine_a = ITEMS.register("l2_oir_vaccine_a", ()->new OIRVaccineItem(false,2,1.2F));//测试物品
+    public static final RegistryObject<Item> c_originium_block = ITEMS.register("c_originium_block", ()->new PreOIBlockItem(BlockRegistry.c_originium_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,2,0,5,2));//c型活性源石
+    public static final RegistryObject<Item> d_originium_block = ITEMS.register("d_originium_block", ()->new PreOIBlockItem(BlockRegistry.d_originium_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,2,0,3,0));//d型失活源石
+    public static final RegistryObject<Item> l1_oir_vaccine_a = ITEMS.register("l1_oir_vaccine_a", ()->new OIRVaccineItem(false,1,0.8F));//1-1源石疫苗
+    public static final RegistryObject<Item> l2_oir_vaccine_a = ITEMS.register("l2_oir_vaccine_a", ()->new OIRVaccineItem(false,2,1.2F));//2-1源石疫苗
+    public static final RegistryObject<Item> broken_ender_energy_radar = ITEMS.register("broken_ender_energy_radar", ()->new EnderEnergyRadar(false));//损坏末影雷达
+    public static final RegistryObject<Item> ender_energy_radar = ITEMS.register("ender_energy_radar", ()->new EnderEnergyRadar(true));//末影雷达
 
 
     //TerraTools泰拉工具工具 注册
@@ -123,6 +126,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> l1_empty_blueprint = ITEMS.register("l1_empty_blueprint",()->new BaseBlueprintItem(false,1,1));
     public static final RegistryObject<Item> l1_blank_blueprint = ITEMS.register("l1_blank_blueprint",()->new BaseBlueprintItem(false,1,0));
 
+
+    //辅助性方块注册
+    public static final RegistryObject<Item> chaotic_air = ITEMS.register("chaotic_air",()->new PreBlockItem(BlockRegistry.chaotic_air.get(), new Item.Properties()));
 
 //    //test
 //    public static final RegistryObject<Item> test_block = ITEMS.register("test_block",()->new BlockItem(BlockRegistry.test_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//测试方块

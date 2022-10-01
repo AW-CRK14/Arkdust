@@ -6,6 +6,7 @@ import net.minecraft.block.material.PushReaction;
 public class Material{
 
     public static final net.minecraft.block.material.Material TEST1 = (new Builder(MaterialColor.COLOR_BLUE)).flammable().build();
+    public static final net.minecraft.block.material.Material STATIC_STRUCTURE_AIR = (new Builder(MaterialColor.NONE)).noCollider().notSolidBlocking().nonSolid().replaceable().build();
     public static final net.minecraft.block.material.Material TEST2 = (new Builder(MaterialColor.COLOR_ORANGE)).flammable().build();
     public static final net.minecraft.block.material.Material TEST3 = (new Builder(MaterialColor.COLOR_GREEN)).build();
     public static final net.minecraft.block.material.Material TEST4 = (new Builder(MaterialColor.COLOR_RED)).replaceable().build();
