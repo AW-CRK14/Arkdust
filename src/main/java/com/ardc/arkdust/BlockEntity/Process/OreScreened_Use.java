@@ -36,7 +36,7 @@ public class OreScreened_Use {
         thisItem = aplayer.getMainHandItem().getItem();//玩家手上的物品
 //        System.out.printf("%nuse running:    hasItem? ->" + blockBE.hasItem);
         if (Screen.hasControlDown()){//测试用：输出state内容
-            System.out.println(state);
+//            System.out.println(state);
             return ActionResultType.SUCCESS;
         }
         if (blockBE.hasItem) {//创建掉落物于此方块上方

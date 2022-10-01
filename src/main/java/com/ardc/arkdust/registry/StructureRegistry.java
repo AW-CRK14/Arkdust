@@ -1,33 +1,60 @@
 package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.Utils;
+import com.ardc.arkdust.worldgen.feature.ConfiguredStructures;
+import com.ardc.arkdust.worldgen.feature.StructureRegistryHelper;
+import com.ardc.arkdust.worldgen.feature.structure.cworld.OldHouse0;
+import com.ardc.arkdust.worldgen.feature.structure.cworld.PixArkLibrary;
 import com.ardc.arkdust.worldgen.feature.structure.cworld.UnderTreeBlueprintBox;
+import com.ardc.arkdust.worldgen.feature.structure_pool.OldHouse0Pool;
+import com.ardc.arkdust.worldgen.feature.structure_pool.UndertreeBlueprintPool;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
+import net.minecraft.world.gen.feature.jigsaw.JigsawPatternRegistry;
 import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+@Mod.EventBusSubscriber(modid = Utils.MOD_ID)
 public class StructureRegistry {
-    public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Utils.MOD_ID);
 
-    public static final RegistryObject<Structure<NoFeatureConfig>> UNDERTREE_BLUEPRINT = setup("undertree_blueprint",new UnderTreeBlueprintBox(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> UNDERTREE_BLUEPRINT = StructureRegistryHelper.setup("undertree_blueprint",new UnderTreeBlueprintBox(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> OLD_HOUSE_0 = StructureRegistryHelper.setup("old_house_0",new OldHouse0(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> PIXARK_LIBRARY = StructureRegistryHelper.setup("pixark_library",new PixArkLibrary(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
 
-    public static <F extends Structure<?>> RegistryObject<F> setup(String name, F structure,GenerationStage.Decoration decoration) {
-        Structure.STRUCTURES_REGISTRY.put(Utils.MOD_ID + ":" + name, structure);
-        Structure.STEP.put(structure, decoration);
-        return STRUCTURES.register(name,()->structure);
+    public static final List<JigsawPattern> jigsawPatternList = Arrays.asList(UndertreeBlueprintPool.pool, OldHouse0Pool.pool_broken,OldHouse0Pool.pool_common);
+
+    public static void JigsawRegistryList(){
+        for (JigsawPattern p : jigsawPatternList) {
+            JigsawPatternRegistry.register(p);
+        }
     }
-    //                ImmutableMap.<Structure<?>, StructureSeparationSettings>builder().putAll(DimensionStructuresSettings.DEFAULTS).put(structure, sSSettings).build();
-//        WorldGenRegistries.NOISE_GENERATOR_SETTINGS.entrySet().forEach(settings -> {
-//            Map<Structure<?>, StructureSeparationSettings> structureMap = settings.getValue().structureSettings().structureConfig();
-//
-    /*
-     * There are very few mods that relies on seeing your structure in the noise settings registry before the world is made.
-     *
-     * You may see some mods add their spacings to DimensionSettings.BUILTIN_OVERWORLD instead of the NOISE_GENERATOR_SETTINGS loop below but
-     * that field only applies for the default overworld and won't add to other worldtypes or dimensions (like amplified or Nether).
-     * So yeah, don't do DimensionSettings.BUILTIN_OVERWORLD. Use the NOISE_GENERATOR_SETTINGS loop below instead if you must.
-     */
+
+    @SubscribeEvent
+    public static void generateStructurePrepare(BiomeLoadingEvent event){
+        if(event.getName() != null) {
+//            RegistryKey<Biome> biomeKey = RegistryKey.create(Registry.BIOME_REGISTRY, event.getName());
+            float tem = event.getClimate().temperature;
+            if(tem >=0.2 && tem <= 1.25 && !event.getCategory().equals(Biome.Category.OCEAN) && !event.getCategory().equals(Biome.Category.RIVER)){//树下蓝图箱生成依赖于群系温度
+                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_undertree_blueprint);//等价的
+//                event.getGeneration().getStructures().add(()->ConfiguredStructures.cfed_undertree_blueprint);
+            }
+            if(event.getCategory().equals(Biome.Category.PLAINS)){//旧屋0结构
+                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_old_house_0);
+            }
+            if(event.getCategory().equals(Biome.Category.DESERT) || event.getCategory().equals(Biome.Category.PLAINS) || event.getCategory().equals(Biome.Category.FOREST) || event.getCategory().equals(Biome.Category.SAVANNA)){//像素方舟图书馆结构
+                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_pixark_library);
+            }
+        }
+    }
 }

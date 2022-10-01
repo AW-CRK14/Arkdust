@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_all",
+  "painter": "landis",
+  "textures": {
+    "all": "arkdust:blocks/ot/chaotic_air",
+    "particle":"arkdust:blocks/ot/chaotic_air"
+  }
+}

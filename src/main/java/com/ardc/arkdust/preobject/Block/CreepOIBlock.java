@@ -2,7 +2,7 @@ package com.ardc.arkdust.preobject.Block;
 
 import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
 import com.ardc.arkdust.registry.BlockRegistry;
-import com.ardc.arkdust.registry.TagRegistry;
+import com.ardc.arkdust.CodeMigration.resourcelocation.Tag;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +28,7 @@ public class CreepOIBlock extends PreOIBlock {
         Random r = new Random();
         int count = r.nextInt(2);
         for(BlockPos posIn : posList) {
-            if (TagRegistry.Blocks.ALLOW_ORIROCK_SPREAD.contains(world.getBlockState(posIn).getBlock())) {
+            if (Tag.Blocks.ALLOW_ORIROCK_SPREAD.contains(world.getBlockState(posIn).getBlock())) {
                 count +=1;
                 if(randomBoolean(randomInt))
                     world.setBlock(posIn, this.defaultBlockState(), 3);

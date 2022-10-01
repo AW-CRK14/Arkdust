@@ -3,6 +3,7 @@ package com.ardc.arkdust.registry;
 import com.ardc.arkdust.preobject.Block.ArkCrystalBlock;
 import com.ardc.arkdust.preobject.Block.CreepOIBlock;
 import com.ardc.arkdust.preobject.Block.HardGlassBlock;
+import com.ardc.arkdust.preobject.Block.StructureAirBlock;
 import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
 import com.ardc.arkdust.Items.blocks.*;
 import com.ardc.arkdust.preobject.Block.terra_industrial.StructureFrameBlock;
@@ -12,10 +13,7 @@ import com.ardc.arkdust.Items.blocks.terra_energy.E_oir_reactor_control_board;
 import com.ardc.arkdust.Enums.TechMaterial;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.model.modelblock.LifeBlockModel;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.GravelBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraftforge.common.ToolType;
@@ -49,6 +47,7 @@ public class BlockRegistry {
 
     //‰÷»æ”√∑ΩøÈ
     public static final RegistryObject<Block> life_model = BLOCKS.register("life_model", LifeBlockModel::new);
+    public static final RegistryObject<Block> chaotic_air = BLOCKS.register("chaotic_air", ()->new StructureAirBlock(AbstractBlock.Properties.of(com.ardc.arkdust.CodeMigration.Material.STATIC_STRUCTURE_AIR).noCollission()));
 //    public static final RegistryObject<Block> projection_block = BLOCKS.register("projection_block", ProjectionBlock::new);
 
 

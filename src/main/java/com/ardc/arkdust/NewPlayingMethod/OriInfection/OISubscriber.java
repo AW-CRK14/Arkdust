@@ -4,7 +4,7 @@ import com.ardc.arkdust.CodeMigration.resourcelocation.Damage;
 import com.ardc.arkdust.CodeMigration.RunHelper.AdvancementHelper;
 import com.ardc.arkdust.CodeMigration.RunHelper.PosHelper;
 import com.ardc.arkdust.registry.BlockRegistry;
-import com.ardc.arkdust.registry.TagRegistry;
+import com.ardc.arkdust.CodeMigration.resourcelocation.Tag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -74,7 +74,7 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
                 for (int y = -2; y <= 2; y++) {
                     for (int z = -2; z <= 2; z++) {
                         BlockPos pos = new BlockPos(posX + x, posY + y, posZ + z);//创建新的方块位置
-                        if (TagRegistry.Blocks.ALLOW_ORIROCK_SPREAD.contains(entity.level.getBlockState(pos).getBlock())) {//如果此坐标为源石允许的生成点
+                        if (Tag.Blocks.ALLOW_ORIROCK_SPREAD.contains(entity.level.getBlockState(pos).getBlock())) {//如果此坐标为源石允许的生成点
                             Random r = new Random();//创建新的随机数并测试是否在此处创建源石
                             if (r.nextInt(32) < 1) {
                                 entity.level.setBlock(pos, BlockRegistry.c_originium_block.get().defaultBlockState(), 3);
@@ -102,7 +102,7 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
         int blockCount = world.getDifficulty().getId() + 1;
         for (int testCount = blockCount * 2 + 2; testCount >= 0; testCount--) {
             BlockPos newPos = PosHelper.getRandomPosNearPos(pos, 16, 16, 4, 128);
-            if (TagRegistry.Blocks.ALLOW_ORIROCK_SPREAD.contains(world.getBlockState(newPos).getBlock())) {
+            if (Tag.Blocks.ALLOW_ORIROCK_SPREAD.contains(world.getBlockState(newPos).getBlock())) {
                 world.setBlock(newPos, BlockRegistry.c_originium_block.get().defaultBlockState(), 3);
                 System.out.println(newPos);
                 if (blockCount <= 0) testCount = -1;

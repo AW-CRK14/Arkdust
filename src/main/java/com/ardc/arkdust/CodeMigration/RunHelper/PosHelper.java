@@ -1,7 +1,9 @@
 package com.ardc.arkdust.CodeMigration.RunHelper;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.gen.feature.structure.StructurePiece;
 
 import java.util.Random;
 
@@ -18,5 +20,72 @@ public class PosHelper {
         yMax = Math.min(Math.max(yMax,yMin+4),254);
         int y = r.nextInt(yMax-yMin+1)+yMin;//yº∆À„
         return new BlockPos(pos.getX()+xAdd,y,pos.getZ()+zAdd);
+    }
+
+    public static long posToRandomSeed (BlockPos pos){
+        Random r = new Random();
+        r.setSeed((long) pos.getX() *pos.getX()-pos.getY()+ (long) pos.getZ() *pos.getY()*pos.getX());
+        return r.nextLong();
+    }
+
+    public static Random posToRandom (BlockPos pos){
+        Random r = new Random();
+        r.setSeed(posToRandomSeed(pos));
+        return r;
+    }
+
+    public static int limitY(int y){
+        return Math.max(1,Math.min(y,256));
+    }
+
+    public static class PosMoveBag{
+        public int x;
+        public int y;
+        public int z;
+        public Direction direction;
+
+        public PosMoveBag(int x,int y,int z){
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.direction = Direction.NORTH;
+        }
+
+        public PosMoveBag(int x,int y,int z,Direction direction){
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.direction = direction;
+        }
+
+        public void setX(int x){
+            this.x = x;
+        }
+
+        public void setY(int y){
+            this.y = y;
+        }
+
+        public void setZ(int z){
+            this.z = z;
+        }
+
+        public void setDirection(Direction direction){
+            this.direction = direction;
+        }
+
+        public BlockPos posMove(BlockPos pos){
+            return pos.offset(this.x,limitY(pos.getY() + this.y),this.z);
+        }
+
+        public void pieceMove(StructurePiece piece){
+            piece.move(this.x,this.y,this.z);
+        }
+
+        public void xzExchange(){
+            int a = this.x;
+            this.x = this.z;
+            this.z = a;
+        }
     }
 }
