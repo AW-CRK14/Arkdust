@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "facing=north": { "model": "arkdust:block/lay0_white_skeleton_block" },
+    "facing=south": { "model": "arkdust:block/lay0_white_skeleton_block","y": 180 },
+    "facing=east": { "model": "arkdust:block/lay0_white_skeleton_block","y": 90 },
+    "facing=west": { "model": "arkdust:block/lay0_white_skeleton_block","y": 270}
+  }
+}
+

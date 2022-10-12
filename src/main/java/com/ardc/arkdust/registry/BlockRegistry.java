@@ -1,9 +1,6 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.preobject.Block.ArkCrystalBlock;
-import com.ardc.arkdust.preobject.Block.CreepOIBlock;
-import com.ardc.arkdust.preobject.Block.HardGlassBlock;
-import com.ardc.arkdust.preobject.Block.StructureAirBlock;
+import com.ardc.arkdust.preobject.Block.*;
 import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
 import com.ardc.arkdust.Items.blocks.*;
 import com.ardc.arkdust.preobject.Block.terra_industrial.StructureFrameBlock;
@@ -16,6 +13,7 @@ import com.ardc.arkdust.model.modelblock.LifeBlockModel;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -37,6 +35,12 @@ public class BlockRegistry {
     public static final RegistryObject<Block> blackstone_medical_point = BLOCKS.register("blackstone_medical_point", BlackstoneMedicalPoint::new);//黑石基座
     public static final RegistryObject<Block> c_originium_block = BLOCKS.register("c_originium_block", ()->new CreepOIBlock(AbstractBlock.Properties.of(Material.METAL).randomTicks().sound(SoundType.METAL).strength(1,2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(),2,3,3,true));//c源石
     public static final RegistryObject<Block> d_originium_block = BLOCKS.register("d_originium_block", ()->new PreOIBlock(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(2,5).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(),1,0,2));//d源石
+    public static final RegistryObject<Block> sit_white_skeleton_block = BLOCKS.register("sit_white_skeleton_block", ()->new SkeletonBlock(SkeletonBlock.State.STAND,false));//坐地白色骷髅
+    public static final RegistryObject<Block> lay0_white_skeleton_block = BLOCKS.register("lay0_white_skeleton_block", ()->new SkeletonBlock(SkeletonBlock.State.LAY,false));//白色骨架
+//    public static final RegistryObject<Block> tombstone_1_1 = BLOCKS.register("tombstone_1_1", ()->new TombstoneBlock(false));//墓碑方块1-1
+    public static final RegistryObject<Block> tombstone_2_1 = BLOCKS.register("tombstone_2_1", ()->new TombstoneBlock(true,VoxelShapes.box(0,0,0.375F,1,0.75F,0.625F), VoxelShapes.box(0.375F,0,0,0.75F,0.875F,1)));//墓碑方块2-1
+    public static final RegistryObject<Block> tombstone_2_2 = BLOCKS.register("tombstone_2_2", ()->new TombstoneBlock(true,VoxelShapes.box(0,0,0.125F,1,0.625F,0.875F), VoxelShapes.box(0.125F,0,0,0.625F,0.875F,1)));//墓碑方块2-2
+    public static final RegistryObject<Block> tombstone_2_3 = BLOCKS.register("tombstone_2_3", ()->new TombstoneBlock(true,VoxelShapes.box(0.125F,0,0.25F,0.875F,0.375F,0.75F), VoxelShapes.box(0.25F,0,0.125F,0.75F,0.375F,0.875F)));//墓碑方块2-3
 
     //泰拉能源
     public static final RegistryObject<Block> e_oir_reactor_control_board = BLOCKS.register("e_oir_reactor_control_board", E_oir_reactor_control_board::new);//E类源石反应堆控制方块

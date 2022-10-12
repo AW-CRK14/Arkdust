@@ -28,4 +28,8 @@ public class BlockPosHelper {
 //    public static List<BlockPos> getStructureMarkPoint(MutableBoundingBox box, boolean sideCenterPoint, boolean vertexPoint) {
 //        return getCenterAndSquareVertexPos();
 //    }
+
+    public static String posInfo(BlockPos pos){
+        return "BlockPos:[" + pos.getX() + "," + pos.getY() + "," + pos.getZ() +"]";
+    }
 }

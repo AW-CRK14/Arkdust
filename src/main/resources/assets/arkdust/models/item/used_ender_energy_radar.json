@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "arkdust:item/wmaterial/used_ender_energy_radar"
+  }
+}

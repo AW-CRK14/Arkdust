@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "arkdust:item/oiitem/l1_oir_vaccine_a"
+  }
+}

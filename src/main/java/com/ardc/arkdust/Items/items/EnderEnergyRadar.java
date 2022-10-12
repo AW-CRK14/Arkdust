@@ -32,7 +32,7 @@ public class EnderEnergyRadar extends PreItem {
         }else if(itemstack.getDamageValue() == 0){
             list.add(new TranslationTextComponent("explain.special.item.arkdust.ender_energy_radar.new").withStyle(TextFormatting.DARK_GREEN));
         }else{
-            list.add(new TranslationTextComponent("explain.special.item.arkdust.ender_energy_radar.used",itemstack.getDamageValue()));
+            list.add(new TranslationTextComponent("explain.special.item.arkdust.ender_energy_radar.used"));
         }
     }
 

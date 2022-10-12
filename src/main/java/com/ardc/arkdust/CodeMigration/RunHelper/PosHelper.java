@@ -5,6 +5,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 
+import java.util.List;
 import java.util.Random;
 
 public class PosHelper {
@@ -80,6 +81,10 @@ public class PosHelper {
 
         public void pieceMove(StructurePiece piece){
             piece.move(this.x,this.y,this.z);
+        }
+
+        public void pieceMove(List<StructurePiece> pieceList){
+            pieceList.forEach(piece -> piece.move(this.x,this.y,this.z));
         }
 
         public void xzExchange(){

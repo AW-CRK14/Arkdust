@@ -25,20 +25,18 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.*;
-import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.gen.feature.template.*;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 import java.util.Random;
 
-public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStructureAddInfo {
+public class CWGrave extends Structure<NoFeatureConfig> implements ArdStructureAddInfo {
 
-    public static final ResourceLocation BUILDING_NBT_OLD = new ResourceLocation(Utils.MOD_ID,"cworld/pixark_library/library");
-    public static final ResourceLocation BUILDING_NBT_NEW = new ResourceLocation(Utils.MOD_ID,"cworld/pixark_library/library2");
+    public static final ResourceLocation[] SMALL_GRAVE = new ResourceLocation[]{new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_1"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_2"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_3")};
+    public static final ResourceLocation[] LARGE_GRAVE = new ResourceLocation[]{new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_4")};
 
-    public PixArkLibrary(Codec<NoFeatureConfig> p_i231997_1_) {
+    public CWGrave(Codec<NoFeatureConfig> p_i231997_1_) {
         super(p_i231997_1_);
     }
 
@@ -51,26 +49,27 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
     protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider biomeSource,
                                      long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ,
                                      Biome biome, ChunkPos chunkPos, NoFeatureConfig featureConfig) {
-        BlockPos centerOfChunk = new BlockPos((chunkX << 4), 0, (chunkZ << 4));
+        BlockPos centerOfChunk = new BlockPos(chunkX << 4, 0, chunkZ << 4);
 
-        return StructureHelper.isEachPlaceAvailable(chunkGenerator, Heightmap.Type.WORLD_SURFACE_WG,4,
-                BlockPosHelper.getCenterAndSquareVertexPos(centerOfChunk,16,false,true)
-        ) && biome.getBaseTemperature() <= 1.2F;//获取此位置是否为流体（防止生成在水上）
+        return StructureHelper.isEachPlaceAvailable(chunkGenerator, Heightmap.Type.WORLD_SURFACE_WG,2,
+                BlockPosHelper.getCenterAndSquareVertexPos(centerOfChunk,8,false,true)
+        );//获取此位置是否为流体（防止生成在水上）
+
     }
 
     @Override
     public int spacing() {
-        return 360;
+        return 70;
     }
 
     @Override
     public int separation() {
-        return 175;
+        return 20;
     }
 
     @Override
     public int salt() {
-        return 48948923;
+        return 24801274;
     }
 
     @Override
@@ -95,10 +94,8 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
             int x = chunkX * 16;
             int z = chunkZ * 16;
             int landHeight = chunkGenerator.getBaseHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
-            BlockPos centerPos = new BlockPos(x,Math.max(landHeight-3,1),z);
+            BlockPos centerPos = new BlockPos(x,Math.max(landHeight-2,1),z);
             addChildren(templateManagerIn,this.pieces,random,centerPos);
-//            System.out.println("piece add test:");
-//            PrintHelper.printList(this.pieces);
             this.calculateBoundingBox();
             StructureHelper.movePieceToCenter(centerPos,this.boundingBox,this.pieces);
             this.calculateBoundingBox();
@@ -106,9 +103,8 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
     }
 
     public static void addChildren(TemplateManager templateManager, List<StructurePiece> pieceList, Random random, BlockPos centerPos) {
-        Piece piece = new Piece(templateManager,random.nextBoolean() ? BUILDING_NBT_NEW : BUILDING_NBT_OLD,centerPos, Rotation.getRandom(random));
-        piece.setOrientation(Direction.SOUTH);
-//        DirectionHelper.PosDirectionRun(centerPos,piece.getBoundingBox().getCenter(),new PosHelper.PosMoveBag(-16,0,-16),false).pieceMove(piece);
+        Piece piece = new Piece(templateManager,random.nextFloat() >= 0.15F ? SMALL_GRAVE : LARGE_GRAVE,centerPos, Rotation.getRandom(random),random);
+//        Piece piece = new Piece(templateManager, LARGE_GRAVE,centerPos, Rotation.getRandom(random),random);
         pieceList.add(piece);
     }
 
@@ -117,24 +113,9 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
         public final ResourceLocation templateLocation;
         public final Rotation rotation;
 
-        /**
-         * 基本思路：
-         * 传参部分： 传入结构的nbt路径(modid:structures/...),通过TemplateManager生成Template数据保存(使用setup方法)同时可以设置方向等
-         *          templatePosition用于存储结构添加的位置。
-         *          同时将数据存入nbt包中，在另一构造函数中读取nbt以获取数据。
-         *          其中Template类的template存储nbt模板数据，PlacementSettings的placeSetting存储诸如旋转，镜像的数据
-         *          在官方给出的其他使用了的地方，通常使用了一套方法来使其高效运行：如下方loadTemplate
-         * 再处理部分：handleDataMarker用于对加载的每个方块再次进行数据处理。
-         *          值得注意的是，此方法通常不会被触发。你需要在你的结构中部署 结构方块-数据模式 以存储对应的数据标签
-         *          之后postProcess方法才会调用此方法，传入的首个参数string即为结构方块存储的数据符
-         *          你可以将它替换成你需要的方块，比如宝箱之类的，也可以用于生成位置固定的实体
-         *          同时，原来的数据标签结构方块将被移除
-         *          如上，我们使用addChildren来方便地处理添加结构的事……虽然说并没有很方便的亚子。注意，这个方法同时也在StructurePiece中有，只是传参不同所以没有显示覆写。
-         *          另外，别忘了calculateBoundingBox()！
-         *       */
-        public Piece(TemplateManager templateManager, ResourceLocation structurePlace, BlockPos addPos, Rotation aRotation) {
-            super(StructurePieceTypeAdd.PIX_ARK_LIBRARY, 3);
-            this.templateLocation = structurePlace;
+        public Piece(TemplateManager templateManager, ResourceLocation[] structurePlace, BlockPos addPos, Rotation aRotation, Random random) {
+            super(StructurePieceTypeAdd.CW_GRAVE, 3);
+            this.templateLocation = structurePlace[random.nextInt(structurePlace.length)];
             this.templatePosition = addPos;
             this.rotation = aRotation;
             this.loadTemplate(templateManager);
@@ -147,11 +128,16 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
         }
 
         public Piece(TemplateManager templateManager, CompoundNBT nbt) {
-            super(StructurePieceTypeAdd.PIX_ARK_LIBRARY, nbt);
+            super(StructurePieceTypeAdd.CW_GRAVE, nbt);
             this.templateLocation = new ResourceLocation(nbt.getString("Template"));
             this.rotation = Rotation.valueOf(nbt.getString("Rot"));
             this.loadTemplate(templateManager);
 //            System.out.println("piece loading test\nnbt:" + nbt.toString() + "\ntemplateManager:" + templateManager.toString() + "\ntemplate location:" + templateLocation + "\ntemplate:" + template + "\nsetting:" + placeSettings);
+        }
+
+        public boolean postProcess(ISeedReader p_230383_1_, StructureManager p_230383_2_, ChunkGenerator p_230383_3_, Random p_230383_4_, MutableBoundingBox p_230383_5_, ChunkPos p_230383_6_, BlockPos p_230383_7_) {
+            this.placeSettings.addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_AND_AIR);
+            return super.postProcess(p_230383_1_, p_230383_2_, p_230383_3_, p_230383_4_, p_230383_5_, p_230383_6_, p_230383_7_);
         }
 
         private void loadTemplate(TemplateManager templateManager) {
@@ -160,30 +146,18 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
             this.setup(template, this.templatePosition, placementsettings);
         }
 
-        public boolean postProcess(ISeedReader p_230383_1_, StructureManager p_230383_2_, ChunkGenerator p_230383_3_, Random p_230383_4_, MutableBoundingBox p_230383_5_, ChunkPos p_230383_6_, BlockPos p_230383_7_) {
-//            System.out.println("PostProcess load:\nISeedReader:" + p_230383_1_ +"\nChuckGenerator:" + p_230383_3_ + "\nMutableBoundingBox:" + p_230383_5_ + "\nPos:" + p_230383_6_ + "  " + p_230383_7_);
-            return super.postProcess(p_230383_1_,p_230383_2_,p_230383_3_,p_230383_4_,p_230383_5_,p_230383_6_,p_230383_7_);
-        }
-
         @Override
         protected void handleDataMarker(String dataName, BlockPos pos, IServerWorld world, Random preRandom, MutableBoundingBox box) {
-//            System.out.println("info:" + dataName + " in " + pos.toString());
             if ("chest".equals(dataName)) {
                 Random r = PosHelper.posToRandom(pos);
                 if(r.nextFloat() <= 0.2) {
                     createChest(world,box,r,pos,LootTable.CW_BLUEPRINT_BOX,null);
-//                    }
                 }else{
-                    world.setBlock(pos, Blocks.BOOKSHELF.defaultBlockState(), 2);
-                }
-            }else if("chest2".equals(dataName)){
-                Random r = PosHelper.posToRandom(pos);
-                if(r.nextFloat() <= 0.15){
-                    createChest(world,box,r,pos,LootTable.CW_BLUEPRINT_BOX,null);
-                }else{
-                    world.setBlock(pos, Blocks.GRASS_BLOCK.defaultBlockState(), 2);
+                    createChest(world,box,r,pos,LootTable.getRandomLootTable(LootTable.SUNDRIES,preRandom),null);
                 }
             }
+//            ServerWorld serverWorld = world.getLevel();
+//            System.out.println(serverWorld.toString());
         }
     }
 }

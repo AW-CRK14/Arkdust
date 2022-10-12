@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "facing=north": { "model": "arkdust:block/tombstone_2_1" },
+    "facing=south": { "model": "arkdust:block/tombstone_2_1","y": 180 },
+    "facing=east": { "model": "arkdust:block/tombstone_2_1","y": 90 },
+    "facing=west": { "model": "arkdust:block/tombstone_2_1","y": 270}
+  }
+}
+

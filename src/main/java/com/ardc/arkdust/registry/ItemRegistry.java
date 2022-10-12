@@ -21,6 +21,8 @@ public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Utils.MOD_ID);
     public static final RegistryObject<Item> bc = ITEMS.register("bc_block", Bc::new);//注册物品bc_block
 
+    //预定义Properties
+    public static final Item.Properties P_CW = new Item.Properties().tab(ModGroupRegistry.worldMaterial);
 
     //TerraCommonMaterial泰拉普料 注册
     public static final RegistryObject<Item> originium = ITEMS.register("originium", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),true,3,2,3,12,4));//源石
@@ -75,30 +77,36 @@ public class ItemRegistry {
     public static final RegistryObject<Item> polymerization_preparation = ITEMS.register("polymerization_preparation", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//聚合剂
 
     //WorldMaterial闭环区物品 注册
-    public static final RegistryObject<Item> dt_crystal = ITEMS.register("dt_crystal", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//静谧水晶
-    public static final RegistryObject<Item> pau_ore = ITEMS.register("pau_ore",()->new PreBlockItem(BlockRegistry.pau_ore.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金矿石
-    public static final RegistryObject<Item> pau_block = ITEMS.register("pau_block",()->new PreBlockItem(BlockRegistry.pau_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金矿石
-    public static final RegistryObject<Item> pau_ingot = ITEMS.register("pau_ingot", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金锭
-    public static final RegistryObject<Item> pau_nugget = ITEMS.register("pau_nugget", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金粒
-    public static final RegistryObject<Item> pau_fluorescence_glass = ITEMS.register("pau_fluorescence_glass",()->new BlockItem(BlockRegistry.pau_fluorescence_glass.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金辉光玻璃
-    public static final RegistryObject<Item> e_t_experiment_data = ITEMS.register("e_t_experiment_data", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//末地-泰拉折跃实验数据
-    public static final RegistryObject<Item> e_t_theory_data = ITEMS.register("e_t_theory_data", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//末地-泰拉折跃理论数据
-    public static final RegistryObject<Item> common_food_bag = ITEMS.register("common_food_bag", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物包
-    public static final RegistryObject<Item> blue_crystal = ITEMS.register("blue_crystal",()->new PreBlockItem(BlockRegistry.blue_crystal.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//赤金辉光玻璃
-    //    public static final RegistryObject<Item> blaze_rod_plant = ITEMS.register("blaze_rod_plant",()->new PreBlockItem(BlockRegistry.blaze_rod_plant.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//烈焰苗
-    public static final RegistryObject<Item> common_food_box = ITEMS.register("common_food_box",()->new PreBlockItem(BlockRegistry.common_food_box.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//普通食物盒子
-    public static final RegistryObject<Item> blackstone_lamp = ITEMS.register("blackstone_lamp",()->new PreBlockItem(BlockRegistry.blackstone_lamp.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石灯
-    public static final RegistryObject<Item> blackstone_sand = ITEMS.register("blackstone_sand",()->new PreBlockItem(BlockRegistry.blackstone_sand.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石沙
-    public static final RegistryObject<Item> blackstone_medical_point = ITEMS.register("blackstone_medical_point",()->new PreBlockItem(BlockRegistry.blackstone_medical_point.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//黑石沙
-    public static final RegistryObject<Item> hang_screened_table = ITEMS.register("hang_screened_table",()->new PreBlockItem(BlockRegistry.hang_screened_table.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//简易筛矿台
-    public static final RegistryObject<Item> netherite_nugget = ITEMS.register("netherite_nugget", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//下届合金粒
-//    public static final RegistryObject<Item> oitest_item = ITEMS.register("oitest_item", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,3,0,2,0));//测试物品
-    public static final RegistryObject<Item> c_originium_block = ITEMS.register("c_originium_block", ()->new PreOIBlockItem(BlockRegistry.c_originium_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,2,0,5,2));//c型活性源石
-    public static final RegistryObject<Item> d_originium_block = ITEMS.register("d_originium_block", ()->new PreOIBlockItem(BlockRegistry.d_originium_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial),false,2,2,0,3,0));//d型失活源石
+    public static final RegistryObject<Item> dt_crystal = ITEMS.register("dt_crystal", ()->new PreItem(P_CW));//静谧水晶
+    public static final RegistryObject<Item> pau_ore = ITEMS.register("pau_ore",()->new PreBlockItem(BlockRegistry.pau_ore.get(), P_CW));//赤金矿石
+    public static final RegistryObject<Item> pau_block = ITEMS.register("pau_block",()->new PreBlockItem(BlockRegistry.pau_block.get(), P_CW));//赤金矿石
+    public static final RegistryObject<Item> pau_ingot = ITEMS.register("pau_ingot", ()->new PreItem(P_CW));//赤金锭
+    public static final RegistryObject<Item> pau_nugget = ITEMS.register("pau_nugget", ()->new PreItem(P_CW));//赤金粒
+    public static final RegistryObject<Item> pau_fluorescence_glass = ITEMS.register("pau_fluorescence_glass",()->new BlockItem(BlockRegistry.pau_fluorescence_glass.get(), P_CW));//赤金辉光玻璃
+    public static final RegistryObject<Item> e_t_experiment_data = ITEMS.register("e_t_experiment_data", ()->new PreItem(P_CW));//末地-泰拉折跃实验数据
+    public static final RegistryObject<Item> e_t_theory_data = ITEMS.register("e_t_theory_data", ()->new PreItem(P_CW));//末地-泰拉折跃理论数据
+    public static final RegistryObject<Item> common_food_bag = ITEMS.register("common_food_bag", ()->new PreItem(P_CW));//普通食物包
+    public static final RegistryObject<Item> blue_crystal = ITEMS.register("blue_crystal",()->new PreBlockItem(BlockRegistry.blue_crystal.get(), P_CW));//赤金辉光玻璃
+    //    public static final RegistryObject<Item> blaze_rod_plant = ITEMS.register("blaze_rod_plant",()->new PreBlockItem(BlockRegistry.blaze_rod_plant.get(), P_CW));//烈焰苗
+    public static final RegistryObject<Item> common_food_box = ITEMS.register("common_food_box",()->new PreBlockItem(BlockRegistry.common_food_box.get(), P_CW));//普通食物盒子
+    public static final RegistryObject<Item> blackstone_lamp = ITEMS.register("blackstone_lamp",()->new PreBlockItem(BlockRegistry.blackstone_lamp.get(), P_CW));//黑石灯
+    public static final RegistryObject<Item> blackstone_sand = ITEMS.register("blackstone_sand",()->new PreBlockItem(BlockRegistry.blackstone_sand.get(), P_CW));//黑石沙
+    public static final RegistryObject<Item> blackstone_medical_point = ITEMS.register("blackstone_medical_point",()->new PreBlockItem(BlockRegistry.blackstone_medical_point.get(), P_CW));//黑石沙
+    public static final RegistryObject<Item> hang_screened_table = ITEMS.register("hang_screened_table",()->new PreBlockItem(BlockRegistry.hang_screened_table.get(), P_CW));//简易筛矿台
+    public static final RegistryObject<Item> netherite_nugget = ITEMS.register("netherite_nugget", ()->new PreItem(P_CW));//下届合金粒
+//    public static final RegistryObject<Item> oitest_item = ITEMS.register("oitest_item", ()->new PreOIItem(P_CW,false,2,3,0,2,0));//测试物品
+    public static final RegistryObject<Item> c_originium_block = ITEMS.register("c_originium_block", ()->new PreOIBlockItem(BlockRegistry.c_originium_block.get(), P_CW,false,2,2,0,5,2));//c型活性源石
+    public static final RegistryObject<Item> d_originium_block = ITEMS.register("d_originium_block", ()->new PreOIBlockItem(BlockRegistry.d_originium_block.get(), P_CW,false,2,2,0,3,0));//d型失活源石
     public static final RegistryObject<Item> l1_oir_vaccine_a = ITEMS.register("l1_oir_vaccine_a", ()->new OIRVaccineItem(false,1,0.8F));//1-1源石疫苗
     public static final RegistryObject<Item> l2_oir_vaccine_a = ITEMS.register("l2_oir_vaccine_a", ()->new OIRVaccineItem(false,2,1.2F));//2-1源石疫苗
     public static final RegistryObject<Item> broken_ender_energy_radar = ITEMS.register("broken_ender_energy_radar", ()->new EnderEnergyRadar(false));//损坏末影雷达
     public static final RegistryObject<Item> ender_energy_radar = ITEMS.register("ender_energy_radar", ()->new EnderEnergyRadar(true));//末影雷达
+    public static final RegistryObject<Item> sit_white_skeleton_block = ITEMS.register("sit_white_skeleton_block", ()->new PreBlockItem(BlockRegistry.sit_white_skeleton_block.get(), P_CW));//坐地白色骷髅
+    public static final RegistryObject<Item> lay0_white_skeleton_block = ITEMS.register("lay0_white_skeleton_block", ()->new PreBlockItem(BlockRegistry.lay0_white_skeleton_block.get(), P_CW));//白色骨架
+//    public static final RegistryObject<Item> tombstone_1_1 = ITEMS.register("tombstone_1_1", ()->new PreBlockItem(BlockRegistry.tombstone_1_1.get(), P_CW));//墓碑1-1
+    public static final RegistryObject<Item> tombstone_2_1 = ITEMS.register("tombstone_2_1", ()->new PreBlockItem(BlockRegistry.tombstone_2_1.get(), P_CW));//墓碑2-1
+    public static final RegistryObject<Item> tombstone_2_2 = ITEMS.register("tombstone_2_2", ()->new PreBlockItem(BlockRegistry.tombstone_2_2.get(), P_CW));//墓碑2-2
+    public static final RegistryObject<Item> tombstone_2_3 = ITEMS.register("tombstone_2_3", ()->new PreBlockItem(BlockRegistry.tombstone_2_3.get(), P_CW));//墓碑2-3
 
 
     //TerraTools泰拉工具工具 注册

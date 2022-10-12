@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "arkdust:item/wmaterial/ender_energy_radar"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "arkdust:damage": 1
+      },
+      "model": "arkdust:item/used_ender_energy_radar"
+    }
+  ]
+}

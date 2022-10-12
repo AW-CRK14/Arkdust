@@ -64,8 +64,9 @@ public class HangScreenedTable extends PreBlock {
     }
 
     public void onRemove(BlockState block, World world, BlockPos pos, BlockState toBlock, boolean iif) {
+        super.onRemove(block,world,pos,toBlock,iif);
         ScreenedTableBE blockBE = (ScreenedTableBE) world.getBlockEntity(pos);
-        if (block.hasTileEntity() && (!block.is(toBlock.getBlock()) || !toBlock.hasTileEntity())/*如果新的方块不是这个方块或者新的方块不具有实体*/) {
+        if (blockBE!=null && block.hasTileEntity() && (!block.is(toBlock.getBlock()) || !toBlock.hasTileEntity())/*如果新的方块不是这个方块或者新的方块不具有实体*/) {
             world.removeBlockEntity(pos);
             ItemEntity drop = new ItemEntity(world, pos.getX(), pos.getY() + 1, pos.getZ(), blockBE.getLootItem());
             world.addFreshEntity(drop);
