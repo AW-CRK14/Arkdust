@@ -1,6 +1,5 @@
 package com.ardc.arkdust.preobject.BlockState;
 
-import com.ardc.arkdust.preobject.pre.PreBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
@@ -27,10 +26,10 @@ public class WaterLoggedRotateBlock extends RotateBlock implements IWaterLoggabl
         BlockPos pos = context.getClickedPos();
         BlockState state = context.getLevel().getBlockState(pos);
         if(state.is(this)){
-            return defaultBlockState().setValue(WATERLOGGED,false).setValue(FACING, context.getHorizontalDirection().getOpposite());
+            return defaultBlockState().setValue(WATERLOGGED,false).setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
         }else{
             FluidState fluid = context.getLevel().getFluidState(pos);
-            return this.defaultBlockState().setValue(WATERLOGGED,fluid.getType() == Fluids.WATER).setValue(FACING, context.getHorizontalDirection().getOpposite());
+            return this.defaultBlockState().setValue(WATERLOGGED,fluid.getType() == Fluids.WATER).setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
         }
     }
 

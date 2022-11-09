@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "light=true": {
+      "model": "arkdust:block/red_caution_light"
+    },
+    "light=false": {
+      "model": "arkdust:block/red_caution_light_2"
+    }
+
+  }
+}

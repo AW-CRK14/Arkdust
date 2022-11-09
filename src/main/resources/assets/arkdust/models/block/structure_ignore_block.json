@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "arkdust:blocks/ot/structure_ignore_block",
+    "particle":"arkdust:blocks/ot/structure_ignore_block"
+  }
+}

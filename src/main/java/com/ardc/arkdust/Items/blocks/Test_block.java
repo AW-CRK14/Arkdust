@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -25,11 +26,17 @@ public class Test_block extends PreBlock {
     @Override
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit){
         if(!worldIn.isClientSide() && worldIn.getBlockState(pos.above()).getBlock().equals(Blocks.AIR)) {
-            worldIn.setBlock(pos.above(),Blocks.CHEST.defaultBlockState(),3);
+            worldIn.setBlock(pos.above(),Blocks.BARREL.defaultBlockState(),3);
+            worldIn.setBlock(pos.above().above(),Blocks.CHEST.defaultBlockState(),3);
             TileEntity tileEntity = worldIn.getBlockEntity(pos.above());
-            if(tileEntity instanceof ChestTileEntity){
+            if(tileEntity instanceof LockableLootTileEntity){
                 Random r = new Random();
-                ((ChestTileEntity) tileEntity).setLootTable(LootTable.CW_BLUEPRINT_BOX,r.nextLong());
+                ((LockableLootTileEntity) tileEntity).setLootTable(LootTable.FISH,r.nextLong());
+            }
+            tileEntity = worldIn.getBlockEntity(pos.above().above());
+            if(tileEntity instanceof LockableLootTileEntity){
+                Random r = new Random();
+                ((LockableLootTileEntity) tileEntity).setLootTable(LootTable.GENERAL_SUPPLY_BOX_A,r.nextLong());
             }
         }
         return ActionResultType.SUCCESS;

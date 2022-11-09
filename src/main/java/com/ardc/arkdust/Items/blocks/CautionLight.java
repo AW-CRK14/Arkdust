@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -28,40 +29,36 @@ import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
 
-public class Blackstone_lamp extends DropSelfBlock implements IWaterLoggable {
+public class CautionLight extends DropSelfBlock implements IWaterLoggable {
     private static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
     private static final BooleanProperty LIGHTING = BooleanProperty.create("light");
+    private final DyeColor COLOR;
 
-    private static final VoxelShape shape;
-    static {
-        VoxelShape shape1 = VoxelShapes.join(VoxelShapes.block() , Block.box(0,3,3,16,13,13), IBooleanFunction.ONLY_FIRST);
-        shape1 = VoxelShapes.join(shape1 , Block.box(3,3,0,13,13,16), IBooleanFunction.ONLY_FIRST);
-        shape = VoxelShapes.join(shape1 , Block.box(5,2,5,11,13,11), IBooleanFunction.OR);
+    public CautionLight() {
+        super(Properties
+                        .of(Material.STONE)
+                        .harvestTool(ToolType.PICKAXE)
+                        .lightLevel((level)->(level.getBlockState().getValue(LIGHTING) ? 9 : 0))
+                        .noOcclusion()
+                ,1);
+        this.COLOR = null;
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false).setValue(LIGHTING,false));
     }
 
-    public Blackstone_lamp() {
+    public CautionLight(DyeColor color) {
         super(Properties
-                .of(Material.STONE)
-                .harvestTool(ToolType.PICKAXE)
-                .strength(2,3)
-                .lightLevel((level)->(level.getBlockState().getValue(LIGHTING) ? 13 : 0))
-                .noOcclusion()
-                .requiresCorrectToolForDrops()
+                        .of(Material.STONE)
+                        .strength(1)
+                        .lightLevel((level)->(level.getBlockState().getValue(LIGHTING) ? 9 : 0))
+                        .noOcclusion()
                 ,1);
+        this.COLOR = color;
         this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false).setValue(LIGHTING,false));
     }
 
     @Override
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if((player.getMainHandItem().getItem() == Items.COAL || player.getMainHandItem().getItem() == Items.TORCH || player.getMainHandItem().getItem() == Items.CHARCOAL) && !state.getValue(LIGHTING)) {
-            worldIn.setBlock(new BlockPos(pos), state.setValue(LIGHTING, true), 3);
-            player.getMainHandItem().shrink(1);
-            return ActionResultType.CONSUME;
-        }
-//        if(!worldIn.isClientSide()) {
-//            WorldOIData data = WorldOIData.get(worldIn);
-//            player.displayClientMessage(new TranslationTextComponent("pma.oi.worldOIState." + data.getWorldOIState()), false);
-//        }
+        worldIn.setBlock(pos,state.setValue(LIGHTING,!state.getValue(LIGHTING)),3);
         return ActionResultType.SUCCESS;
     }
 
@@ -73,7 +70,12 @@ public class Blackstone_lamp extends DropSelfBlock implements IWaterLoggable {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
-        return shape;
+        return VoxelShapes.box(0.375F,0,0.375F,0.625F,0.4F,0.625F);
+    }
+
+    @Nullable
+    public DyeColor getColor() {
+        return this.COLOR;
     }
 
     @Nullable

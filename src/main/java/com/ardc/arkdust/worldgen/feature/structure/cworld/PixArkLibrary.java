@@ -1,7 +1,5 @@
 package com.ardc.arkdust.worldgen.feature.structure.cworld;
 
-import com.ardc.arkdust.CodeMigration.RunHelper.BlockPosHelper;
-import com.ardc.arkdust.CodeMigration.RunHelper.DirectionHelper;
 import com.ardc.arkdust.CodeMigration.RunHelper.PosHelper;
 import com.ardc.arkdust.CodeMigration.RunHelper.StructureHelper;
 import com.ardc.arkdust.CodeMigration.resourcelocation.LootTable;
@@ -16,7 +14,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
@@ -54,7 +51,7 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
         BlockPos centerOfChunk = new BlockPos((chunkX << 4), 0, (chunkZ << 4));
 
         return StructureHelper.isEachPlaceAvailable(chunkGenerator, Heightmap.Type.WORLD_SURFACE_WG,4,
-                BlockPosHelper.getCenterAndSquareVertexPos(centerOfChunk,16,false,true)
+                PosHelper.getCenterAndSquareVertexPos(centerOfChunk,16,false,true)
         ) && biome.getBaseTemperature() <= 1.2F;//获取此位置是否为流体（防止生成在水上）
     }
 
@@ -107,7 +104,7 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
 
     public static void addChildren(TemplateManager templateManager, List<StructurePiece> pieceList, Random random, BlockPos centerPos) {
         Piece piece = new Piece(templateManager,random.nextBoolean() ? BUILDING_NBT_NEW : BUILDING_NBT_OLD,centerPos, Rotation.getRandom(random));
-        piece.setOrientation(Direction.SOUTH);
+//        piece.setOrientation(Direction.SOUTH);
 //        DirectionHelper.PosDirectionRun(centerPos,piece.getBoundingBox().getCenter(),new PosHelper.PosMoveBag(-16,0,-16),false).pieceMove(piece);
         pieceList.add(piece);
     }
@@ -160,10 +157,10 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
             this.setup(template, this.templatePosition, placementsettings);
         }
 
-        public boolean postProcess(ISeedReader p_230383_1_, StructureManager p_230383_2_, ChunkGenerator p_230383_3_, Random p_230383_4_, MutableBoundingBox p_230383_5_, ChunkPos p_230383_6_, BlockPos p_230383_7_) {
+//        public boolean postProcess(ISeedReader p_230383_1_, StructureManager p_230383_2_, ChunkGenerator p_230383_3_, Random p_230383_4_, MutableBoundingBox p_230383_5_, ChunkPos p_230383_6_, BlockPos p_230383_7_) {
 //            System.out.println("PostProcess load:\nISeedReader:" + p_230383_1_ +"\nChuckGenerator:" + p_230383_3_ + "\nMutableBoundingBox:" + p_230383_5_ + "\nPos:" + p_230383_6_ + "  " + p_230383_7_);
-            return super.postProcess(p_230383_1_,p_230383_2_,p_230383_3_,p_230383_4_,p_230383_5_,p_230383_6_,p_230383_7_);
-        }
+//            return super.postProcess(p_230383_1_,p_230383_2_,p_230383_3_,p_230383_4_,p_230383_5_,p_230383_6_,p_230383_7_);
+//        }
 
         @Override
         protected void handleDataMarker(String dataName, BlockPos pos, IServerWorld world, Random preRandom, MutableBoundingBox box) {

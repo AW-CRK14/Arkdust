@@ -66,12 +66,12 @@ public class OldHouse0 extends Structure<NoFeatureConfig> implements ArdStructur
 
     @Override
     public int spacing() {
-        return 90;
+        return 70;
     }
 
     @Override
     public int separation() {
-        return 60;
+        return 40;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class OldHouse0 extends Structure<NoFeatureConfig> implements ArdStructur
                 BlockPos endPos = StructureHelper.getEndPos(this.boundingBox, centerPos);
                 int laterLandHeight = chunkGenerator.getBaseHeight(endPos.getX(), endPos.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
                 int move = laterLandHeight - landHeight;
-                System.out.println("\n  y move:" + move + "\n  cpos:" + centerPos.toString() + "," + landHeight + "\n  tpos:" + endPos.toString() + "," + laterLandHeight);
+//                System.out.println("\n  y move:" + move + "\n  cpos:" + centerPos.toString() + "," + landHeight + "\n  tpos:" + endPos.toString() + "," + laterLandHeight);
                 if (Math.abs(move) >= 3) {
                     this.pieces.get(0).move(0, move + 1, 0);
                     preMove = move +1;

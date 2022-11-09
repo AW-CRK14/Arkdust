@@ -20,6 +20,7 @@ public class BlockRenderType {
                 RenderTypeLookup.setRenderLayer(BlockRegistry.hang_screened_table.get(), RenderType.cutout());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.life_model.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.chaotic_air.get(), RenderType.translucent());
+                RenderTypeLookup.setRenderLayer(BlockRegistry.structure_ignore_block.get(), RenderType.translucent());
 //                RenderTypeLookup.setRenderLayer(BlockRegistry.projection_block.get(), RenderType.translucent());
             });
         }

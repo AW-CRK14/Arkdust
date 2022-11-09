@@ -3,10 +3,7 @@ package com.ardc.arkdust.registry;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.worldgen.feature.ConfiguredStructures;
 import com.ardc.arkdust.worldgen.feature.StructureRegistryHelper;
-import com.ardc.arkdust.worldgen.feature.structure.cworld.CWGrave;
-import com.ardc.arkdust.worldgen.feature.structure.cworld.OldHouse0;
-import com.ardc.arkdust.worldgen.feature.structure.cworld.PixArkLibrary;
-import com.ardc.arkdust.worldgen.feature.structure.cworld.UnderTreeBlueprintBox;
+import com.ardc.arkdust.worldgen.feature.structure.cworld.*;
 import com.ardc.arkdust.worldgen.feature.structure_pool.OldHouse0Pool;
 import com.ardc.arkdust.worldgen.feature.structure_pool.UndertreeBlueprintPool;
 import net.minecraft.world.World;
@@ -17,19 +14,12 @@ import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPatternRegistry;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,9 +27,12 @@ import java.util.List;
 public class StructureRegistry {
 
     public static final RegistryObject<Structure<NoFeatureConfig>> UNDERTREE_BLUEPRINT = StructureRegistryHelper.setup("undertree_blueprint",new UnderTreeBlueprintBox(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
-    public static final RegistryObject<Structure<NoFeatureConfig>> OLD_HOUSE_0 = StructureRegistryHelper.setup("old_house_0",new OldHouse0(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> CW_OLD_HOUSE_0 = StructureRegistryHelper.setup("cw_old_house_0",new OldHouse0(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
     public static final RegistryObject<Structure<NoFeatureConfig>> PIXARK_LIBRARY = StructureRegistryHelper.setup("pixark_library",new PixArkLibrary(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
     public static final RegistryObject<Structure<NoFeatureConfig>> CW_GRAVE = StructureRegistryHelper.setup("cw_grave",new CWGrave(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> CW_TOWER = StructureRegistryHelper.setup("cw_tower",new CWTower(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> CW_OLD_HOUSE = StructureRegistryHelper.setup("cw_old_house",new CWOldHouse(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> CW_BOAT = StructureRegistryHelper.setup("cw_boat",new CWBoat(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
 
     public static final List<JigsawPattern> jigsawPatternList = Arrays.asList(UndertreeBlueprintPool.pool, OldHouse0Pool.pool_broken,OldHouse0Pool.pool_common);
 
@@ -69,13 +62,18 @@ public class StructureRegistry {
 //                event.getGeneration().getStructures().add(()->ConfiguredStructures.cfed_undertree_blueprint);
             }
             if(event.getCategory().equals(Biome.Category.PLAINS)){//旧屋0结构
-                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_old_house_0);
+                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_old_house_0);
             }
             if(event.getCategory().equals(Biome.Category.DESERT) || event.getCategory().equals(Biome.Category.PLAINS) || event.getCategory().equals(Biome.Category.FOREST) || event.getCategory().equals(Biome.Category.SAVANNA)){//像素方舟图书馆结构
                 event.getGeneration().addStructureStart(ConfiguredStructures.cfed_pixark_library);
             }
-            if(!event.getCategory().equals(Biome.Category.OCEAN) && !event.getCategory().equals(Biome.Category.RIVER)){//墓碑结构
+            if(!event.getCategory().equals(Biome.Category.OCEAN) && !event.getCategory().equals(Biome.Category.RIVER)){//墓碑结构与塔结构
                 event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_grave);
+                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_tower);
+                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_old_house);
+            }
+            if(event.getCategory().equals(Biome.Category.OCEAN) || event.getCategory().equals(Biome.Category.RIVER)){
+                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_boat);
             }
         }
     }

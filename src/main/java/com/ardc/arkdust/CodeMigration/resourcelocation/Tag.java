@@ -26,6 +26,7 @@ public class Tag
 //        public static final net.minecraftforge.common.Tags.IOptionalNamedTag<Item> BARRELS = tag("barrels");
         public static final Tags.IOptionalNamedTag<Block> ALLOW_ORIROCK_SPREAD = tag("allow_originium_spread");
         public static final Tags.IOptionalNamedTag<Block> NATURAL_BLOCK = tag("natural_blocks");
+        public static final Tags.IOptionalNamedTag<Block> SUPPLY_BLOCK = tag("supply_blocks");
 
         private static net.minecraftforge.common.Tags.IOptionalNamedTag<Block> tag(String name)
         {

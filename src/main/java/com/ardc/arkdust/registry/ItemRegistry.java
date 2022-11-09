@@ -107,6 +107,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> tombstone_2_1 = ITEMS.register("tombstone_2_1", ()->new PreBlockItem(BlockRegistry.tombstone_2_1.get(), P_CW));//墓碑2-1
     public static final RegistryObject<Item> tombstone_2_2 = ITEMS.register("tombstone_2_2", ()->new PreBlockItem(BlockRegistry.tombstone_2_2.get(), P_CW));//墓碑2-2
     public static final RegistryObject<Item> tombstone_2_3 = ITEMS.register("tombstone_2_3", ()->new PreBlockItem(BlockRegistry.tombstone_2_3.get(), P_CW));//墓碑2-3
+    public static final RegistryObject<Item> red_caution_light = ITEMS.register("red_caution_light", ()->new PreBlockItem(BlockRegistry.red_caution_light.get(), P_CW));//红色应急灯
 
 
     //TerraTools泰拉工具工具 注册
@@ -137,6 +138,8 @@ public class ItemRegistry {
 
     //辅助性方块注册
     public static final RegistryObject<Item> chaotic_air = ITEMS.register("chaotic_air",()->new PreBlockItem(BlockRegistry.chaotic_air.get(), new Item.Properties()));
+    public static final RegistryObject<Item> structure_ignore_block = ITEMS.register("structure_ignore_block",()->new PreBlockItem(BlockRegistry.structure_ignore_block.get(), new Item.Properties()));
+    public static final RegistryObject<Item> story_point = ITEMS.register("story_point",()->new PreBlockItem(BlockRegistry.story_point.get(), new Item.Properties()));
 
 //    //test
 //    public static final RegistryObject<Item> test_block = ITEMS.register("test_block",()->new BlockItem(BlockRegistry.test_block.get(), new Item.Properties().tab(ModGroupRegistry.worldMaterial)));//测试方块

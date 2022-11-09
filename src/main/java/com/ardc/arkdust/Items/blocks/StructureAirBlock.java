@@ -1,4 +1,4 @@
-package com.ardc.arkdust.preobject.Block;
+package com.ardc.arkdust.Items.blocks;
 
 import com.ardc.arkdust.preobject.pre.PreBlock;
 import net.minecraft.block.BlockState;

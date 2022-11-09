@@ -1,6 +1,5 @@
 package com.ardc.arkdust.preobject.Block;
 
-import com.ardc.arkdust.preobject.BlockState.RotateBlock;
 import com.ardc.arkdust.preobject.BlockState.WaterLoggedRotateBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -39,7 +38,7 @@ public class TombstoneBlock extends WaterLoggedRotateBlock {
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
-        if(state.getValue(FACING).equals(Direction.NORTH) || state.getValue(FACING).equals(Direction.SOUTH))//如果方向为南北向
+        if(state.getValue(HORIZONTAL_FACING).equals(Direction.NORTH) || state.getValue(HORIZONTAL_FACING).equals(Direction.SOUTH))//如果方向为南北向
             return VoxelShapes.or(VoxelShapes.box(0,0,0,1,0.125F,1), voxelShape_NS);
         return VoxelShapes.or(VoxelShapes.box(0,0,0,1,0.125F,1), voxelShape_EW);
     }

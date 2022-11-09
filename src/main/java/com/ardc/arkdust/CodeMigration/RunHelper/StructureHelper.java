@@ -1,22 +1,19 @@
 package com.ardc.arkdust.CodeMigration.RunHelper;
 
-import com.ibm.icu.impl.Pair;
 import net.minecraft.block.BlockState;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
-import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.plaf.basic.BasicListUI;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class StructureHelper {
     public static StructurePiece setRotation(List<StructurePiece> list, int num, Direction direction) {
@@ -58,7 +55,7 @@ public class StructureHelper {
         if (heightTestFlag) {
             List<Integer> heightList = new ArrayList<>();
             for (BlockPos fPos : pos) {
-                if(testMode) System.out.println(BlockPosHelper.posInfo(fPos));
+                if(testMode) System.out.println(PosHelper.posInfo(fPos));
                 int height = chunkGenerator.getBaseHeight(fPos.getX(), fPos.getZ(), type);
                 if(testMode) System.out.println("    PosSurfaceHeight:" + height);
 
@@ -82,7 +79,7 @@ public class StructureHelper {
                 return false;
         }else {
             for (BlockPos fPos : pos) {
-                if(testMode) System.out.println(BlockPosHelper.posInfo(fPos));
+                if(testMode) System.out.println(PosHelper.posInfo(fPos));
                 int height = chunkGenerator.getBaseHeight(fPos.getX(), fPos.getZ(), type);
 
                 if(testMode) System.out.println("    PosSurfaceHeight:" + height);
@@ -96,5 +93,87 @@ public class StructureHelper {
         }
         if(testMode) System.out.println("[return]Chuck finish:each pos is valuable" );
         return true;
+    }
+
+    public static boolean isEachPlaceWater(ChunkGenerator chunkGenerator, @Nonnull List<BlockPos> posList){
+        for (BlockPos pos : posList){
+            int height = chunkGenerator.getBaseHeight(pos.getX(), pos.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
+            FluidState state = chunkGenerator.getBaseColumn(pos.getX(), pos.getZ()).getFluidState(new BlockPos(pos.getX(),Math.max(height-1,1),pos.getZ()));
+            if(state.getType() != Fluids.WATER) return false;
+        }
+        return true;
+    }
+
+    public static class StructureAndVariation{
+        public final ResourceLocation MAIN_STRUCTURE;
+        public ResourceLocation[] VARIATION_STRUCTURE;
+        public float possibility;
+
+        public StructureAndVariation(String modId,String path){
+            this.MAIN_STRUCTURE = new ResourceLocation(modId,path);
+            this.possibility = 1;
+        }
+
+        @Deprecated
+        public StructureAndVariation(String modId,String mainPath,float possibility,String... variationPath){
+            this.MAIN_STRUCTURE = new ResourceLocation(modId,mainPath);
+            this.possibility = possibility;
+        }
+
+        @Deprecated
+        public StructureAndVariation(String modId,String mainPath,String... variationPath){
+            this.MAIN_STRUCTURE = new ResourceLocation(modId,mainPath);
+//            this.VARIATION_STRUCTURE  = Collections.emptyList();
+//            for(String s : variationPath){
+//                VARIATION_STRUCTURE.add(new ResourceLocation(modId,s));
+//            }
+            this.possibility = -1;
+        }
+
+        public StructureAndVariation(ResourceLocation main){
+            this.MAIN_STRUCTURE = main;
+            this.possibility = 1;
+        }
+
+        public StructureAndVariation(ResourceLocation main,float possibility,ResourceLocation[] variation){
+            this.MAIN_STRUCTURE = main;
+            this.VARIATION_STRUCTURE = variation;
+            this.possibility = possibility;
+        }
+
+        public StructureAndVariation(ResourceLocation main,ResourceLocation[] variation){
+            this.MAIN_STRUCTURE = main;
+            this.VARIATION_STRUCTURE = variation;
+            this.possibility = -1;
+        }
+
+        @Deprecated
+        public void addVariation(ResourceLocation location){
+//            if(VARIATION_STRUCTURE!=null){
+//                VARIATION_STRUCTURE.add(location);
+//            }else {
+//                VARIATION_STRUCTURE = Collections.singletonList(location);
+//            }
+        }
+
+        public void setPossibility(float possibility){
+            this.possibility = possibility;
+        }
+
+        public ResourceLocation getRandomPart(Random r){
+            if(VARIATION_STRUCTURE == null || VARIATION_STRUCTURE.length == 0 || possibility >= 1){//只有Main的时候
+                return MAIN_STRUCTURE;
+            }else if(possibility == -1){//possibility取-1时，平均分配可能性
+                int i = r.nextInt(VARIATION_STRUCTURE.length + 1);
+                if(i == VARIATION_STRUCTURE.length)
+                    return MAIN_STRUCTURE;
+                return VARIATION_STRUCTURE[i];
+            }else {//按比重分配Main
+                if(r.nextFloat() <= possibility)
+                    return MAIN_STRUCTURE;
+                Random newR = new Random(r.nextLong());
+                return VARIATION_STRUCTURE[newR.nextInt(VARIATION_STRUCTURE.length)];
+            }
+        }
     }
 }

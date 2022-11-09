@@ -7,12 +7,12 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
-  apply plugin: 'net.minecraftforge.gradle'
+ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = 'alpha0.4.3'
+version = 'alpha0.4.3.1021t'
 group = 'com.ardc.arkdust' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'arkdust'
 

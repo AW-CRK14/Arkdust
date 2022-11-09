@@ -8,12 +8,14 @@ import com.ardc.arkdust.CodeMigration.resourcelocation.Tag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -97,7 +99,9 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
             data.worldOIBegin(world);
             new OIMain.EntityOI().setPlayerOIResistanceLevel(event.getPlayer(),1,world);
         }
-        if (r.nextInt(32) > 3 && !new OIMain.WorldOI().ifWorldOIRun(world)) return;
+        if (!(event.getPlayer() instanceof ServerPlayerEntity && ((ServerPlayerEntity) event.getPlayer()).gameMode.getGameModeForPlayer() == GameType.SURVIVAL) ||
+                (r.nextInt(32) > 3 && !new OIMain.WorldOI().ifWorldOIRun(world)))
+            return;
         BlockPos pos = PosHelper.entityPosToBlock(event.getPlayer());
         int blockCount = world.getDifficulty().getId() + 1;
         for (int testCount = blockCount * 2 + 2; testCount >= 0; testCount--) {
@@ -109,10 +113,8 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
                 else blockCount--;
             }
         }
-        if (!world.isClientSide()) {
-            if (!new OIMain.WorldOI().ifWorldOIRun(world)) {
-                event.getPlayer().displayClientMessage(new TranslationTextComponent("pma.oi.getAdvancement"), false);
-            }
+        if (!new OIMain.WorldOI().ifWorldOIRun(world)) {
+            event.getPlayer().displayClientMessage(new TranslationTextComponent("pma.oi.getAdvancement"), false);
         }
     }
 
