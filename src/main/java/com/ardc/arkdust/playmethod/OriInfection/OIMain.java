@@ -1,9 +1,7 @@
-package com.ardc.arkdust.NewPlayingMethod.OriInfection;
+package com.ardc.arkdust.playmethod.OriInfection;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 

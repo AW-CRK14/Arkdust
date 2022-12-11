@@ -2,6 +2,7 @@ package com.ardc.arkdust.worldgen.feature.preobj;
 
 import com.ardc.arkdust.CodeMigration.RunHelper.DirectionHelper;
 import com.ardc.arkdust.preobject.BlockState.RotateBlock;
+import com.ardc.arkdust.worldgen.feature.ArdStructureAddInfo;
 import com.ardc.arkdust.worldgen.feature.StructureProcessorListAdd;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -49,7 +50,7 @@ public abstract class CommonCWTemplatePiece extends TemplateStructurePiece {
 
     public void loadTemplate(TemplateManager templateManager) {
         Template template = templateManager.getOrCreate(this.templateLocation);
-        PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE).setRotationPivot(new BlockPos(16,0,16)).addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK);
+        PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE).setRotationPivot(new BlockPos(16,0,16)).addProcessor(StructureProcessorListAdd.STRUCTURE_BLOCK_AND_ARD_IGNBLOCK.get());
         this.setup(template, this.templatePosition, placementsettings);
     }
 

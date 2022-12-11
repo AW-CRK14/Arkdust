@@ -1,4 +1,4 @@
-package com.ardc.arkdust.NewPlayingMethod.OriInfection;
+package com.ardc.arkdust.playmethod.OriInfection;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;

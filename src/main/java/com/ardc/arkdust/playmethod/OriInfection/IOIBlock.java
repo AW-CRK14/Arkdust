@@ -1,4 +1,4 @@
-package com.ardc.arkdust.NewPlayingMethod.OriInfection;
+package com.ardc.arkdust.playmethod.OriInfection;
 
 public interface IOIBlock{
     default boolean touchHurt(){return true;}

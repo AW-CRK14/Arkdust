@@ -1,32 +1,20 @@
 package com.ardc.arkdust.worldgen.feature.structure.cworld;
 
-import com.ardc.arkdust.CodeMigration.RunHelper.BlockHelper;
-import com.ardc.arkdust.CodeMigration.RunHelper.DirectionHelper;
 import com.ardc.arkdust.CodeMigration.RunHelper.PosHelper;
 import com.ardc.arkdust.CodeMigration.RunHelper.StructureHelper;
 import com.ardc.arkdust.CodeMigration.resourcelocation.LootTable;
 import com.ardc.arkdust.CodeMigration.resourcelocation.Tag;
-import com.ardc.arkdust.NewPlayingMethod.story.blockanditem.StoryPointBE;
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.preobject.BlockState.RotateBlock;
-import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.worldgen.feature.ArdStructureAddInfo;
 import com.ardc.arkdust.worldgen.feature.StructurePieceTypeAdd;
 import com.ardc.arkdust.worldgen.feature.preobj.CommonCWStart;
 import com.ardc.arkdust.worldgen.feature.preobj.CommonCWTemplatePiece;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.*;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.biome.Biome;
@@ -37,13 +25,8 @@ import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import net.minecraftforge.fml.RegistryObject;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 

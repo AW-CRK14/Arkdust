@@ -1,6 +1,8 @@
-package com.ardc.arkdust.NewPlayingMethod.story.blockanditem;
+package com.ardc.arkdust.playmethod.story.blockanditem;
 
+import com.ardc.arkdust.playmethod.story.IStorySaveCapability;
 import com.ardc.arkdust.preobject.pre.PreBlock;
+import com.ardc.arkdust.registry.CapabilityRegistry;
 import com.ardc.arkdust.registry.ItemRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -23,6 +25,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -47,16 +50,27 @@ public class StoryPointBlock extends PreBlock {
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult ray) {
         TileEntity blockEntity = world.getBlockEntity(pos);
         if(blockEntity instanceof StoryPointBE){
-            System.out.println("StoryPointTest:" + ((StoryPointBE) blockEntity).dataToNBT().toString());
-            //TODO 剧情解锁判定
+//            System.out.println("StoryPointTest:" + ((StoryPointBE) blockEntity).dataToNBT().toString());
             if(!world.isClientSide()){
-                playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getTitleContext(),false);
-                playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getContext(),false);
+                if(((StoryPointBE) blockEntity).isBagState()) {
+                    LazyOptional<IStorySaveCapability> cap = playerEntity.getCapability(CapabilityRegistry.STORY_CAPABILITY);
+                    cap.ifPresent((i) -> {
+                        boolean b = i.addToList(((StoryPointBE) blockEntity).bag, ((StoryPointBE) blockEntity).bagLevel);
+                        if(b) {
+                            playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getTitleContext(), false);
+                            playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getContext(), false);
+                        }else {
+                            playerEntity.displayClientMessage(new TranslationTextComponent("story.info.locked"), false);
+                        }
+                    });
+                }else {
+                    playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getTitleContext(), false);
+                    playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getContext(), false);
+                }
             }
-            //TODO 剧情增补
             return ActionResultType.SUCCESS;
         }
-        playerEntity.displayClientMessage(new StringTextComponent("[ArD]WARN:You may find a new issue:we can't get block entity at#" + pos.toString()),false);
+        playerEntity.displayClientMessage(new StringTextComponent("[ArD]WARN:It seems that you find a new issue:we can't get block entity at#" + pos.toString()),false);
         playerEntity.displayClientMessage(new StringTextComponent("[ArD]警告:您似乎找到了一个新的漏洞:我们无法在位置#" + pos.toString() + " 正确地获取到方块实体，请联系管理员(悲)"),false);
         return ActionResultType.FAIL;
     }

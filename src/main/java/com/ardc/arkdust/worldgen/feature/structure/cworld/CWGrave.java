@@ -5,7 +5,7 @@ import com.ardc.arkdust.CodeMigration.RunHelper.DirectionHelper;
 import com.ardc.arkdust.CodeMigration.RunHelper.PosHelper;
 import com.ardc.arkdust.CodeMigration.RunHelper.StructureHelper;
 import com.ardc.arkdust.CodeMigration.resourcelocation.LootTable;
-import com.ardc.arkdust.NewPlayingMethod.story.blockanditem.StoryPointBE;
+import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBE;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.preobject.BlockState.RotateBlock;
 import com.ardc.arkdust.registry.BlockRegistry;

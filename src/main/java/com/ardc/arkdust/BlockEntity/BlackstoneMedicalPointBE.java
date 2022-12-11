@@ -1,8 +1,8 @@
 package com.ardc.arkdust.BlockEntity;
 
 import com.ardc.arkdust.Items.blocks.BlackstoneMedicalPoint;
-import com.ardc.arkdust.NewPlayingMethod.camp.Camp;
-import com.ardc.arkdust.NewPlayingMethod.camp.CampHelper;
+import com.ardc.arkdust.playmethod.camp.Camp;
+import com.ardc.arkdust.playmethod.camp.CampHelper;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.registry.TileEntityTypeRegistry;
 import net.minecraft.block.BlockState;

@@ -1,7 +1,7 @@
 package com.ardc.arkdust.preobject.pre.OIItem;
 
 import com.ardc.arkdust.preobject.pre.PreItem;
-import com.ardc.arkdust.NewPlayingMethod.OriInfection.IOIItem;
+import com.ardc.arkdust.playmethod.OriInfection.IOIItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;

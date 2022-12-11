@@ -1,4 +1,4 @@
-package com.ardc.arkdust.NewPlayingMethod.OriInfection;
+package com.ardc.arkdust.playmethod.OriInfection;
 
 import com.ardc.arkdust.CodeMigration.resourcelocation.Damage;
 import com.ardc.arkdust.CodeMigration.RunHelper.AdvancementHelper;

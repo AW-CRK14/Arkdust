@@ -1,4 +1,4 @@
-package com.ardc.arkdust.NewPlayingMethod.OriInfection;
+package com.ardc.arkdust.playmethod.OriInfection;
 
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextFormatting;

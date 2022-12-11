@@ -1,6 +1,6 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.NewPlayingMethod.story.blockanditem.StoryPointBlock;
+import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBlock;
 import com.ardc.arkdust.preobject.Block.*;
 import com.ardc.arkdust.preobject.BlockState.FaceCullingWhenSameBlock;
 import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
@@ -62,7 +62,7 @@ public class BlockRegistry {
 
 //    //test
     public static final RegistryObject<Block> test_block = BLOCKS.register("test_block", Test_block::new);//≤‚ ‘∑ΩøÈ
-//    public static final RegistryObject<Block> test_block_b = BLOCKS.register("test_block_b", Test_block_b::new);//≤‚ ‘∑ΩøÈ
+    public static final RegistryObject<Block> test_block_b = BLOCKS.register("test_block_b", Test_block_b::new);//≤‚ ‘∑ΩøÈ
 //    public static final RegistryObject<Block> test_block_c = BLOCKS.register("test_block_c", Test_block_c::new);//≤‚ ‘∑ΩøÈ
 //    public static final RegistryObject<Block> test_block_d = BLOCKS.register("test_block_d", Test_block_d::new);//≤‚ ‘∑ΩøÈ
 

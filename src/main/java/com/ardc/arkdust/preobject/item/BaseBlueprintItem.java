@@ -1,16 +1,10 @@
 package com.ardc.arkdust.preobject.item;
 
-import com.ardc.arkdust.NewPlayingMethod.OriInfection.OIMain;
 import com.ardc.arkdust.preobject.pre.PreItem;
 import com.ardc.arkdust.registry.ModGroupRegistry;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;

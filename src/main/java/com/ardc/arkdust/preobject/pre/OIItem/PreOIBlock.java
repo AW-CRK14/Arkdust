@@ -2,8 +2,8 @@ package com.ardc.arkdust.preobject.pre.OIItem;
 
 import com.ardc.arkdust.CodeMigration.resourcelocation.Damage;
 import com.ardc.arkdust.preobject.pre.PreBlock;
-import com.ardc.arkdust.NewPlayingMethod.OriInfection.IOIBlock;
-import com.ardc.arkdust.NewPlayingMethod.OriInfection.OIMain;
+import com.ardc.arkdust.playmethod.OriInfection.IOIBlock;
+import com.ardc.arkdust.playmethod.OriInfection.OIMain;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

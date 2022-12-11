@@ -2,8 +2,9 @@ package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.worldgen.feature.ConfiguredStructures;
-import com.ardc.arkdust.worldgen.feature.StructureRegistryHelper;
+import com.ardc.arkdust.CodeMigration.RunHelper.StructureRegistryHelper;
 import com.ardc.arkdust.worldgen.feature.structure.cworld.*;
+import com.ardc.arkdust.worldgen.feature.structure.story.moonfall.SMoonfallOasis;
 import com.ardc.arkdust.worldgen.feature.structure_pool.OldHouse0Pool;
 import com.ardc.arkdust.worldgen.feature.structure_pool.UndertreeBlueprintPool;
 import net.minecraft.world.World;
@@ -33,6 +34,7 @@ public class StructureRegistry {
     public static final RegistryObject<Structure<NoFeatureConfig>> CW_TOWER = StructureRegistryHelper.setup("cw_tower",new CWTower(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
     public static final RegistryObject<Structure<NoFeatureConfig>> CW_OLD_HOUSE = StructureRegistryHelper.setup("cw_old_house",new CWOldHouse(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
     public static final RegistryObject<Structure<NoFeatureConfig>> CW_BOAT = StructureRegistryHelper.setup("cw_boat",new CWBoat(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> STORY_MOONFALL_OASIS = StructureRegistryHelper.setup("story_moonfall_oasis",new SMoonfallOasis(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
 
     public static final List<JigsawPattern> jigsawPatternList = Arrays.asList(UndertreeBlueprintPool.pool, OldHouse0Pool.pool_broken,OldHouse0Pool.pool_common);
 
@@ -74,6 +76,9 @@ public class StructureRegistry {
             }
             if(event.getCategory().equals(Biome.Category.OCEAN) || event.getCategory().equals(Biome.Category.RIVER)){
                 event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_boat);
+            }
+            if(event.getCategory().equals(Biome.Category.DESERT)){
+                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_story_moonfall_oasis);
             }
         }
     }

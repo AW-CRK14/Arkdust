@@ -1,4 +1,4 @@
-package com.ardc.arkdust.NewPlayingMethod.camp;
+package com.ardc.arkdust.playmethod.camp;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;

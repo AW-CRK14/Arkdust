@@ -1,7 +1,7 @@
 package com.ardc.arkdust;
 
 import com.ardc.arkdust.worldgen.feature.ConfiguredStructures;
-import com.ardc.arkdust.worldgen.feature.StructureRegistryHelper;
+import com.ardc.arkdust.CodeMigration.RunHelper.StructureRegistryHelper;
 import com.ardc.arkdust.registry.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;

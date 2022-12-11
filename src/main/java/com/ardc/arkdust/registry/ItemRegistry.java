@@ -2,6 +2,7 @@ package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.CodeMigration.MaterialTier;
 import com.ardc.arkdust.Items.items.EnderEnergyRadar;
+import com.ardc.arkdust.gui.menu.MenuTestItem;
 import com.ardc.arkdust.preobject.item.BaseBlueprintItem;
 import com.ardc.arkdust.preobject.item.OIRVaccineItem;
 import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlockItem;
@@ -29,7 +30,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> originium_dust = ITEMS.register("originium_dust", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),false,2,0,1,32,8));//源石尘e1
     public static final RegistryObject<Item> originium_shard = ITEMS.register("originium_shard", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),false,2,1,0,4,1));//源石碎片
     public static final RegistryObject<Item> poor_originium = ITEMS.register("poor_originium", ()->new PreOIItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial),false,1,0,0,0,2));//贫瘠源石
-    public static final RegistryObject<Item> ester = ITEMS.register("ester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//一级酯
+    public static final RegistryObject<Item> ester = ITEMS.register("ester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//一w5级酯
     public static final RegistryObject<Item> polyester = ITEMS.register("polyester", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//二级酯
     public static final RegistryObject<Item> polyester_pack = ITEMS.register("polyester_pack", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//三级酯
     public static final RegistryObject<Item> polyester_lump = ITEMS.register("polyester_lump", ()->new PreItem(new Item.Properties().tab(ModGroupRegistry.terraCommonMaterial)));//四级酯
@@ -108,6 +109,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> tombstone_2_2 = ITEMS.register("tombstone_2_2", ()->new PreBlockItem(BlockRegistry.tombstone_2_2.get(), P_CW));//墓碑2-2
     public static final RegistryObject<Item> tombstone_2_3 = ITEMS.register("tombstone_2_3", ()->new PreBlockItem(BlockRegistry.tombstone_2_3.get(), P_CW));//墓碑2-3
     public static final RegistryObject<Item> red_caution_light = ITEMS.register("red_caution_light", ()->new PreBlockItem(BlockRegistry.red_caution_light.get(), P_CW));//红色应急灯
+    public static final RegistryObject<Item> menu_test = ITEMS.register("menu_test",MenuTestItem::new);//红色应急灯
 
 
     //TerraTools泰拉工具工具 注册

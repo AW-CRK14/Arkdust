@@ -1,7 +1,7 @@
 package com.ardc.arkdust.Items.blocks.ores;
 
 
-import com.ardc.arkdust.NewPlayingMethod.OriInfection.OIMain;
+import com.ardc.arkdust.playmethod.OriInfection.OIMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;

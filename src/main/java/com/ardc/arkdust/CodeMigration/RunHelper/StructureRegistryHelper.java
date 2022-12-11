@@ -1,6 +1,7 @@
-package com.ardc.arkdust.worldgen.feature;
+package com.ardc.arkdust.CodeMigration.RunHelper;
 
 import com.ardc.arkdust.Utils;
+import com.ardc.arkdust.worldgen.feature.ArdStructureAddInfo;
 import com.ardc.arkdust.worldgen.feature.structure.cworld.UnderTreeBlueprintBox;
 import com.ardc.arkdust.worldgen.feature.structure_pool.UndertreeBlueprintPool;
 import com.google.common.collect.ImmutableList;
