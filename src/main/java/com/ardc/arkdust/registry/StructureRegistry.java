@@ -51,7 +51,6 @@ public class StructureRegistry {
         if (worldW instanceof ServerWorld){
             world = (ServerWorld) worldW;
         }
-        System.out.println("WorldLoad:" + worldW + ":" + world);
     }
 
     @SubscribeEvent

@@ -1,13 +1,13 @@
-package com.ardc.arkdust.playmethod.OriInfection;
+package com.ardc.arkdust.playmethod.health_system.ori_infection;
 
 public interface IOIBlock{
     default boolean touchHurt(){return true;}
 
     float touchTickDamage();
 
-    int touchTickDamageProbability();
+    float touchTickDamageProbability();
 
-    int tickPlayerOILevelAdd();
+    int tickPlayerOIPointAdd();
 
     int needOIRLevel();
 

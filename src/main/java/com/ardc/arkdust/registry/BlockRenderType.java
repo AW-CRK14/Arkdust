@@ -12,6 +12,7 @@ public class BlockRenderType {
         @SubscribeEvent
         public static void onRenderTypeSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
+//                RenderTypeLookup.setRenderLayer(BlockRegistry.pau_fluorescence_glass.get(), RenderType.lightning());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.pau_fluorescence_glass.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.iron_structure_frame_creator.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.blue_crystal.get(), RenderType.translucent());

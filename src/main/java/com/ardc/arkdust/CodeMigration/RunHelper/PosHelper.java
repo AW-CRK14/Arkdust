@@ -37,7 +37,7 @@ public class PosHelper {
     }
 
     public static BlockPos entityPosToBlock(LivingEntity entity){
-        return new BlockPos((int)entity.getX()+0.5,(int)entity.getY(),(int)entity.getZ()+0.5).below();
+        return new BlockPos(Math.floor(entity.getX()),(int)entity.getY(),Math.floor(entity.getZ())).below();
     }
 
     public static BlockPos getRandomPosNearPos(BlockPos pos,int xRange,int zRange,int yMin,int yMax){

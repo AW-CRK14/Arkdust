@@ -1,19 +1,13 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.CodeMigration.RunHelper.CapabilityHelper;
-import com.ardc.arkdust.Utils;
+import com.ardc.arkdust.playmethod.health_system.IHealthSystemCapability;
+import com.ardc.arkdust.playmethod.rdi_auth.IRDIAccountAuthCapability;
 import com.ardc.arkdust.playmethod.story.IStorySaveCapability;
-import com.ardc.arkdust.playmethod.story.StoryCapabilityProvider;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -22,6 +16,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class CapabilityRegistry {
     @CapabilityInject(IStorySaveCapability.class)
     public static Capability<IStorySaveCapability> STORY_CAPABILITY;
+    @CapabilityInject(IHealthSystemCapability.class)
+    public static Capability<IHealthSystemCapability> HEALTH_SYSTEM_CAPABILITY;
+    @CapabilityInject(IRDIAccountAuthCapability.class)
+    public static Capability<IRDIAccountAuthCapability> RDI_ACCOUNT_AUTH_CAPABILITY;
 
     @SubscribeEvent
     public static void StoryCapabilityRegistry(FMLCommonSetupEvent event){
@@ -36,5 +34,33 @@ public class CapabilityRegistry {
                 },
                 ()->null
         ));
+
+        event.enqueueWork(()-> CapabilityManager.INSTANCE.register(
+                IHealthSystemCapability.class,
+                new Capability.IStorage<IHealthSystemCapability>() {
+                    public INBT writeNBT(Capability<IHealthSystemCapability> capability, IHealthSystemCapability instance, Direction side) {
+                        return null;
+                    }
+                    public void readNBT(Capability<IHealthSystemCapability> capability, IHealthSystemCapability instance, Direction side, INBT nbt) {
+                    }
+                },
+                ()->null
+        ));
+
+        event.enqueueWork(registerDefaultCap(IRDIAccountAuthCapability.class));
+    }
+
+    public static <T> Runnable registerDefaultCap(Class<T> tClass){
+        return ()-> CapabilityManager.INSTANCE.register(
+                tClass,
+                new Capability.IStorage<T>() {
+                    public INBT writeNBT(Capability<T> capability, T instance, Direction side) {
+                        return null;
+                    }
+                    public void readNBT(Capability<T> capability, T instance, Direction side, INBT nbt) {
+                    }
+                },
+                ()->null
+        );
     }
 }

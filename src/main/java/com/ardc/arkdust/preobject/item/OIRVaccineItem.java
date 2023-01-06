@@ -1,7 +1,7 @@
 package com.ardc.arkdust.preobject.item;
 
 import com.ardc.arkdust.preobject.pre.PreItem;
-import com.ardc.arkdust.playmethod.OriInfection.OIMain;
+import com.ardc.arkdust.registry.CapabilityRegistry;
 import com.ardc.arkdust.registry.ModGroupRegistry;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -42,23 +42,25 @@ public class OIRVaccineItem extends PreItem {
     }
 
     public ItemStack finishUsingItem(ItemStack itemStack, World world, LivingEntity livingEntity) {
-        if(livingEntity instanceof PlayerEntity && !world.isClientSide()){
-            int rLevel = new OIMain.EntityOI().getPlayerOIResistanceLevel((PlayerEntity) livingEntity,world);
-            if(this.vaccineLevel == rLevel+1){
-                new OIMain.EntityOI().setPlayerOIResistanceLevel((PlayerEntity)livingEntity,vaccineLevel,world);
-                new OIMain.EntityOI().setPlayerOIPoint(livingEntity,0);
-                ((PlayerEntity) livingEntity).displayClientMessage(new TranslationTextComponent("pma.oi.OIPointReset").withStyle(TextFormatting.GREEN),false);
-                itemStack.shrink(1);
-                return itemStack;
-            }else if (this.vaccineLevel <= rLevel){
-                int minus =(int) (-vaccineLevel*vaccineLevel*24*therapeuticFactors);
-                new OIMain.EntityOI().addPlayerOIPoint(livingEntity, minus);
-                System.out.println(minus);
-                itemStack.shrink(1);
-                return itemStack;
-            }else{
-                ((PlayerEntity) livingEntity).displayClientMessage(new TranslationTextComponent("pma.oi.vaccineLevelTooHigh").withStyle(TextFormatting.RED),false);
-            }
+        if(livingEntity instanceof PlayerEntity) {
+            livingEntity.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)->{
+                int rLevel = i.ORI$getRLevel();
+                if (this.vaccineLevel == rLevel + 1) {
+                    i.ORI$addRLevel();
+                    i.ORI$resetPoint();
+                    if(world.isClientSide)
+                        ((PlayerEntity) livingEntity).displayClientMessage(new TranslationTextComponent("pma.oi.OIPointReset").withStyle(TextFormatting.GREEN), false);
+                    itemStack.shrink(1);
+                } else if (this.vaccineLevel <= rLevel) {
+                    int minus = (int) (-vaccineLevel * vaccineLevel * 24 * therapeuticFactors);
+                    i.ORI$addPoint(minus);
+                    System.out.println(minus);
+                    itemStack.shrink(1);
+                } else {
+                    if(world.isClientSide)
+                        ((PlayerEntity) livingEntity).displayClientMessage(new TranslationTextComponent("pma.oi.vaccineLevelTooHigh").withStyle(TextFormatting.RED), false);
+                }
+            });
         }
         return itemStack;
     }

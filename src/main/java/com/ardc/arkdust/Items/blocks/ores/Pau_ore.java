@@ -1,7 +1,8 @@
 package com.ardc.arkdust.Items.blocks.ores;
 
 
-import com.ardc.arkdust.playmethod.OriInfection.OIMain;
+import com.ardc.arkdust.Utils;
+import com.ardc.arkdust.registry.CapabilityRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -22,7 +23,9 @@ public class Pau_ore extends Block{
 
     @Override
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit){
-        OIMain.seedOIData(player);
+        if(worldIn.isClientSide && !player.isCreative()){
+            player.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)-> Utils.LOGGER.info(i.toString()));
+        }
         return ActionResultType.SUCCESS;
     }
 

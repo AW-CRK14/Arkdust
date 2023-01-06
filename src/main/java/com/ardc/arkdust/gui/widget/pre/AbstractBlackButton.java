@@ -19,9 +19,9 @@ public class AbstractBlackButton extends Button {
         super(fromX,fromY,addX,addY,iTextComponent,progress,tip);
     }
 
-    public static final ResourceLocation RESOURCE = new ResourceLocation(Utils.MOD_ID,"textures/gui/widget/blackbutton.png");
-    public static final ResourceLocation RETURN_RESOURCE = new ResourceLocation(Utils.MOD_ID,"textures/gui/material/menu_return.png");
-    public static final ResourceLocation CLOSE_RESOURCE = new ResourceLocation(Utils.MOD_ID,"textures/gui/material/menu_close.png");
+    public static final ResourceLocation RESOURCE = new ResourceLocation(Utils.MOD_ID,"textures/gui/info/widget/blackbutton.png");
+    public static final ResourceLocation RETURN_RESOURCE = new ResourceLocation(Utils.MOD_ID,"textures/gui/info/material/menu_return.png");
+    public static final ResourceLocation CLOSE_RESOURCE = new ResourceLocation(Utils.MOD_ID,"textures/gui/info/material/menu_close.png");
 
     @Override
     public void renderButton(MatrixStack stack, int mouseX, int mouseY, float p_230431_4_) {
@@ -32,9 +32,15 @@ public class AbstractBlackButton extends Button {
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
         //渲染内容
-        RenderSystem.color4f(1,1,1,1);
-        this.blit(stack, this.x, this.y,this.width*this.getYImage(this.isHovered()), 0, this.width, this.height,this.width*4,this.height);//UV部分:0->锁定 1->按下 2->正常
+//        int i =this.width*getTextureX(mouseX,mouseY);
+//        System.out.println("\nbutton test:" + i + "{width:"+this.width+",YImage:"+this.getYImage(this.isHovered())+"}");
+        this.blit(stack, this.x, this.y,this.width*getTextureX(mouseX,mouseY), 0, this.width, this.height,this.width*4,this.height);
         this.renderBg(stack, minecraft, mouseX, mouseY);
+    }
+
+    public int getTextureX(int mouthX,int mouthY){//0->锁定 2->上方 1->正常
+        if(!this.active) return 0;
+        return this.isMouseOver(mouthX,mouthY) ? 2 : 1;
     }
 
 

@@ -2,12 +2,11 @@ package com.ardc.arkdust.preobject.pre.OIItem;
 
 import com.ardc.arkdust.CodeMigration.resourcelocation.Damage;
 import com.ardc.arkdust.preobject.pre.PreBlock;
-import com.ardc.arkdust.playmethod.OriInfection.IOIBlock;
-import com.ardc.arkdust.playmethod.OriInfection.OIMain;
+import com.ardc.arkdust.playmethod.health_system.ori_infection.IOIBlock;
+import com.ardc.arkdust.registry.CapabilityRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.util.math.BlockPos;
@@ -16,6 +15,7 @@ import net.minecraft.world.World;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PreOIBlock extends PreBlock implements IOIBlock {
     private final float touchTickDamage;
@@ -34,12 +34,12 @@ public class PreOIBlock extends PreBlock implements IOIBlock {
     }
 
     @Override
-    public int touchTickDamageProbability() {
-        return 100;
+    public float touchTickDamageProbability() {
+        return 1;
     }
 
     @Override
-    public int tickPlayerOILevelAdd() {
+    public int tickPlayerOIPointAdd() {
         return tickPlayerOILevelAdd;
     }
 
@@ -50,15 +50,12 @@ public class PreOIBlock extends PreBlock implements IOIBlock {
 
     @Override
     public void stepOn(World world, BlockPos pos, Entity entity) {
-        if(!(entity instanceof LivingEntity)) return;
-        Random r = new Random();
-        if(!world.isClientSide() && entity instanceof PlayerEntity && new OIMain.EntityOI().getPlayerOIResistanceLevel((PlayerEntity) entity,world) >= this.needOIRLevel){
-            if(r.nextInt(100)+1 <= touchTickDamageProbability()) entity.hurt(Damage.ORIROCK_INFECTION,0.2F);
-            return;
+        if(!(entity instanceof LivingEntity) || !this.touchHurt()) return;
+        AtomicInteger rLevel = new AtomicInteger();
+        entity.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)-> rLevel.set(i.ORI$getRLevel()));
+        if(new Random().nextFloat() <= touchTickDamageProbability()){
+            entity.hurt(Damage.ORIROCK_INFECTION, rLevel.get() >= this.needOIRLevel ? 0.2F : touchTickDamage);
         }
-        if(r.nextInt(100)+1 <= touchTickDamageProbability()) entity.hurt(Damage.ORIROCK_INFECTION,touchTickDamage());
-        if(entity instanceof PlayerEntity && r.nextInt(10)==0)
-            new OIMain.EntityOI().addPlayerOIPoint(entity,tickPlayerOILevelAdd);
     }
 
     @Override
