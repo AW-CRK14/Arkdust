@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "arkdust:blocks/main_world_blocks/c7lab/lab_strock_ground_5",
+    "particle":"arkdust:blocks/main_world_blocks/c7lab/lab_strock_ground_5"
+  }
+}

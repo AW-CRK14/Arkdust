@@ -1,20 +1,27 @@
 package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.worldgen.feature.ConfiguredStructures;
-import com.ardc.arkdust.CodeMigration.RunHelper.StructureRegistryHelper;
-import com.ardc.arkdust.worldgen.feature.structure.cworld.*;
-import com.ardc.arkdust.worldgen.feature.structure.story.moonfall.SMoonfallOasis;
-import com.ardc.arkdust.worldgen.feature.structure_pool.OldHouse0Pool;
-import com.ardc.arkdust.worldgen.feature.structure_pool.UndertreeBlueprintPool;
+import com.ardc.arkdust.worldgen.feature.OreFeature;
+import com.ardc.arkdust.worldgen.structure.ConfiguredStructures;
+import com.ardc.arkdust.RunHelper.StructureRegistryHelper;
+import com.ardc.arkdust.worldgen.structure.structure.cworld.*;
+import com.ardc.arkdust.worldgen.structure.structure.story.moonfall.SMoonfallOasis;
+import com.ardc.arkdust.worldgen.structure.structure_pool.OldHouse0Pool;
+import com.ardc.arkdust.worldgen.structure.structure_pool.UndertreeBlueprintPool;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPatternRegistry;
 import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -35,6 +42,7 @@ public class StructureRegistry {
     public static final RegistryObject<Structure<NoFeatureConfig>> CW_OLD_HOUSE = StructureRegistryHelper.setup("cw_old_house",new CWOldHouse(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
     public static final RegistryObject<Structure<NoFeatureConfig>> CW_BOAT = StructureRegistryHelper.setup("cw_boat",new CWBoat(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
     public static final RegistryObject<Structure<NoFeatureConfig>> STORY_MOONFALL_OASIS = StructureRegistryHelper.setup("story_moonfall_oasis",new SMoonfallOasis(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> CW_TEST_BRIDGE = StructureRegistryHelper.setup("cw_test_bridge",new CWTestBridge(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
 
     public static final List<JigsawPattern> jigsawPatternList = Arrays.asList(UndertreeBlueprintPool.pool, OldHouse0Pool.pool_broken,OldHouse0Pool.pool_common);
 
@@ -58,26 +66,33 @@ public class StructureRegistry {
         if(event.getName() != null) {
 //            RegistryKey<Biome> biomeKey = RegistryKey.create(Registry.BIOME_REGISTRY, event.getName());
             float tem = event.getClimate().temperature;
-            if(tem >=0.2 && tem <= 1.25 && !event.getCategory().equals(Biome.Category.OCEAN) && !event.getCategory().equals(Biome.Category.RIVER)){//树下蓝图箱生成依赖于群系温度
-                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_undertree_blueprint);//等价的
-//                event.getGeneration().getStructures().add(()->ConfiguredStructures.cfed_undertree_blueprint);
+            BiomeGenerationSettingsBuilder gen = event.getGeneration();
+            Biome.Category category = event.getCategory();
+
+            if(tem >=0.2 && tem <= 1.25 && !category.equals(Biome.Category.OCEAN) && !category.equals(Biome.Category.RIVER)){//树下蓝图箱生成依赖于群系温度
+                gen.addStructureStart(ConfiguredStructures.cfed_undertree_blueprint);//等价的
+//                gen.getStructures().add(()->ConfiguredStructures.cfed_undertree_blueprint);
             }
-            if(event.getCategory().equals(Biome.Category.PLAINS)){//旧屋0结构
-                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_old_house_0);
+            if(category.equals(Biome.Category.PLAINS)){
+                gen.addStructureStart(ConfiguredStructures.cfed_cw_old_house_0);
             }
-            if(event.getCategory().equals(Biome.Category.DESERT) || event.getCategory().equals(Biome.Category.PLAINS) || event.getCategory().equals(Biome.Category.FOREST) || event.getCategory().equals(Biome.Category.SAVANNA)){//像素方舟图书馆结构
-                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_pixark_library);
+            if(category.equals(Biome.Category.DESERT) || category.equals(Biome.Category.PLAINS) || category.equals(Biome.Category.FOREST) || category.equals(Biome.Category.SAVANNA)){//像素方舟图书馆结构
+                gen.addStructureStart(ConfiguredStructures.cfed_pixark_library);
             }
-            if(!event.getCategory().equals(Biome.Category.OCEAN) && !event.getCategory().equals(Biome.Category.RIVER)){//墓碑结构与塔结构
-                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_grave);
-                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_tower);
-                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_old_house);
+            if(!category.equals(Biome.Category.OCEAN) && !category.equals(Biome.Category.RIVER)){//墓碑结构与塔结构
+                gen.addStructureStart(ConfiguredStructures.cfed_cw_grave);
+                gen.addStructureStart(ConfiguredStructures.cfed_cw_tower);
+                gen.addStructureStart(ConfiguredStructures.cfed_cw_old_house);
+                gen.addStructureStart(ConfiguredStructures.cfed_cw_test_bridge);
             }
-            if(event.getCategory().equals(Biome.Category.OCEAN) || event.getCategory().equals(Biome.Category.RIVER)){
-                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_cw_boat);
+            if(category.equals(Biome.Category.OCEAN) || category.equals(Biome.Category.RIVER)){
+                gen.addStructureStart(ConfiguredStructures.cfed_cw_boat);
             }
-            if(event.getCategory().equals(Biome.Category.DESERT)){
-                event.getGeneration().addStructureStart(ConfiguredStructures.cfed_story_moonfall_oasis);
+            if(category.equals(Biome.Category.DESERT)){
+                gen.addStructureStart(ConfiguredStructures.cfed_story_moonfall_oasis);
+            }
+            if(event.getName().equals(BiomeRegistry.CW$FAULT_LINE.getId())){
+                gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, OreFeature.ORE_PAU);
             }
         }
     }

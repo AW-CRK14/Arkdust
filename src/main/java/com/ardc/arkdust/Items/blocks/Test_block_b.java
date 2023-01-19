@@ -1,7 +1,7 @@
 package com.ardc.arkdust.Items.blocks;
 
-import com.ardc.arkdust.CodeMigration.Material;
-import com.ardc.arkdust.playmethod.story.IStorySaveCapability;
+import com.ardc.arkdust.obj_property.ExtraMaterial;
+import com.ardc.arkdust.capability.story.IStorySaveCapability;
 import com.ardc.arkdust.registry.CapabilityRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,7 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public class Test_block_b extends Block{
     public Test_block_b(){
-        super(Properties.of(Material.TEST1).strength(2));
+        super(Properties.of(ExtraMaterial.TEST1).strength(2));
         //strength是强度，等价于非官方版中的hardnessAndResistance
 
     }

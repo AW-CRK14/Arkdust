@@ -1,0 +1,23 @@
+{
+  "name" : "arkdust:cw/test_bridge/small_road",
+  "fallback" : "minecraft:empty",
+  "elements" : [
+    {
+      "weight": 1,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/s1",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },{
+      "weight": 2,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/s2",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

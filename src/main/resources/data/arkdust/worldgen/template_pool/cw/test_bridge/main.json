@@ -1,0 +1,15 @@
+{
+  "name" : "arkdust:cw/test_bridge/main",
+  "fallback" : "minecraft:empty",
+  "elements" : [
+    {
+      "weight": 1,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/c",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

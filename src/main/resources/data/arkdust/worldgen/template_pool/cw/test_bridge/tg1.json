@@ -1,0 +1,23 @@
+{
+  "name" : "arkdust:cw/test_bridge/tg1",
+  "fallback" : "minecraft:empty",
+  "elements" : [
+    {
+      "weight": 3,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/tg1_1",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },{
+      "weight": 1,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/tg1_2",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

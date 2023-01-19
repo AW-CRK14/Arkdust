@@ -1,0 +1,59 @@
+{
+  "name" : "arkdust:cw/test_bridge/road",
+  "fallback" : "minecraft:empty",
+  "elements" : [
+    {
+      "weight": 1,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/r1",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },{
+      "weight": 2,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/r2",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/r7",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/r4",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/r5",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/r6",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

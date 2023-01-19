@@ -1,7 +1,7 @@
 package com.ardc.arkdust.preobject.pre.OIItem;
 
 import com.ardc.arkdust.preobject.pre.PreBlockItem;
-import com.ardc.arkdust.playmethod.health_system.ori_infection.IOIItem;
+import com.ardc.arkdust.capability.health_system.ori_infection.IOIItem;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;

@@ -1,8 +1,8 @@
 package com.ardc.arkdust.preobject.pre.OIItem;
 
-import com.ardc.arkdust.CodeMigration.resourcelocation.Damage;
+import com.ardc.arkdust.resourcelocation.Damage;
 import com.ardc.arkdust.preobject.pre.PreBlock;
-import com.ardc.arkdust.playmethod.health_system.ori_infection.IOIBlock;
+import com.ardc.arkdust.capability.health_system.ori_infection.IOIBlock;
 import com.ardc.arkdust.registry.CapabilityRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;

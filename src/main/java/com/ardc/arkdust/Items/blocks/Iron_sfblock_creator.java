@@ -1,9 +1,9 @@
 package com.ardc.arkdust.Items.blocks;
 
-import com.ardc.arkdust.BlockEntity.SFBlockCreatorBE;
+import com.ardc.arkdust.block_entity.SFBlockCreatorBE;
 import com.ardc.arkdust.preobject.BlockState.RotateBlock;
 import com.ardc.arkdust.registry.ItemRegistry;
-import com.ardc.arkdust.BlockEntity.Process.SFBlockCreator_Use;
+import com.ardc.arkdust.block_entity.Process.SFBlockCreator_Use;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;

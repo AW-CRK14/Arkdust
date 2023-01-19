@@ -1,6 +1,6 @@
 package com.ardc.arkdust.model.block;
 
-import com.ardc.arkdust.BlockEntity.ScreenedTableBE;
+import com.ardc.arkdust.block_entity.ScreenedTableBE;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;

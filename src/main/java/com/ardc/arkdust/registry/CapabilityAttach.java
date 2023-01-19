@@ -1,10 +1,11 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.CodeMigration.RunHelper.CapabilityHelper;
+import com.ardc.arkdust.RunHelper.CapabilityHelper;
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.playmethod.health_system.HealthSystemCapabilityProvider;
-import com.ardc.arkdust.playmethod.rdi_auth.RDIAccountAuthCapabilityProvider;
-import com.ardc.arkdust.playmethod.story.StoryCapabilityProvider;
+import com.ardc.arkdust.capability.health_system.HealthSystemCapabilityProvider;
+import com.ardc.arkdust.capability.rdi_auth.RDIAccountAuthCapabilityProvider;
+import com.ardc.arkdust.capability.rdi_depot.RDIDepotCapabilityProvider;
+import com.ardc.arkdust.capability.story.StoryCapabilityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -23,6 +24,7 @@ public class CapabilityAttach {
             event.addCapability(new ResourceLocation(Utils.MOD_ID,"story"),new StoryCapabilityProvider());
             event.addCapability(new ResourceLocation(Utils.MOD_ID,"health_system"),new HealthSystemCapabilityProvider());
             event.addCapability(new ResourceLocation(Utils.MOD_ID,"rdi_account_auth"),new RDIAccountAuthCapabilityProvider());
+            event.addCapability(new ResourceLocation(Utils.MOD_ID,"rdi_depot"),new RDIDepotCapabilityProvider());
         }
     }
 
@@ -31,6 +33,7 @@ public class CapabilityAttach {
         CapabilityHelper.playerCloneDefaultProgress(CapabilityRegistry.STORY_CAPABILITY,event);
         CapabilityHelper.playerCloneDefaultProgress(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY,event);
         CapabilityHelper.playerCloneDefaultProgress(CapabilityRegistry.RDI_ACCOUNT_AUTH_CAPABILITY,event);
+        CapabilityHelper.playerCloneDefaultProgress(CapabilityRegistry.RDI_DEPOT_CAPABILITY,event);
     }
 
     @SubscribeEvent//玩家进入时的数据同步
@@ -38,6 +41,7 @@ public class CapabilityAttach {
         if(!event.getPlayer().level.isClientSide){
             event.getPlayer().getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)->i.sendPackToClient((ServerPlayerEntity) event.getPlayer()));
             event.getPlayer().getCapability(CapabilityRegistry.RDI_ACCOUNT_AUTH_CAPABILITY).ifPresent((i)->i.sendPackToClient((ServerPlayerEntity) event.getPlayer()));
+            event.getPlayer().getCapability(CapabilityRegistry.RDI_DEPOT_CAPABILITY).ifPresent((i)->i.sendPackToClient((ServerPlayerEntity) event.getPlayer()));
         }
     }
 }

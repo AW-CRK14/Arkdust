@@ -1,9 +1,9 @@
 package com.ardc.arkdust;
 
-import com.ardc.arkdust.worldgen.feature.ConfiguredStructures;
-import com.ardc.arkdust.CodeMigration.RunHelper.StructureRegistryHelper;
+import com.ardc.arkdust.worldgen.biome.BiomeKey;
+import com.ardc.arkdust.worldgen.structure.ConfiguredStructures;
+import com.ardc.arkdust.RunHelper.StructureRegistryHelper;
 import com.ardc.arkdust.registry.*;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -17,13 +17,18 @@ public class Arkdust {
 
     public Arkdust(){
         final IEventBus BUS = FMLJavaModLoadingContext.get().getModEventBus();
-        ItemRegistry.ITEMS.register(BUS);//items类注册入mod主线
-        BlockRegistry.BLOCKS.register(BUS);//blocks类注册入mod主线
-        TileEntityTypeRegistry.TE.register(BUS);//方块实体注册入mod主线
-        StructureRegistryHelper.STRUCTURES.register(BUS);//
+        ItemRegistry.ITEMS.register(BUS);//物品注册
+        BlockRegistry.BLOCKS.register(BUS);//方块注册
+        TileEntityTypeRegistry.TE.register(BUS);//方块实体注册
+
+        //结构注册
+        StructureRegistryHelper.STRUCTURES.register(BUS);
         BUS.addListener(this::ardStructureRegistrySetup);
-        MinecraftForge.EVENT_BUS.register(this);
-//        SurfaceBuilderInit.SURFACE_BUILDER.register(FMLJavaModLoadingContext.get().getModEventBus());
+        SurfaceBuilderRegistry.SURFACE_BUILDER.register(BUS);
+
+        //生物群系注册
+        BiomeRegistry.BIOMES.register(BUS);
+        BiomeKey.generateBiome();
     }
 
     private void ardStructureRegistrySetup(final FMLCommonSetupEvent event){

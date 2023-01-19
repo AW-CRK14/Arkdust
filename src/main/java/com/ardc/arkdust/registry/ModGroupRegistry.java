@@ -1,6 +1,6 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.ModGroup.*;
+import com.ardc.arkdust.item_group.*;
 import net.minecraft.item.ItemGroup;
 
 //此文件用于注册mod的物品分组

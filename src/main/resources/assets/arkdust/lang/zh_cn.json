@@ -24,6 +24,7 @@
   "block.arkdust.c_originium_block": "C型扩散源石",
   "block.arkdust.story_point": "信息端口",
   "block.arkdust.d_originium_block": "D型静态源石",
+  "block.arkdust.lab_strock": "",
   "death.attack.orirock_infection": "%1$s 在源石中凝固为结晶",
   "death.attack.orirock_death": "%1$s 死于急性源石感染",
   "explain.exp.item.arkdust.aketon": "酮凝集组",

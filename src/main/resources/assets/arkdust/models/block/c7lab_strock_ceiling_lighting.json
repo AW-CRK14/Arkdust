@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "arkdust:blocks/main_world_blocks/c7lab/lab_strock_ceiling_lighting",
+    "particle":"arkdust:blocks/main_world_blocks/c7lab/lab_strock_ceiling_lighting"
+  }
+}
+

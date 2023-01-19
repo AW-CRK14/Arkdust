@@ -1,0 +1,24 @@
+{
+  "name" : "arkdust:cw/test_bridge/chest",
+  "fallback" : "minecraft:empty",
+  "elements" : [
+    {
+      "weight": 1,
+      "element": {
+        "location": "arkdust:cworld/test_bridge/chest",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "arkdust:empty",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 package com.ardc.arkdust.model.block;
 
-import com.ardc.arkdust.BlockEntity.BlackstoneMedicalPointBE;
+import com.ardc.arkdust.block_entity.BlackstoneMedicalPointBE;
 import com.ardc.arkdust.model.modelblock.LifeBlockModel;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;

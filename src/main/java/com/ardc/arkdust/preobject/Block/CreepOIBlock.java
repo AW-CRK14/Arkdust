@@ -2,7 +2,7 @@ package com.ardc.arkdust.preobject.Block;
 
 import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
 import com.ardc.arkdust.registry.BlockRegistry;
-import com.ardc.arkdust.CodeMigration.resourcelocation.Tag;
+import com.ardc.arkdust.resourcelocation.Tag;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;

@@ -3,8 +3,9 @@ package com.ardc.arkdust.gui.screen.menu;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.gui.ArdMainInfoScreen;
 import com.ardc.arkdust.gui.widget.pre.MainMenuTagCardButton;
-import com.ardc.arkdust.playmethod.health_system.HealthSystemCapability;
-import com.ardc.arkdust.playmethod.rdi_auth.RDIAccountAuthCapability;
+import com.ardc.arkdust.capability.health_system.HealthSystemCapability;
+import com.ardc.arkdust.capability.rdi_auth.RDIAccountAuthCapability;
+import com.ardc.arkdust.capability.rdi_depot.RDIDepotCapability;
 import com.ardc.arkdust.registry.CapabilityRegistry;
 import com.ibm.icu.impl.Pair;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -50,7 +51,18 @@ public class MenuScreen extends ArdMainInfoScreen {
                         });
                     }
                 });
-        resourceCard = new MainMenuTagCardButton(rightBoxBaseX,rightBoxBaseY+100,rightBoxAddX,40,"resource",(button)->{},null,null,0,(button,fx,fy,ax,ay,stack)->{});
+        resourceCard = new MainMenuTagCardButton(rightBoxBaseX,rightBoxBaseY+100,rightBoxAddX,40,"resource",(button)->{},new ResourceLocation(Utils.MOD_ID,"textures/gui/info/pic/resource.png"),null,0,
+                (button,fx,fy,ax,ay,stack)->{
+                    PlayerEntity entity = minecraft.player;
+                    if(entity != null) {
+                        entity.getCapability(CapabilityRegistry.RDI_DEPOT_CAPABILITY).ifPresent((i)->{
+                            drawScaledText(stack,0.85F,new StringTextComponent(int2PatternString(i.getObject(RDIDepotCapability.DepotObject.ORUNDUM))),0xC62A37,fx + 0.2F * ax,fy + 0.7F * ay,false);
+                            drawScaledText(stack,0.85F,new StringTextComponent(int2PatternString(i.getObject(RDIDepotCapability.DepotObject.LMB))),0x6AC1D7,fx + 0.2F * ax,fy + 0.15F * ay,false);
+                            drawScaledText(stack,0.85F,new StringTextComponent(int2PatternString(i.getObject(RDIDepotCapability.DepotObject.ORIGINITE_PRIME))),0xFFF78C,fx + 0.7F * ax,fy + 0.15F * ay,false);
+                            drawScaledText(stack,0.85F,new StringTextComponent(int2PatternString(i.getObject(RDIDepotCapability.DepotObject.ORIGINIUM_INGOT))),0x04DEB6,fx + 0.7F * ax,fy + 0.7F * ay,false);
+                        });
+                    }
+                });
     }
 
     public void drawHealthLine(MatrixStack stack ,int fx,int fy,int ax,int ay,int in,int all,int color,int color_index){
@@ -60,7 +72,16 @@ public class MenuScreen extends ArdMainInfoScreen {
         blit(stack,fx+color_part,fy+ay-height,0,20*height,ax-color_part,height,1,21*height);
         blit(stack,fx,fy+ay-height,0,color_index*height,color_part,height,1,21*height);
         drawScaledCenterText(stack,1.3F,new StringTextComponent(String.valueOf(in)),color,fx+0.3F*ax,fy+ay-height,false,true);
-        drawScaledText(stack,0.8F,new StringTextComponent("/" + all),0xAEAEAE,fx+ax-font.width("/" + all)*0.8F,fy+ay-height-7.2F,false);
+        drawScaledText(stack,0.8F,new StringTextComponent("/" + all),0xE2E2E2,fx+ax-font.width("/" + all)*0.8F,fy+ay-height-7.2F,false);
+    }
+
+    private static String int2PatternString(int num){
+        if(num>600000){
+            return (num/100000)/10F + "m";
+        }else if(num>5000){
+            return (num/100)/10F + "k";
+        }
+        return String.valueOf(num);
     }
 
 
@@ -83,13 +104,13 @@ public class MenuScreen extends ArdMainInfoScreen {
         createData();
         TextureManager manager = this.minecraft.getTextureManager();
 
-        manager.bind(plank);
-        setAlpha(0.16F);
-        blit(ms,rightBoxBaseX,rightBoxBaseY,0,0,rightBoxAddX,40,90,90);
+//        manager.bind(plank);
+//        setAlpha(0.16F);
+//        blit(ms,rightBoxBaseX,rightBoxBaseY,0,0,rightBoxAddX,40,90,90);
         
         manager.bind(getFromMaterial("bg_color"));
         defaultAlpha();
-        blit(ms,rightBoxBaseX+6,rightBoxBaseY-12,0,0,rightBoxAddX - 12,168,1,1740);
+        blit(ms,rightBoxBaseX+6,rightBoxBaseY-12,0,0,rightBoxAddX - 12,158,1,1740);
 
         manager.bind(getFromMaterial("account_data"));
         blit(ms,rightBoxBaseX,rightBoxBaseY-18,0,0,48,12,48,12);

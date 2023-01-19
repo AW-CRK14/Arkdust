@@ -11,6 +11,11 @@ import java.util.List;
 public class DropSelfBlock extends PreBlock {
     public final int dropNumber;
 
+    public DropSelfBlock(Properties properties){
+        super(properties);
+        dropNumber = 1;
+    }
+
     public DropSelfBlock(Properties properties, int number){
         super(properties);
         dropNumber = number;

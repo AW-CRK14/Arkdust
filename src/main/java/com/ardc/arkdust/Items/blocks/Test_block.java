@@ -1,12 +1,11 @@
 package com.ardc.arkdust.Items.blocks;
 
-import com.ardc.arkdust.CodeMigration.Material;
-import com.ardc.arkdust.CodeMigration.resourcelocation.LootTable;
+import com.ardc.arkdust.obj_property.ExtraMaterial;
+import com.ardc.arkdust.resourcelocation.LootTable;
 import com.ardc.arkdust.preobject.pre.PreBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -19,24 +18,17 @@ import java.util.Random;
 
 public class Test_block extends PreBlock {
     public Test_block(){
-        super(Properties.of(Material.TEST1).strength(2));
+        super(Properties.of(ExtraMaterial.TEST1).strength(2));
         //strength是强度，等价于非官方版中的hardnessAndResistance
     }
 
     @Override
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit){
-        if(!worldIn.isClientSide() && worldIn.getBlockState(pos.above()).getBlock().equals(Blocks.AIR)) {
-            worldIn.setBlock(pos.above(),Blocks.BARREL.defaultBlockState(),3);
-            worldIn.setBlock(pos.above().above(),Blocks.CHEST.defaultBlockState(),3);
+        if(!worldIn.isClientSide()) {
+            worldIn.setBlock(pos.above(),Blocks.CHEST.defaultBlockState(),3);
             TileEntity tileEntity = worldIn.getBlockEntity(pos.above());
             if(tileEntity instanceof LockableLootTileEntity){
-                Random r = new Random();
-                ((LockableLootTileEntity) tileEntity).setLootTable(LootTable.FISH,r.nextLong());
-            }
-            tileEntity = worldIn.getBlockEntity(pos.above().above());
-            if(tileEntity instanceof LockableLootTileEntity){
-                Random r = new Random();
-                ((LockableLootTileEntity) tileEntity).setLootTable(LootTable.GENERAL_SUPPLY_BOX_A,r.nextLong());
+                ((LockableLootTileEntity) tileEntity).setLootTable(LootTable.GENERAL_SUPPLY_BOX_A,new Random().nextLong());
             }
         }
         return ActionResultType.SUCCESS;

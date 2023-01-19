@@ -1,9 +1,9 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.BlockEntity.BlackstoneMedicalPointBE;
-import com.ardc.arkdust.BlockEntity.SFBlockCreatorBE;
-import com.ardc.arkdust.BlockEntity.ScreenedTableBE;
-import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBE;
+import com.ardc.arkdust.block_entity.BlackstoneMedicalPointBE;
+import com.ardc.arkdust.block_entity.SFBlockCreatorBE;
+import com.ardc.arkdust.block_entity.ScreenedTableBE;
+import com.ardc.arkdust.capability.story.blockanditem.StoryPointBE;
 import com.ardc.arkdust.Utils;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;

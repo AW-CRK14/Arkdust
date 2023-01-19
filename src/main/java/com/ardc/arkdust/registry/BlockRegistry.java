@@ -1,14 +1,16 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBlock;
+import com.ardc.arkdust.obj_property.ExtraMaterial;
+import com.ardc.arkdust.capability.story.blockanditem.StoryPointBlock;
 import com.ardc.arkdust.preobject.Block.*;
+import com.ardc.arkdust.preobject.Block.cw.C7LabStructureBlock;
 import com.ardc.arkdust.preobject.BlockState.FaceCullingWhenSameBlock;
 import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
 import com.ardc.arkdust.Items.blocks.*;
 import com.ardc.arkdust.preobject.Block.terra_industrial.StructureFrameBlock;
 import com.ardc.arkdust.preobject.pre.PreBlock;
 import com.ardc.arkdust.Items.blocks.ores.Pau_ore;
-import com.ardc.arkdust.Items.blocks.terra_energy.E_oir_reactor_control_board;
+import com.ardc.arkdust.Items.blocks.terra_energy.EOirReactorControlBoard;
 import com.ardc.arkdust.Enums.TechMaterial;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.model.modelblock.LifeBlockModel;
@@ -44,9 +46,26 @@ public class BlockRegistry {
     public static final RegistryObject<Block> tombstone_2_2 = BLOCKS.register("tombstone_2_2", ()->new TombstoneBlock(true,VoxelShapes.box(0,0,0.125F,1,0.625F,0.875F), VoxelShapes.box(0.125F,0,0,0.625F,0.875F,1)));//墓碑方块2-2
     public static final RegistryObject<Block> tombstone_2_3 = BLOCKS.register("tombstone_2_3", ()->new TombstoneBlock(true,VoxelShapes.box(0.125F,0,0.25F,0.875F,0.375F,0.75F), VoxelShapes.box(0.25F,0,0.125F,0.75F,0.375F,0.875F)));//墓碑方块2-3
     public static final RegistryObject<Block> red_caution_light = BLOCKS.register("red_caution_light", CautionLight::new);//红色警示灯
+    public static final RegistryObject<Block> c7lab_strock = registerDefaultC7LabStrock("c7lab_strock",true);
+    public static final RegistryObject<Block> c7lab_strock_ground_1 = registerDefaultC7LabStrock("c7lab_strock_ground_1",false);
+    public static final RegistryObject<Block> c7lab_strock_ground_2 = registerDefaultC7LabStrock("c7lab_strock_ground_2",false);
+    public static final RegistryObject<Block> c7lab_strock_ground_3 = registerDefaultC7LabStrock("c7lab_strock_ground_3",false);
+    public static final RegistryObject<Block> c7lab_strock_ground_4 = registerDefaultC7LabStrock("c7lab_strock_ground_4",false);
+    public static final RegistryObject<Block> c7lab_strock_ground_5 = registerDefaultC7LabStrock("c7lab_strock_ground_5",false);
+    public static final RegistryObject<Block> c7lab_strock_ceiling_1 = registerDefaultC7LabStrock("c7lab_strock_ceiling_1",false);
+    public static final RegistryObject<Block> c7lab_strock_ceiling_2 = registerDefaultC7LabStrock("c7lab_strock_ceiling_2",false);
+    public static final RegistryObject<Block> c7lab_strock_pillar_1 = registerDefaultC7LabStrock("c7lab_strock_pillar_1",false);
+    public static final RegistryObject<Block> c7lab_strock_pillar_2 = registerDefaultC7LabStrock("c7lab_strock_pillar_2",false);
+    public static final RegistryObject<Block> c7lab_strock_wall_1 = registerDefaultC7LabStrock("c7lab_strock_wall_1",false);
+    public static final RegistryObject<Block> c7lab_strock_wall_2 = registerDefaultC7LabStrock("c7lab_strock_wall_2",false);
+    public static final RegistryObject<Block> c7lab_strock_wall_3 = registerDefaultC7LabStrock("c7lab_strock_wall_3",false);
+    public static final RegistryObject<Block> c7lab_strock_ceiling_lighting = BLOCKS.register("c7lab_strock_ceiling_lighting",()->new C7LabStructureBlock(AbstractBlock.Properties.of(ExtraMaterial.LAB_STROCK).lightLevel((i)->12),false,false));
+    public static final RegistryObject<Block> c7lab_strock_glass_1 = BLOCKS.register("c7lab_strock_glass_1",()->new C7LabStructureBlock(AbstractBlock.Properties.of(ExtraMaterial.LAB_STROCK).noOcclusion(),false,true));
+    public static final RegistryObject<Block> c7lab_strock_glass_2 = BLOCKS.register("c7lab_strock_glass_2",()->new C7LabStructureBlock(AbstractBlock.Properties.of(ExtraMaterial.LAB_STROCK).noOcclusion(),false,true));
+
 
     //泰拉能源
-    public static final RegistryObject<Block> e_oir_reactor_control_board = BLOCKS.register("e_oir_reactor_control_board", E_oir_reactor_control_board::new);//E类源石反应堆控制方块
+    public static final RegistryObject<Block> e_oir_reactor_control_board = BLOCKS.register("e_oir_reactor_control_board", EOirReactorControlBoard::new);//E类源石反应堆控制方块
 
     //泰拉工业
     public static final RegistryObject<Block> iron_structure_frame = BLOCKS.register("iron_structure_frame",()->new StructureFrameBlock(AbstractBlock.Properties.of(Material.HEAVY_METAL).strength(5,40).noOcclusion().harvestLevel(3).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(), TechMaterial.C_IRON));
@@ -54,16 +73,19 @@ public class BlockRegistry {
 
     //特殊方块
     public static final RegistryObject<Block> life_model = BLOCKS.register("life_model", LifeBlockModel::new);
-    public static final RegistryObject<Block> chaotic_air = BLOCKS.register("chaotic_air", ()->new StructureAirBlock(AbstractBlock.Properties.of(com.ardc.arkdust.CodeMigration.Material.STATIC_STRUCTURE_AIR).noCollission()));
-    public static final RegistryObject<Block> structure_ignore_block = BLOCKS.register("structure_ignore_block", ()->new FaceCullingWhenSameBlock(AbstractBlock.Properties.of(com.ardc.arkdust.CodeMigration.Material.STATIC_STRUCTURE_AIR).noCollission()));
+    public static final RegistryObject<Block> chaotic_air = BLOCKS.register("chaotic_air", ()->new StructureAirBlock(AbstractBlock.Properties.of(ExtraMaterial.STATIC_STRUCTURE_AIR).noCollission()));
+    public static final RegistryObject<Block> structure_ignore_block = BLOCKS.register("structure_ignore_block", ()->new FaceCullingWhenSameBlock(AbstractBlock.Properties.of(ExtraMaterial.STATIC_STRUCTURE_AIR).noCollission()));
     public static final RegistryObject<Block> story_point = BLOCKS.register("story_point", StoryPointBlock::new);
 //    public static final RegistryObject<Block> projection_block = BLOCKS.register("projection_block", ProjectionBlock::new);
 
 
-//    //test
+    //test
     public static final RegistryObject<Block> test_block = BLOCKS.register("test_block", Test_block::new);//测试方块
     public static final RegistryObject<Block> test_block_b = BLOCKS.register("test_block_b", Test_block_b::new);//测试方块
 //    public static final RegistryObject<Block> test_block_c = BLOCKS.register("test_block_c", Test_block_c::new);//测试方块
 //    public static final RegistryObject<Block> test_block_d = BLOCKS.register("test_block_d", Test_block_d::new);//测试方块
 
+    private static RegistryObject<Block> registerDefaultC7LabStrock(String name, boolean unbroken){
+        return BLOCKS.register(name,()->new C7LabStructureBlock(AbstractBlock.Properties.of(ExtraMaterial.LAB_STROCK).lightLevel((i)->3),unbroken,false));
+    }
 }

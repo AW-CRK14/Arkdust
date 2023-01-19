@@ -1,6 +1,6 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.CodeMigration.MaterialTier;
+import com.ardc.arkdust.obj_property.MaterialTier;
 import com.ardc.arkdust.Items.items.EnderEnergyRadar;
 import com.ardc.arkdust.gui.screen.menu.MenuTestItem;
 import com.ardc.arkdust.preobject.item.BaseBlueprintItem;
@@ -109,7 +109,23 @@ public class ItemRegistry {
     public static final RegistryObject<Item> tombstone_2_2 = ITEMS.register("tombstone_2_2", ()->new PreBlockItem(BlockRegistry.tombstone_2_2.get(), P_CW));//墓碑2-2
     public static final RegistryObject<Item> tombstone_2_3 = ITEMS.register("tombstone_2_3", ()->new PreBlockItem(BlockRegistry.tombstone_2_3.get(), P_CW));//墓碑2-3
     public static final RegistryObject<Item> red_caution_light = ITEMS.register("red_caution_light", ()->new PreBlockItem(BlockRegistry.red_caution_light.get(), P_CW));//红色应急灯
-    public static final RegistryObject<Item> menu_test = ITEMS.register("menu_test",MenuTestItem::new);//红色应急灯
+    public static final RegistryObject<Item> menu_test = ITEMS.register("menu_test",MenuTestItem::new);
+    public static final RegistryObject<Item> c7lab_strock = ITEMS.register("c7lab_strock",()->new PreBlockItem(BlockRegistry.c7lab_strock.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_ground_1 = ITEMS.register("c7lab_strock_ground_1",()->new PreBlockItem(BlockRegistry.c7lab_strock_ground_1.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_ground_2 = ITEMS.register("c7lab_strock_ground_2",()->new PreBlockItem(BlockRegistry.c7lab_strock_ground_2.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_ground_3 = ITEMS.register("c7lab_strock_ground_3",()->new PreBlockItem(BlockRegistry.c7lab_strock_ground_3.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_ground_4 = ITEMS.register("c7lab_strock_ground_4",()->new PreBlockItem(BlockRegistry.c7lab_strock_ground_4.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_ground_5 = ITEMS.register("c7lab_strock_ground_5",()->new PreBlockItem(BlockRegistry.c7lab_strock_ground_5.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_ceiling_1 = ITEMS.register("c7lab_strock_ceiling_1",()->new PreBlockItem(BlockRegistry.c7lab_strock_ceiling_1.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_ceiling_2 = ITEMS.register("c7lab_strock_ceiling_2",()->new PreBlockItem(BlockRegistry.c7lab_strock_ceiling_2.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_pillar_1 = ITEMS.register("c7lab_strock_pillar_1",()->new PreBlockItem(BlockRegistry.c7lab_strock_pillar_1.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_pillar_2 = ITEMS.register("c7lab_strock_pillar_2",()->new PreBlockItem(BlockRegistry.c7lab_strock_pillar_2.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_wall_1 = ITEMS.register("c7lab_strock_wall_1",()->new PreBlockItem(BlockRegistry.c7lab_strock_wall_1.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_wall_2 = ITEMS.register("c7lab_strock_wall_2",()->new PreBlockItem(BlockRegistry.c7lab_strock_wall_2.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_wall_3 = ITEMS.register("c7lab_strock_wall_3",()->new PreBlockItem(BlockRegistry.c7lab_strock_wall_3.get(), P_CW.fireResistant()));
+    public static final RegistryObject<Item> c7lab_strock_ceiling_lighting = ITEMS.register("c7lab_strock_ceiling_lighting",()->new PreBlockItem(BlockRegistry.c7lab_strock_ceiling_lighting.get(), P_CW));
+    public static final RegistryObject<Item> c7lab_strock_glass_1 = ITEMS.register("c7lab_strock_glass_1",()->new PreBlockItem(BlockRegistry.c7lab_strock_glass_1.get(), P_CW));
+    public static final RegistryObject<Item> c7lab_strock_glass_2 = ITEMS.register("c7lab_strock_glass_2",()->new PreBlockItem(BlockRegistry.c7lab_strock_glass_2.get(), P_CW));
 
 
     //TerraTools泰拉工具工具 注册

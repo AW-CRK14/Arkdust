@@ -1,8 +1,9 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.playmethod.health_system.IHealthSystemCapability;
-import com.ardc.arkdust.playmethod.rdi_auth.IRDIAccountAuthCapability;
-import com.ardc.arkdust.playmethod.story.IStorySaveCapability;
+import com.ardc.arkdust.capability.health_system.IHealthSystemCapability;
+import com.ardc.arkdust.capability.rdi_auth.IRDIAccountAuthCapability;
+import com.ardc.arkdust.capability.rdi_depot.IRDIDepotCapability;
+import com.ardc.arkdust.capability.story.IStorySaveCapability;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -20,6 +21,8 @@ public class CapabilityRegistry {
     public static Capability<IHealthSystemCapability> HEALTH_SYSTEM_CAPABILITY;
     @CapabilityInject(IRDIAccountAuthCapability.class)
     public static Capability<IRDIAccountAuthCapability> RDI_ACCOUNT_AUTH_CAPABILITY;
+    @CapabilityInject(IRDIDepotCapability.class)
+    public static Capability<IRDIDepotCapability> RDI_DEPOT_CAPABILITY;
 
     @SubscribeEvent
     public static void StoryCapabilityRegistry(FMLCommonSetupEvent event){
@@ -48,6 +51,7 @@ public class CapabilityRegistry {
         ));
 
         event.enqueueWork(registerDefaultCap(IRDIAccountAuthCapability.class));
+        event.enqueueWork(registerDefaultCap(IRDIDepotCapability.class));
     }
 
     public static <T> Runnable registerDefaultCap(Class<T> tClass){

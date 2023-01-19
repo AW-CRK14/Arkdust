@@ -22,6 +22,8 @@ public class BlockRenderType {
                 RenderTypeLookup.setRenderLayer(BlockRegistry.life_model.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.chaotic_air.get(), RenderType.translucent());
                 RenderTypeLookup.setRenderLayer(BlockRegistry.structure_ignore_block.get(), RenderType.translucent());
+                RenderTypeLookup.setRenderLayer(BlockRegistry.c7lab_strock_glass_1.get(), RenderType.translucent());
+                RenderTypeLookup.setRenderLayer(BlockRegistry.c7lab_strock_glass_2.get(), RenderType.translucent());
 //                RenderTypeLookup.setRenderLayer(BlockRegistry.projection_block.get(), RenderType.translucent());
             });
         }
