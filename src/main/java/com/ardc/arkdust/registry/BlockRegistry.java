@@ -1,22 +1,29 @@
 package com.ardc.arkdust.registry;
 
+import com.ardc.arkdust.helper.LootHelper;
 import com.ardc.arkdust.obj_property.ExtraMaterial;
-import com.ardc.arkdust.capability.story.blockanditem.StoryPointBlock;
+import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBlock;
 import com.ardc.arkdust.preobject.Block.*;
 import com.ardc.arkdust.preobject.Block.cw.C7LabStructureBlock;
+import com.ardc.arkdust.preobject.Block.cw.MineshaftBoard;
+import com.ardc.arkdust.preobject.BlockState.DropSelfBlock;
+import com.ardc.arkdust.preobject.BlockState.DropSelfWhenSilkTouchBlock;
 import com.ardc.arkdust.preobject.BlockState.FaceCullingWhenSameBlock;
-import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
+import com.ardc.arkdust.preobject.BlockState.ThreeAxisBlock;
+import com.ardc.arkdust.playmethod.oi.OIItem.PreOIBlock;
 import com.ardc.arkdust.Items.blocks.*;
 import com.ardc.arkdust.preobject.Block.terra_industrial.StructureFrameBlock;
 import com.ardc.arkdust.preobject.pre.PreBlock;
 import com.ardc.arkdust.Items.blocks.ores.Pau_ore;
 import com.ardc.arkdust.Items.blocks.terra_energy.EOirReactorControlBoard;
-import com.ardc.arkdust.Enums.TechMaterial;
+import com.ardc.arkdust.enums.TechMaterial;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.model.modelblock.LifeBlockModel;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
@@ -62,6 +69,23 @@ public class BlockRegistry {
     public static final RegistryObject<Block> c7lab_strock_ceiling_lighting = BLOCKS.register("c7lab_strock_ceiling_lighting",()->new C7LabStructureBlock(AbstractBlock.Properties.of(ExtraMaterial.LAB_STROCK).lightLevel((i)->12),false,false));
     public static final RegistryObject<Block> c7lab_strock_glass_1 = BLOCKS.register("c7lab_strock_glass_1",()->new C7LabStructureBlock(AbstractBlock.Properties.of(ExtraMaterial.LAB_STROCK).noOcclusion(),false,true));
     public static final RegistryObject<Block> c7lab_strock_glass_2 = BLOCKS.register("c7lab_strock_glass_2",()->new C7LabStructureBlock(AbstractBlock.Properties.of(ExtraMaterial.LAB_STROCK).noOcclusion(),false,true));
+    public static final RegistryObject<Block> rushed_iron_mineshaft_board = BLOCKS.register("rushed_iron_mineshaft_board",()->new MineshaftBoard(AbstractBlock.Properties.of(Material.METAL).noOcclusion().strength(4).harvestLevel(1).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> rushed_iron_mineshaft_net = BLOCKS.register("rushed_iron_mineshaft_net",()->new MineshaftBoard(AbstractBlock.Properties.of(Material.METAL).noOcclusion().strength(4).harvestLevel(1).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> rushed_iron_block = BLOCKS.register("rushed_iron_block",()->new DropSelfBlock(AbstractBlock.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(3).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE)));
+    public static final RegistryObject<Block> dark_rushed_iron_block = BLOCKS.register("dark_rushed_iron_block",()->new DropSelfBlock(AbstractBlock.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(3).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE)));
+    public static final RegistryObject<Block> red_paint_rushed_iron_block = BLOCKS.register("red_paint_rushed_iron_block",()->new DropSelfBlock(AbstractBlock.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(3).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE)));
+    public static final RegistryObject<Block> broken_rushed_iron_mineshaft_net = BLOCKS.register("broken_rushed_iron_mineshaft_net",()->new MineshaftBoard(AbstractBlock.Properties.of(Material.METAL).noCollission().strength(4).harvestLevel(1).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> wasteland_mineshaft_spandrel_girder = BLOCKS.register("wasteland_mineshaft_spandrel_girder",()->new ThreeAxisBlock(AbstractBlock.Properties.of(Material.METAL).strength(7,12).harvestLevel(1).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(),true));
+    public static final RegistryObject<Block> dirty_concrete = BLOCKS.register("dirty_concrete",()->new DropSelfBlock(AbstractBlock.Properties.of(Material.STONE).strength(3).harvestLevel(1).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> dirty_concrete_powder = BLOCKS.register("dirty_concrete_powder",()->new ConcretePowderBlock(dirty_concrete.get(),AbstractBlock.Properties.of(Material.SAND).strength(2)));
+    public static final RegistryObject<Block> oried_dirty_concrete = BLOCKS.register("oried_dirty_concrete",()->new DropSelfBlock(AbstractBlock.Properties.of(Material.STONE).strength(2),1,()->dirty_concrete_powder.get().asItem()));
+    public static final RegistryObject<Block> cracked_dirty_concrete = BLOCKS.register("cracked_dirty_concrete",()->new DropSelfWhenSilkTouchBlock(AbstractBlock.Properties.of(Material.STONE).strength(2),(c)->new ItemStack(dirty_concrete_powder.get().asItem())));
+    public static final RegistryObject<Block> radiant_crystal_ore = BLOCKS.register("radiant_crystal_ore",()->new DropSelfWhenSilkTouchBlock(AbstractBlock.Properties.of(Material.STONE).harvestTool(ToolType.PICKAXE).strength(11).harvestLevel(3).requiresCorrectToolForDrops(),(c)->new ItemStack(ItemRegistry.radiant_crystal_shard.get(),2+ LootHelper.getEnchantment(c, Enchantments.BLOCK_FORTUNE))));
+    public static final RegistryObject<Block> basic_blueprint_reduce_box = BLOCKS.register("basic_blueprint_reduce_box", CWorldBlueprintReduceBox::new);
+    public static final RegistryObject<Block> stone_oak_log = BLOCKS.register("stone_oak_log", ()->new RotatedPillarBlock(AbstractBlock.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> stone_oak_wood = BLOCKS.register("stone_oak_wood", ()->new RotatedPillarBlock(AbstractBlock.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> stone_oak_plank = BLOCKS.register("stone_oak_plank", ()->new PreBlock(AbstractBlock.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
+
 
 
     //Ì©À­ÄÜÔ´

@@ -1,7 +1,7 @@
 package com.ardc.arkdust.preobject.Block.terra_industrial;
 
 import com.ardc.arkdust.preobject.pre.PreBlock;
-import com.ardc.arkdust.Enums.TechMaterial;
+import com.ardc.arkdust.enums.TechMaterial;
 
 public class IndustrialBlock extends PreBlock {
     public final TechMaterial material;

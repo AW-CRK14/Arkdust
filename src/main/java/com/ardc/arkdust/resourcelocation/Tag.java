@@ -27,6 +27,9 @@ public class Tag
         public static final Tags.IOptionalNamedTag<Block> ALLOW_ORIROCK_SPREAD = tag("allow_originium_spread");
         public static final Tags.IOptionalNamedTag<Block> NATURAL_BLOCK = tag("natural_blocks");
         public static final Tags.IOptionalNamedTag<Block> SUPPLY_BLOCK = tag("supply_blocks");
+        public static final Tags.IOptionalNamedTag<Block> STRUCTURE$WASTELAND_MINESHAFT_GROUND = tag("structure/wasteland_mineshaft_ground");
+        public static final Tags.IOptionalNamedTag<Block> STRUCTURE$WASTELAND_MINESHAFT_DIRTY_CONCRETE = tag("structure/wasteland_mineshaft_dirty_concrete");
+        public static final Tags.IOptionalNamedTag<Block> STRUCTURE$WASTELAND_MINESHAFT_PILLAR_DOWN = tag("structure/wasteland_mineshaft_pillar_down");
 
         private static net.minecraftforge.common.Tags.IOptionalNamedTag<Block> tag(String name)
         {

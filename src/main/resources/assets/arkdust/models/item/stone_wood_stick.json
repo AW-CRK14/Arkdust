@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "arkdust:item/wmaterial/stone_wood_stick"
+  }
+}

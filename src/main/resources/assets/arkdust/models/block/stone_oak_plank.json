@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "painter": "landis",
+  "textures": {
+    "all": "arkdust:blocks/main_world_blocks/stone_oak_planks"
+  }
+}

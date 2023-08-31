@@ -1,16 +1,16 @@
 package com.ardc.arkdust.worldgen.structure.structure.story.moonfall;
 
-import com.ardc.arkdust.RunHelper.PosHelper;
-import com.ardc.arkdust.RunHelper.StructureHelper;
+import com.ardc.arkdust.helper.PosHelper;
+import com.ardc.arkdust.helper.StructureHelper;
+import com.ardc.arkdust.registry.StoryRegistry;
 import com.ardc.arkdust.resourcelocation.LootTable;
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.capability.story.StoryBag;
-import com.ardc.arkdust.capability.story.blockanditem.StoryPointBE;
+import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBE;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.worldgen.WorldStructureSavaData;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
 import com.ardc.arkdust.worldgen.structure.StructurePieceTypeAdd;
-import com.ardc.arkdust.worldgen.structure.preobj.CommonCWStart;
+import com.ardc.arkdust.worldgen.structure.preobj.AAStructureStart;
 import com.ardc.arkdust.worldgen.structure.preobj.CommonCWTemplatePiece;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BarrelBlock;
@@ -87,7 +87,7 @@ public class SMoonfallOasis extends Structure<NoFeatureConfig> implements ArdStr
         return Start::new;
     }
 
-    public static class Start extends CommonCWStart {
+    public static class Start extends AAStructureStart {
 
         public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ, MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
             super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
@@ -139,7 +139,7 @@ public class SMoonfallOasis extends Structure<NoFeatureConfig> implements ArdStr
                         world.setBlock(pos, BlockRegistry.story_point.get().defaultBlockState(), 2);
                         TileEntity e = world.getBlockEntity(pos);
                         if (e instanceof StoryPointBE) {
-                            ((StoryPointBE) e).setBagAndLevel(StoryBag.CW_MAIN, 1);
+                            ((StoryPointBE) e).setBagAndLevel(StoryRegistry.MOON_FALL, 1);
                         }
                     }
                     break;

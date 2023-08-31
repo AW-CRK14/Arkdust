@@ -24,7 +24,7 @@ public class OIRVaccineItem extends PreItem {
     public final int vaccineLevel;
     public final float therapeuticFactors;
     public OIRVaccineItem(boolean exp, int vaccineLevel, float therapeuticFactors) {
-        super(new Properties().fireResistant().rarity(Rarity.UNCOMMON).stacksTo(8).tab(ModGroupRegistry.worldMaterial), exp);
+        super(new Properties().fireResistant().rarity(Rarity.UNCOMMON).stacksTo(8).tab(ModGroupRegistry.WORLD_MATERIAL), exp);
         this.vaccineLevel = Math.max(vaccineLevel,1);
         this.therapeuticFactors = Math.min(Math.max(therapeuticFactors,0.1F),5);
     }

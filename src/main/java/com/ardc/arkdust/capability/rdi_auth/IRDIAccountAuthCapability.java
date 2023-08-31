@@ -8,10 +8,11 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public interface IRDIAccountAuthCapability extends INBTSerializable<CompoundNBT> {
+    //玩家经验与理智
     default void sendPackToClient(ServerPlayerEntity entity) {
         RDIAccountAuthDataNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> entity), new RDIAccountAuthDataNetwork.RDIAccountAuthDataPack(getAExp(),getAExp()));
-        Utils.LOGGER.info("Player#" + entity.getName().getString() + " send pack from server");
-        Utils.LOGGER.info("RDIAccAuthCapInServer:" + this.toString());
+        Utils.LOGGER.debug("[ArdNetwork-RDIAccount]Player#" + entity.getName().getString() + " send pack from server");
+        Utils.LOGGER.debug("[ArdNetwork-RDIAccount]RDIAccAuthCapInServer:" + this);
     }
 
 

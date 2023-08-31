@@ -1,7 +1,7 @@
 package com.ardc.arkdust.block_entity.Process;
 
 import com.ardc.arkdust.block_entity.ScreenedTableBE;
-import com.ardc.arkdust.Enums.BlockEntityAbout.ScreenedTable;
+import com.ardc.arkdust.enums.BlockEntityAbout.ScreenedTable;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.item.ItemEntity;

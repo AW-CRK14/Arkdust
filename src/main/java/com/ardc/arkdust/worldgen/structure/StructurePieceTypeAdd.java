@@ -14,4 +14,5 @@ public interface StructurePieceTypeAdd{
     IStructurePieceType CW_BOAT = IStructurePieceType.setPieceId(CWBoat.Piece::new,"arkdust:cw/boat");
 //    IStructurePieceType CW_TEST_BRIDGE = IStructurePieceType.setPieceId(CWTestBridge.Piece::new,"arkdust:cw/test_bridge");
     IStructurePieceType STORY_MOONFALL_OASIS = IStructurePieceType.setPieceId(SMoonfallOasis.Piece::new,"arkdust:story/moonfall/oasis");
+    IStructurePieceType GRAVELLY_WASTELAND_MINESHAFT = IStructurePieceType.setPieceId(GravellyWastelandMineshaft.Piece::new,"arkdust:gravelly_wasteland_mineshaft");
 }

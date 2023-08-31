@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "arkdust:item/blueprint/l1_empty_blueprint"
-  }
-}

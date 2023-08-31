@@ -1,12 +1,12 @@
 package com.ardc.arkdust.worldgen.structure.structure.cworld;
 
-import com.ardc.arkdust.RunHelper.PosHelper;
-import com.ardc.arkdust.RunHelper.StructureHelper;
+import com.ardc.arkdust.helper.PosHelper;
+import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.resourcelocation.LootTable;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
 import com.ardc.arkdust.worldgen.structure.StructurePieceTypeAdd;
-import com.ardc.arkdust.worldgen.structure.preobj.CommonCWStart;
+import com.ardc.arkdust.worldgen.structure.preobj.AAStructureStart;
 import com.ardc.arkdust.worldgen.structure.preobj.CommonCWTemplatePiece;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BarrelBlock;
@@ -84,7 +84,7 @@ public class CWBoat extends Structure<NoFeatureConfig> implements ArdStructureAd
         return Start::new;
     }
 
-    public static class Start extends CommonCWStart {
+    public static class Start extends AAStructureStart {
 
         public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ, MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
             super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);

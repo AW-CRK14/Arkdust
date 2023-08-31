@@ -30,6 +30,10 @@
     "arkdust:common_food_box",
     "arkdust:blackstone_sand",
     "arkdust:iron_structure_frame",
+    "arkdust:dirty_concrete",
+    "arkdust:dirty_concrete_powder",
+    "arkdust:dark_rushed_iron_block",
+    "arkdust:rushed_iron_block",
     "minecraft:purpur_block"
   ]
 }

@@ -12,7 +12,7 @@ buildscript {
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = 'alpha0.4.3.1021t'
+version = 'alpha0.5.0.2308'
 group = 'com.ardc.arkdust' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'arkdust'
 

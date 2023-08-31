@@ -16,7 +16,7 @@ public class ScreenedTableBE extends TileEntity {
     //0对标原物品，1对标返回物品
     public NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
     public ScreenedTableBE() {
-        super(TileEntityTypeRegistry.aScreenedTableBE.get());
+        super(TileEntityTypeRegistry.SCREENED_TABLE_BE.get());
     }
 
     //尝试放入方块

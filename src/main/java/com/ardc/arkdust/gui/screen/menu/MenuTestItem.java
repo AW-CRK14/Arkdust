@@ -13,7 +13,7 @@ import net.minecraftforge.fml.DistExecutor;
 public class MenuTestItem extends PreItem {
 
     public MenuTestItem() {
-        super(new Properties().tab(ModGroupRegistry.worldMaterial).fireResistant());
+        super(new Properties().tab(ModGroupRegistry.WORLD_MATERIAL).fireResistant());
     }
 
     public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {

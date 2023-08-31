@@ -1,8 +1,8 @@
 package com.ardc.arkdust.worldgen.structure.structure.cworld;
 
-import com.ardc.arkdust.RunHelper.DirectionHelper;
-import com.ardc.arkdust.RunHelper.PosHelper;
-import com.ardc.arkdust.RunHelper.StructureHelper;
+import com.ardc.arkdust.helper.DirectionAndRotationHelper;
+import com.ardc.arkdust.helper.PosHelper;
+import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
 import com.ardc.arkdust.worldgen.structure.structure_piece.BluePrintBoxPiece;
 import com.ardc.arkdust.worldgen.structure.structure_pool.OldHouse0Pool;
@@ -132,10 +132,10 @@ public class OldHouse0 extends Structure<NoFeatureConfig> implements ArdStructur
             }
             Vector3i bcpos = this.pieces.get(0).getBoundingBox().getCenter();
             this.pieces.add(new BluePrintBoxPiece.Piece(new BlockPos(centerPos.getX(),64,centerPos.getZ())));
-            DirectionHelper.PosDirectionRun(centerPos,bcpos,new PosHelper.PosMoveBag(5,-1+preMove,7),false).pieceMove(pieces.get(1));
+            DirectionAndRotationHelper.PosDirectionRun(centerPos,bcpos,new PosHelper.PosMoveBag(5,-1+preMove,7),false).pieceMove(pieces.get(1));
             if(flagFloat <= 0.25F) {
                 this.pieces.add(new BluePrintBoxPiece.Piece(new BlockPos(centerPos.getX(), 64, centerPos.getZ())));
-                DirectionHelper.PosDirectionRun(centerPos, bcpos, new PosHelper.PosMoveBag(3, 5+preMove, 3), false).pieceMove(pieces.get(2));
+                DirectionAndRotationHelper.PosDirectionRun(centerPos, bcpos, new PosHelper.PosMoveBag(3, 5+preMove, 3), false).pieceMove(pieces.get(2));
             }
             this.calculateBoundingBox();
         }

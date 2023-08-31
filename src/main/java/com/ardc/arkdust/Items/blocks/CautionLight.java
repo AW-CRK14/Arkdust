@@ -10,7 +10,6 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
@@ -18,7 +17,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -40,7 +38,7 @@ public class CautionLight extends DropSelfBlock implements IWaterLoggable {
                         .harvestTool(ToolType.PICKAXE)
                         .lightLevel((level)->(level.getBlockState().getValue(LIGHTING) ? 9 : 0))
                         .noOcclusion()
-                ,1);
+        );
         this.COLOR = null;
         this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false).setValue(LIGHTING,false));
     }
@@ -51,7 +49,7 @@ public class CautionLight extends DropSelfBlock implements IWaterLoggable {
                         .strength(1)
                         .lightLevel((level)->(level.getBlockState().getValue(LIGHTING) ? 9 : 0))
                         .noOcclusion()
-                ,1);
+        );
         this.COLOR = color;
         this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false).setValue(LIGHTING,false));
     }

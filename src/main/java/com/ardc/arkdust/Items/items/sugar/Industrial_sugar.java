@@ -11,6 +11,6 @@ public class Industrial_sugar extends Item{
             .build();
 
     public Industrial_sugar() {
-        super(new Properties().food(food).tab(ModGroupRegistry.terraCommonMaterial));
+        super(new Properties().food(food).tab(ModGroupRegistry.TERRA_WORLD_COMMON_MATERIAL));
     }
 }

@@ -14,7 +14,7 @@
     {
       "weight": 5,
       "element": {
-        "location": "arkdust:empty",
+        "location": "arkdust:cworld/test_bridge/no_chest",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

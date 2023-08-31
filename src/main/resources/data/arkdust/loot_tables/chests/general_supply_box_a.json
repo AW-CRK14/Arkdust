@@ -55,17 +55,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:diamond_sword",
-          "weight": 6
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:diamond_sword",
-          "weight": 4,
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ]
+          "weight": 1
         },
         {
           "type": "minecraft:item",
@@ -99,16 +89,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:diamond_helmet",
-          "weight": 2,
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:diamond_chestplate",
           "weight": 1
         },
@@ -130,17 +110,17 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:diamond_axe",
-          "weight": 6
+          "weight": 1
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:diamond_pickaxe",
-          "weight": 6
+          "weight": 2
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:diamond_pickaxe",
-          "weight": 6,
+          "weight": 1,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -301,7 +281,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "arkdust:l1_blank_blueprint",
+          "name": "arkdust:general_blueprint",
           "weight": 1,
           "functions": [
             {
@@ -310,6 +290,9 @@
                 "min": 1,
                 "max": 2
               }
+            },{
+              "function": "set_nbt",
+              "tag": "{blueprint: {value: \"COMMON\",type: \"EPEE\",level: 0,weight: 1,blueprint_type: \"GENERAL\"}}"
             }
           ]
         }
@@ -327,7 +310,7 @@
           "weight": 3
         },{
           "type": "minecraft:empty",
-          "weight": 2
+          "weight": 7
         }
       ]
     }

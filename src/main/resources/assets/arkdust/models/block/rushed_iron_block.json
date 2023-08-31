@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "arkdust:blocks/main_world_blocks/rushed_iron_block",
+    "particle":"arkdust:blocks/main_world_blocks/rushed_iron_block"
+  }
+}

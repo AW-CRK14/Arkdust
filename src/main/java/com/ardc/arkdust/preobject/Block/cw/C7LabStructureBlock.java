@@ -1,8 +1,9 @@
 package com.ardc.arkdust.preobject.Block.cw;
 
-import com.ardc.arkdust.preobject.Block.IgnoreFaceRenderBlock;
+import com.ardc.arkdust.preobject.Block.IConnectRenderInfo;
 import com.ardc.arkdust.preobject.BlockState.DropSelfBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -12,9 +13,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.common.util.LazyOptional;
 
-public class C7LabStructureBlock extends DropSelfBlock implements IgnoreFaceRenderBlock {
+public class C7LabStructureBlock extends DropSelfBlock implements IConnectRenderInfo {
     private final boolean isGlass;
     public C7LabStructureBlock(Properties properties, boolean unbroken, boolean glass) {
         super(properties.strength(unbroken ? -1 : 30,720).harvestLevel(6).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops());
@@ -23,7 +23,7 @@ public class C7LabStructureBlock extends DropSelfBlock implements IgnoreFaceRend
 
     @OnlyIn(Dist.CLIENT)
     public boolean skipRendering(BlockState block1, BlockState block2, Direction p_200122_3_) {
-        return isGlass && IgnoreFaceRenderBlock.ignoreOrNot(block1.getBlock(),block2.getBlock()) || super.skipRendering(block1, block2, p_200122_3_);
+        return isGlass && IConnectRenderInfo.ignoreOrNot(block1.getBlock(),block2.getBlock()) || super.skipRendering(block1, block2, p_200122_3_);
     }
 
     public VoxelShape getVisualShape(BlockState p_230322_1_, IBlockReader p_230322_2_, BlockPos p_230322_3_, ISelectionContext p_230322_4_) {
@@ -40,7 +40,7 @@ public class C7LabStructureBlock extends DropSelfBlock implements IgnoreFaceRend
     }
 
     @Override
-    public FalseOrIntPack getIndex() {
-        return new FalseOrIntPack(isGlass,0);
+    public ConnectRenderInfo getInfo() {
+        return new ConnectRenderInfo(ConnectRenderType.IGNORE,0);
     }
 }

@@ -9,6 +9,6 @@ public class Sugar_substitute extends Item {
             .nutrition(1)
             .build();
     public Sugar_substitute() {
-        super(new Properties().food(food).tab(ModGroupRegistry.terraCommonMaterial));//记住此处要添加food(food)
+        super(new Properties().food(food).tab(ModGroupRegistry.TERRA_WORLD_COMMON_MATERIAL));//记住此处要添加food(food)
     }
 }

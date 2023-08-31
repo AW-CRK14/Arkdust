@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:polished_blackstone_wall",
+    "minecraft:polished_blackstone_wall",
+    "minecraft:polished_blackstone_wall",
+    "minecraft:polished_blackstone_wall",
+    "minecraft:nether_brick_wall",
+    "minecraft:nether_brick_wall",
+    "minecraft:nether_brick_wall",
+    "minecraft:red_nether_brick_wall"
+  ]
+}

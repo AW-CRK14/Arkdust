@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "arkdust:blocks/main_world_blocks/cracked_dirty_concrete",
+    "particle":"arkdust:blocks/main_world_blocks/cracked_dirty_concrete"
+  }
+}

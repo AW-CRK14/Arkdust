@@ -1,6 +1,6 @@
 package com.ardc.arkdust.preobject.Block.terra_industrial;
 
-import com.ardc.arkdust.Enums.TechMaterial;
+import com.ardc.arkdust.enums.TechMaterial;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;

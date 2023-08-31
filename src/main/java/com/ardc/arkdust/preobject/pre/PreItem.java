@@ -29,9 +29,6 @@ public class PreItem extends Item {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-//        if(this instanceof IOIItem){
-//            list.add(((IOIItem) itemstack.getItem()).infoAddOfOI());
-//        }
         if(explain) {
             if (!Screen.hasShiftDown()) {
                 list.add(new TranslationTextComponent("explain.exp." + this.getDescriptionId()));

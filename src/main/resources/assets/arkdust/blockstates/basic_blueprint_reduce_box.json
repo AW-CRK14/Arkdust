@@ -1,0 +1,29 @@
+{
+  "multipart": [
+    {
+      "when": {"facing": "north"},
+      "apply": {"model": "arkdust:block/cw_blueprint_reduce_box"}
+    },{
+      "when": {"facing": "south"},
+      "apply": {"model": "arkdust:block/cw_blueprint_reduce_box","y": 180}
+    },{
+      "when": {"facing": "east"},
+      "apply": {"model": "arkdust:block/cw_blueprint_reduce_box","y": 90}
+    },{
+      "when": {"facing": "west"},
+      "apply": {"model": "arkdust:block/cw_blueprint_reduce_box","y": 270}
+    },{
+      "when": {"top": "true","facing": "north"},
+      "apply": {"model": "arkdust:block/cw_blueprint_reduce_box_top"}
+    },{
+      "when": {"top": "true","facing": "south"},
+      "apply": {"model": "arkdust:block/cw_blueprint_reduce_box_top","y": 180}
+    },{
+      "when": {"top": "true","facing": "east"},
+      "apply": {"model": "arkdust:block/cw_blueprint_reduce_box_top","y": 90}
+    },{
+      "when": {"top": "true","facing": "west"},
+      "apply": {"model": "arkdust:block/cw_blueprint_reduce_box_top","y": 270}
+    }
+  ]
+}

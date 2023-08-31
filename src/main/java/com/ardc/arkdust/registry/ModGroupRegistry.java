@@ -2,14 +2,14 @@ package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.item_group.*;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 
-//此文件用于注册mod的物品分组
 public class ModGroupRegistry {
-    public static final ItemGroup worldMaterial = new MainWorldMaterial();
-    //第一个worldMaterial是为物品添加进组时调用的名字，第二个对应（此处为mod group中的）对应文件
-    public static final ItemGroup terraTools = new TerraTools();
-    public static final ItemGroup terraEnergy = new TerraEnergy();
-    public static final ItemGroup terraCommonMaterial = new TerraWorldCommonMaterial();
-    public static final ItemGroup terraIndustrialMaterial = new TerraIndustrialMaterial();
+    public static final ItemGroup WORLD_MATERIAL = new MainWorldMaterial();
+    public static final ItemGroup TERRA_TOOLS = new TerraTools();
+    public static final ItemGroup TERRA_ENERGY = new TerraEnergy();
+    public static final ItemGroup TERRA_WORLD_COMMON_MATERIAL = new TerraWorldCommonMaterial();
+    public static final ItemGroup TERRA_INDUSTRIAL_MATERIAL = new TerraIndustrialMaterial();
+    public static final ItemGroup TERRA_BLUEPRINT = new GroupGenerator("terra_blueprint",()->new ItemStack(Item$BlueprintRegistry.e_t_experiment_data::get));
 }
 

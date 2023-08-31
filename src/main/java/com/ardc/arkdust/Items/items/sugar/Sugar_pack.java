@@ -13,6 +13,6 @@ public class Sugar_pack extends Item {
             .effect(()->new EffectInstance(Effects.POISON,40,3), 0.3F)
             .build();
     public Sugar_pack() {
-        super(new Properties().food(food).tab(ModGroupRegistry.terraCommonMaterial));
+        super(new Properties().food(food).tab(ModGroupRegistry.TERRA_WORLD_COMMON_MATERIAL));
     }
 }

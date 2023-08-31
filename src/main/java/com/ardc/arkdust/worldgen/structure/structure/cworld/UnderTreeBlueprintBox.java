@@ -1,7 +1,7 @@
 package com.ardc.arkdust.worldgen.structure.structure.cworld;
 
-import com.ardc.arkdust.RunHelper.DirectionHelper;
-import com.ardc.arkdust.RunHelper.PosHelper;
+import com.ardc.arkdust.helper.DirectionAndRotationHelper;
+import com.ardc.arkdust.helper.PosHelper;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
 import com.ardc.arkdust.worldgen.structure.structure_piece.BluePrintBoxPiece;
 import com.ardc.arkdust.worldgen.structure.structure_pool.UndertreeBlueprintPool;
@@ -203,7 +203,7 @@ public class UnderTreeBlueprintBox extends Structure<NoFeatureConfig> implements
 //            pieces.get(1).move(-3,0,-3);
 //            pieces.get(1).move(-xOffset,0,-zOffset);
 //            System.out.println(pieces.get(0).getRotation());*/
-            PosHelper.PosMoveBag bag = DirectionHelper.PosDirectionRun(centerPos,structureCenter,new PosHelper.PosMoveBag(3,0,3),false);
+            PosHelper.PosMoveBag bag = DirectionAndRotationHelper.PosDirectionRun(centerPos,structureCenter,new PosHelper.PosMoveBag(3,0,3),false);
             bag.pieceMove(pieces.get(1));
 //            System.out.println("定义的方向:" + direction + "\n计算的方向:" + bag.direction + "\npiece0结果:" + pieces.get(0).getOrientation() + "\n起始点坐标:" + centerPos + "\n中点坐标:" +structureCenter);
 //            this.pieces.get(0).addChildren();

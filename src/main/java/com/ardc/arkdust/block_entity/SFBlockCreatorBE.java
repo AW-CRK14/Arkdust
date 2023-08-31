@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 public class SFBlockCreatorBE extends TileEntity {
     public int count = 0;
     public SFBlockCreatorBE() {
-        super(TileEntityTypeRegistry.aSFBlockCreatorBE.get());
+        super(TileEntityTypeRegistry.SF_BLOCK_CREATOR_BE.get());
     }
     
     public int increaseCount(int number){

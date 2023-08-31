@@ -1,7 +1,7 @@
 package com.ardc.arkdust.worldgen.structure.structure.cworld;
 
-import com.ardc.arkdust.RunHelper.PosHelper;
-import com.ardc.arkdust.RunHelper.StructureHelper;
+import com.ardc.arkdust.helper.PosHelper;
+import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
 import com.mojang.serialization.Codec;

@@ -12,5 +12,4 @@ public class MainWorldMaterial extends ItemGroup {
     public ItemStack makeIcon(){
         return new ItemStack(ItemRegistry.dt_crystal.get());
     }
-    //makeIcon是官混版写法，和教程中不同。教程中的不可用
 }

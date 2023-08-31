@@ -60,8 +60,8 @@ public class HealthSystemDataNetwork {
                     e.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)->{
                         i.ORI$setPoint(ori$point);
                         i.ORI$setRLevel(ori$level);
-                        Utils.LOGGER.info("Player#" + e.getName().getString() + " get pack in client");
-                        Utils.LOGGER.info("ORICapInClient:" + i.toString());
+                        Utils.LOGGER.debug("[ArdNetwork-HealthSystem]Player#" + e.getName().getString() + " get pack from client");
+                        Utils.LOGGER.debug("[ArdNetwork-HealthSystem]ORICapInClient:" + i);
                     });
                 }
             });

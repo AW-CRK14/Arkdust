@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "arkdust:blocks/main_world_blocks/stone_oak_log_top",
+    "side": "arkdust:blocks/main_world_blocks/stone_oak_log"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "multipart": [
+    {
+      "apply": {"model": "arkdust:block/rushed_iron_mineshaft_board"}
+    }, {
+      "when": {"north": "true"},
+      "apply": {"model": "arkdust:block/rushed_iron_mineshaft_edge"}
+    }, {
+      "when": {"south": "true"},
+      "apply": {"model": "arkdust:block/rushed_iron_mineshaft_edge","y": 180}
+    }, {
+      "when": {"east": "true"},
+      "apply": {"model": "arkdust:block/rushed_iron_mineshaft_edge","y": 90}
+    }, {
+      "when": {"west": "true"},
+      "apply": {"model": "arkdust:block/rushed_iron_mineshaft_edge","y": 270}
+    }, {
+      "when": {"wdn": "true"},
+      "apply": {"model": "arkdust:block/rushed_iron_mineshaft_vertex"}
+    }, {
+      "when": {"eds": "true"},
+      "apply": {"model": "arkdust:block/rushed_iron_mineshaft_vertex","y": 180}
+    }, {
+      "when": {"edn": "true"},
+      "apply": {"model": "arkdust:block/rushed_iron_mineshaft_vertex","y": 90}
+    }, {
+      "when": {"wds": "true"},
+      "apply": {"model": "arkdust:block/rushed_iron_mineshaft_vertex","y": 270}
+    }
+  ]
+}

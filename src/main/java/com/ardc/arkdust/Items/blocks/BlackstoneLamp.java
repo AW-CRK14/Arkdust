@@ -46,8 +46,7 @@ public class BlackstoneLamp extends DropSelfBlock implements IWaterLoggable {
                 .strength(2,3)
                 .lightLevel((level)->(level.getBlockState().getValue(LIGHTING) ? 13 : 0))
                 .noOcclusion()
-                .requiresCorrectToolForDrops()
-                ,1);
+                .requiresCorrectToolForDrops());
         this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false).setValue(LIGHTING,false));
     }
 

@@ -44,7 +44,7 @@ public class BlackstoneMedicalPointBE extends TileEntity implements ITickableTil
     public int treatTimer = 0;
 
     public BlackstoneMedicalPointBE() {
-        super(TileEntityTypeRegistry.aBlackstoneMedicalPointBE.get());
+        super(TileEntityTypeRegistry.BLACKSTONE_MEDICAL_POINT_BE.get());
     }
 
     public boolean ifDefaultSet() {
@@ -179,10 +179,10 @@ public class BlackstoneMedicalPointBE extends TileEntity implements ITickableTil
     public CompoundNBT save(CompoundNBT nbt) {
         nbt.putInt("workingRange", workingRange);
         nbt.putInt("damage", damage);
-        nbt.putInt("attackTick", funcTick.get(0));
-        nbt.putInt("treatTick", funcTick.get(1));
-        nbt.putFloat("attackValue", funcValue.get(0));
-        nbt.putFloat("treatValue", funcValue.get(1));
+        nbt.putInt("attackTick", funcTick.get(0) == null ? 0 : funcTick.get(0));
+        nbt.putInt("treatTick", funcTick.get(1) == null ? 0 : funcTick.get(1));
+        nbt.putFloat("attackValue", funcValue.get(0) == null ? 1 : funcValue.get(0));
+        nbt.putFloat("treatValue", funcValue.get(1) == null ? 1 : funcValue.get(1));
         nbt.putBoolean("activation", activation);
         nbt.putBoolean("attackNeutrality", attackNeutrality);
         nbt.putBoolean("attackUnfriendly", attackUnfriendly);

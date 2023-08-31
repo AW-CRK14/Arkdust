@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "arkdust:block/wasteland_mineshaft_spandrel_girder",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "arkdust:block/wasteland_mineshaft_spandrel_girder"
+    },
+    "axis=z": {
+      "model": "arkdust:block/wasteland_mineshaft_spandrel_girder",
+      "x": 90
+    }
+  }
+}

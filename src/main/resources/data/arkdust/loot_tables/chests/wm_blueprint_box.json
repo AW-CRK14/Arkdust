@@ -126,15 +126,18 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "arkdust:l1_blank_blueprint",
-          "weight": 10,
+          "name": "arkdust:general_blueprint",
+          "weight": 1,
           "functions": [
             {
               "function": "set_count",
               "count": {
                 "min": 1,
-                "max": 3
+                "max": 2
               }
+            },{
+              "function": "set_nbt",
+              "tag": "{blueprint: {value: \"COMMON\",type: \"SWORD\",level: 0,weight: 1,blueprint_type: \"GENERAL\"}}"
             }
           ]
         },
@@ -159,7 +162,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "arkdust:l1_empty_blueprint",
+          "name": "arkdust:general_blueprint",
           "weight": 2,
           "functions": [
             {
@@ -168,6 +171,9 @@
                 "min": 1,
                 "max": 3
               }
+            },{
+              "function": "set_nbt",
+              "tag": "{blueprint: {value: \"SPECIAL\",type: \"TACTICS\",level: 0,weight: 1,blueprint_type: \"GENERAL\"}}"
             }
           ]
         },

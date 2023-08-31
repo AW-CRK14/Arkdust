@@ -3,7 +3,7 @@ package com.ardc.arkdust.registry;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.worldgen.feature.OreFeature;
 import com.ardc.arkdust.worldgen.structure.ConfiguredStructures;
-import com.ardc.arkdust.RunHelper.StructureRegistryHelper;
+import com.ardc.arkdust.helper.StructureRegistryHelper;
 import com.ardc.arkdust.worldgen.structure.structure.cworld.*;
 import com.ardc.arkdust.worldgen.structure.structure.story.moonfall.SMoonfallOasis;
 import com.ardc.arkdust.worldgen.structure.structure_pool.OldHouse0Pool;
@@ -11,15 +11,10 @@ import com.ardc.arkdust.worldgen.structure.structure_pool.UndertreeBlueprintPool
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPatternRegistry;
 import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -43,6 +38,7 @@ public class StructureRegistry {
     public static final RegistryObject<Structure<NoFeatureConfig>> CW_BOAT = StructureRegistryHelper.setup("cw_boat",new CWBoat(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
     public static final RegistryObject<Structure<NoFeatureConfig>> STORY_MOONFALL_OASIS = StructureRegistryHelper.setup("story_moonfall_oasis",new SMoonfallOasis(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
     public static final RegistryObject<Structure<NoFeatureConfig>> CW_TEST_BRIDGE = StructureRegistryHelper.setup("cw_test_bridge",new CWTestBridge(NoFeatureConfig.CODEC), GenerationStage.Decoration.SURFACE_STRUCTURES);
+    public static final RegistryObject<Structure<NoFeatureConfig>> GRAVELLY_WASTELAND_MINESHAFT = StructureRegistryHelper.setup("gravelly_wasteland_mineshaft",new GravellyWastelandMineshaft(NoFeatureConfig.CODEC), GenerationStage.Decoration.UNDERGROUND_DECORATION);
 
     public static final List<JigsawPattern> jigsawPatternList = Arrays.asList(UndertreeBlueprintPool.pool, OldHouse0Pool.pool_broken,OldHouse0Pool.pool_common);
 
@@ -93,6 +89,7 @@ public class StructureRegistry {
             }
             if(event.getName().equals(BiomeRegistry.CW$FAULT_LINE.getId())){
                 gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, OreFeature.ORE_PAU);
+                gen.addStructureStart(ConfiguredStructures.cfed_gravelly_wasteland_mineshaft);
             }
         }
     }

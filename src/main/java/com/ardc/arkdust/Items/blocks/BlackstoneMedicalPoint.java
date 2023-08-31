@@ -25,15 +25,8 @@ import java.util.Collections;
 
 public class BlackstoneMedicalPoint extends DropSelfBlock {
     public static final IntegerProperty RUNNING_STATE = IntegerProperty.create("running_state", 0, 3);
-    /**
-     * RUNNING_STATE中:
-     * 0->未激活
-     * 1->失去活性
-     * 2->缺少反应物
-     * 3->工作中
-     */
     public BlackstoneMedicalPoint() {
-        super(Properties.of(Material.HEAVY_METAL).strength(2, 6).harvestTool(ToolType.PICKAXE).noOcclusion().requiresCorrectToolForDrops(), 1);
+        super(Properties.of(Material.HEAVY_METAL).strength(2, 6).harvestTool(ToolType.PICKAXE).noOcclusion().requiresCorrectToolForDrops());
         this.registerDefaultState(this.defaultBlockState().setValue(RUNNING_STATE, 0));
     }
 
@@ -47,27 +40,26 @@ public class BlackstoneMedicalPoint extends DropSelfBlock {
     }
 
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        BlackstoneMedicalPointBE blockBE = (BlackstoneMedicalPointBE) worldIn.getBlockEntity(pos);//获取方块实体
+        BlackstoneMedicalPointBE blockBE = (BlackstoneMedicalPointBE) worldIn.getBlockEntity(pos);//??????????
         if (blockBE == null) return ActionResultType.FAIL;
         ActionResultType reType = ActionResultType.SUCCESS;
-        if (!blockBE.ifDefaultSet()) {//检查方块数据是否初始化
-            //初始化方块并发送信息
+        if (!blockBE.ifDefaultSet()) {
             blockBE.setDefaultValue(0, 4.5F, 1, 60, 100, false, false, true,false,6, BlackstoneMedicalPointBE.mode.BSMP);
             blockBE.setCampBelong(Collections.singletonList(Camp.PLAYER));
             blockBE.setBelongUs(true);
             if(!worldIn.isClientSide()) player.displayClientMessage(new TranslationTextComponent("mes.bs_medical_point.activation").withStyle(TextFormatting.GREEN), false);
             reType = ActionResultType.CONSUME;
         }
-        int toState = getState(pos, state, worldIn);//获取新的状态
-        worldIn.setBlock(pos, state.setValue(RUNNING_STATE, toState), 1);//设置新的状态
+        int toState = getState(pos, state, worldIn);
+        worldIn.setBlock(pos, state.setValue(RUNNING_STATE, toState), 1);
         if ((toState == 1 || toState == 2) && !worldIn.isClientSide())
             player.displayClientMessage(new TranslationTextComponent("mes.bs_medical_point.inactivation"), false);
         return reType;
     }
 
     private int getState(BlockPos pos, BlockState blockState, World worldIn) {
-        int state = blockState.getValue(RUNNING_STATE);//获取方块状态
-        boolean b = worldIn.getBlockState(pos.below()).getBlock() == BlockRegistry.pau_block.get();//获取下方的方块是否为赤金块
+        int state = blockState.getValue(RUNNING_STATE);
+        boolean b = worldIn.getBlockState(pos.below()).getBlock() == BlockRegistry.pau_block.get();
         if (state == 1 || state == 2) return b ? 3 : 1;
         return b ? 3 : 2;
     }

@@ -1,11 +1,11 @@
 package com.ardc.arkdust.worldgen.structure.structure.cworld;
 
-import com.ardc.arkdust.RunHelper.BlockHelper;
-import com.ardc.arkdust.RunHelper.DirectionHelper;
-import com.ardc.arkdust.RunHelper.PosHelper;
-import com.ardc.arkdust.RunHelper.StructureHelper;
+import com.ardc.arkdust.helper.BlockHelper;
+import com.ardc.arkdust.helper.DirectionAndRotationHelper;
+import com.ardc.arkdust.helper.PosHelper;
+import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.resourcelocation.LootTable;
-import com.ardc.arkdust.capability.story.blockanditem.StoryPointBE;
+import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBE;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.preobject.BlockState.RotateBlock;
 import com.ardc.arkdust.registry.BlockRegistry;
@@ -227,10 +227,7 @@ public class CWGrave extends Structure<NoFeatureConfig> implements ArdStructureA
                 case "story_point_2":
                     world.setBlock(pos,BlockRegistry.story_point.get().defaultBlockState(), 2);
                     TileEntity entity = world.getBlockEntity(pos);
-                    if(entity instanceof StoryPointBE){
-                        ((StoryPointBE) entity).setKey("cw_past.things_apart");
-                        ((StoryPointBE) entity).setTitle("cw_past");
-                    }
+                    ((StoryPointBE) entity).setTitleAndKey("cw_past","cw_past.things_apart");
             }
 //            ServerWorld serverWorld = world.getLevel();
 //            System.out.println(serverWorld.toString());
@@ -241,7 +238,7 @@ public class CWGrave extends Structure<NoFeatureConfig> implements ArdStructureA
     public static BlockState randomRotationBlockState(RegistryObject<Block> block, Random random){
         BlockState state = block.get().defaultBlockState();
         if(state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)){
-            Direction direction = DirectionHelper.RandomDirection(DirectionHelper.direcList.HORIZON_DIRECTION,random);
+            Direction direction = DirectionAndRotationHelper.RandomDirection(DirectionAndRotationHelper.direcList.HORIZON_DIRECTION,random);
             state = state.setValue(block.get() instanceof RotateBlock ? RotateBlock.HORIZONTAL_FACING : BlockStateProperties.HORIZONTAL_FACING,direction);
 //            System.out.println("Direction:" + direction + "\nBlockState:" + state.toString());
         }

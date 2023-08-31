@@ -6,7 +6,6 @@ import com.ardc.arkdust.registry.ModGroupRegistry;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -21,7 +20,7 @@ public class EnderEnergyRadar extends PreItem {
     public final boolean work;
 
     public EnderEnergyRadar(boolean canWork) {
-        super(new Properties().tab(ModGroupRegistry.worldMaterial).fireResistant().durability(16));
+        super(new Properties().tab(ModGroupRegistry.WORLD_MATERIAL).fireResistant().durability(16));
         this.work = canWork;
     }
 

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class ProjectionBlock extends DropSelfBlock {
     public static final List<Block> NOT_ALLOWED = Arrays.asList(Blocks.BROWN_MUSHROOM_BLOCK,Blocks.RED_MUSHROOM_BLOCK,Blocks.MUSHROOM_STEM,Blocks.COMPOSTER, BlockRegistry.blackstone_lamp.get());
     public ProjectionBlock(){
-        super(Properties.of(Material.STONE).strength(5,40).harvestLevel(3).harvestTool(ToolType.PICKAXE).noCollission(),1);
+        super(Properties.of(Material.STONE).strength(5,40).harvestLevel(3).harvestTool(ToolType.PICKAXE).noCollission());
     }
 
 //    public boolean hasTileEntity(BlockState state) {

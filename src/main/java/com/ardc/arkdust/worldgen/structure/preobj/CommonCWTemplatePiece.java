@@ -1,6 +1,6 @@
 package com.ardc.arkdust.worldgen.structure.preobj;
 
-import com.ardc.arkdust.RunHelper.DirectionHelper;
+import com.ardc.arkdust.helper.DirectionAndRotationHelper;
 import com.ardc.arkdust.preobject.BlockState.RotateBlock;
 import com.ardc.arkdust.worldgen.structure.ExtraStructureProcessorList;
 import net.minecraft.block.Block;
@@ -60,7 +60,7 @@ public abstract class CommonCWTemplatePiece extends TemplateStructurePiece {
     public static BlockState randomRotationBlockState(RegistryObject<Block> block, Random random){
         BlockState state = block.get().defaultBlockState();
         if(state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)){
-            Direction direction = DirectionHelper.RandomDirection(DirectionHelper.direcList.HORIZON_DIRECTION,random);
+            Direction direction = DirectionAndRotationHelper.RandomDirection(DirectionAndRotationHelper.direcList.HORIZON_DIRECTION,random);
             state = state.setValue(block.get() instanceof RotateBlock ? RotateBlock.HORIZONTAL_FACING : BlockStateProperties.HORIZONTAL_FACING,direction);
         }
         return state;

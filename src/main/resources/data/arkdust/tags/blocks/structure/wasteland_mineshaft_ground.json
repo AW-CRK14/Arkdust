@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:cobblestone",
+    "minecraft:mossy_cobblestone",
+    "minecraft:stone",
+    "minecraft:gravel",
+    "minecraft:stone_bricks",
+    "minecraft:cracked_stone_bricks",
+    "minecraft:mossy_stone_bricks",
+    "minecraft:andesite",
+    "minecraft:air",
+    "minecraft:smooth_stone",
+    "arkdust:cracked_dirty_concrete",
+    "minecraft:polished_andesite"
+  ]
+}

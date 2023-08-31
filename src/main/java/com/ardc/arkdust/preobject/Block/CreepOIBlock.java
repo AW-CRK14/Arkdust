@@ -1,6 +1,6 @@
 package com.ardc.arkdust.preobject.Block;
 
-import com.ardc.arkdust.preobject.pre.OIItem.PreOIBlock;
+import com.ardc.arkdust.playmethod.oi.OIItem.PreOIBlock;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.resourcelocation.Tag;
 import net.minecraft.block.BlockState;
