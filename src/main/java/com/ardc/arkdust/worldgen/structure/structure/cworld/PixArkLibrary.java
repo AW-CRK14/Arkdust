@@ -5,7 +5,7 @@ import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.resourcelocation.LootTable;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
-import com.ardc.arkdust.worldgen.structure.StructurePieceTypeAdd;
+import com.ardc.arkdust.registry.StructurePieceTypeRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
@@ -130,7 +130,7 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
          *          ¡ÌÕ‚£¨±Õ¸¡ÀcalculateBoundingBox()£°
          *       */
         public Piece(TemplateManager templateManager, ResourceLocation structurePlace, BlockPos addPos, Rotation aRotation) {
-            super(StructurePieceTypeAdd.PIX_ARK_LIBRARY, 3);
+            super(StructurePieceTypeRegistry.PIX_ARK_LIBRARY, 3);
             this.templateLocation = structurePlace;
             this.templatePosition = addPos;
             this.rotation = aRotation;
@@ -144,7 +144,7 @@ public class PixArkLibrary extends Structure<NoFeatureConfig> implements ArdStru
         }
 
         public Piece(TemplateManager templateManager, CompoundNBT nbt) {
-            super(StructurePieceTypeAdd.PIX_ARK_LIBRARY, nbt);
+            super(StructurePieceTypeRegistry.PIX_ARK_LIBRARY, nbt);
             this.templateLocation = new ResourceLocation(nbt.getString("Template"));
             this.rotation = Rotation.valueOf(nbt.getString("Rot"));
             this.loadTemplate(templateManager);

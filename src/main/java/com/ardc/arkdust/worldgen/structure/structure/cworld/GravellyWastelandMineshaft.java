@@ -8,9 +8,8 @@ import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.resourcelocation.LootTable;
 import com.ardc.arkdust.resourcelocation.Tag;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
-import com.ardc.arkdust.worldgen.structure.StructurePieceTypeAdd;
+import com.ardc.arkdust.registry.StructurePieceTypeRegistry;
 import com.ardc.arkdust.worldgen.structure.preobj.AAStructureStart;
-import com.ardc.arkdust.worldgen.structure.processor.PreparedProcessor;
 import com.ardc.arkdust.worldgen.structure.processor.structure_processor.WastelandMineshaftProcessor;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
@@ -30,13 +29,11 @@ import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.jigsaw.JigsawOrientation;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import org.lwjgl.system.CallbackI;
 
 import java.util.*;
 
@@ -143,16 +140,16 @@ public class GravellyWastelandMineshaft extends Structure<NoFeatureConfig> imple
         }
 
         public Piece(TemplateManager templateManager, ResourceLocation structurePlace, BlockPos addPos, Rotation rotation, int growth) {
-            super(StructurePieceTypeAdd.GRAVELLY_WASTELAND_MINESHAFT, templateManager, structurePlace, addPos, rotation, BlockPos.ZERO, growth, BlockPos.ZERO,new MapNecessityTemJigsawPieceElement(randomPart,mustPart,endPart),null,"START");
+            super(StructurePieceTypeRegistry.GRAVELLY_WASTELAND_MINESHAFT, templateManager, structurePlace, addPos, rotation, BlockPos.ZERO, growth, BlockPos.ZERO,new MapNecessityTemJigsawPieceElement(randomPart,mustPart,endPart),null,"START");
             this.key2ElementMap.buildTemplateMap(templateManager);
         }
 
         public Piece(TemplateManager templateManager, ResourceLocation structurePlace, BlockPos addPos, Rotation rotation, BlockPos rotationPivotPoint, int growth,BlockPos ignorePos,MapNecessityTemJigsawPieceElement element,Map<ChunkPos,List<MutableBoundingBox>> bbMap,String generateFromKey) {
-            super(StructurePieceTypeAdd.GRAVELLY_WASTELAND_MINESHAFT, templateManager, structurePlace, addPos, rotation, rotationPivotPoint, growth, ignorePos,element,bbMap,generateFromKey);
+            super(StructurePieceTypeRegistry.GRAVELLY_WASTELAND_MINESHAFT, templateManager, structurePlace, addPos, rotation, rotationPivotPoint, growth, ignorePos,element,bbMap,generateFromKey);
         }
 
         public Piece(TemplateManager templateManager, CompoundNBT nbt) {
-            super(StructurePieceTypeAdd.GRAVELLY_WASTELAND_MINESHAFT, templateManager, nbt);
+            super(StructurePieceTypeRegistry.GRAVELLY_WASTELAND_MINESHAFT, templateManager, nbt);
         }
 
         @Override

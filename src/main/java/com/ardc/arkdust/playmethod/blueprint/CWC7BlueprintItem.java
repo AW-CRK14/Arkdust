@@ -39,7 +39,9 @@ public class CWC7BlueprintItem extends BlueprintItem{
     @Override
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.appendHoverText(itemstack, world, list, flag);
-        list.add(new TranslationTextComponent("pma.bp.weight").withStyle(TextFormatting.WHITE).append(String.valueOf(itemstack.getOrCreateTagElement("blueprint").getInt("weight"))));
+        list.add(new TranslationTextComponent("pma.bp.BP_SPECIAL").withStyle(TextFormatting.BLUE));
+        list.add(new TranslationTextComponent("pma.bp.type").withStyle(TextFormatting.WHITE).append("C7_TELEPORT"));
+        list.add(new TranslationTextComponent("pma.bp.value").append("SPECIAL").withStyle(BlueprintValueEnum.SPECIAL.formatting));
+        list.add(new TranslationTextComponent("pma.bp.weight").append(String.valueOf(weight)));
     }
 }

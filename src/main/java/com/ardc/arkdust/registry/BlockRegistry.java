@@ -1,24 +1,23 @@
 package com.ardc.arkdust.registry;
 
-import com.ardc.arkdust.helper.LootHelper;
-import com.ardc.arkdust.obj_property.ExtraMaterial;
-import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBlock;
-import com.ardc.arkdust.preobject.Block.*;
-import com.ardc.arkdust.preobject.Block.cw.C7LabStructureBlock;
-import com.ardc.arkdust.preobject.Block.cw.MineshaftBoard;
-import com.ardc.arkdust.preobject.BlockState.DropSelfBlock;
-import com.ardc.arkdust.preobject.BlockState.DropSelfWhenSilkTouchBlock;
-import com.ardc.arkdust.preobject.BlockState.FaceCullingWhenSameBlock;
-import com.ardc.arkdust.preobject.BlockState.ThreeAxisBlock;
-import com.ardc.arkdust.playmethod.oi.OIItem.PreOIBlock;
-import com.ardc.arkdust.Items.blocks.*;
-import com.ardc.arkdust.preobject.Block.terra_industrial.StructureFrameBlock;
-import com.ardc.arkdust.preobject.pre.PreBlock;
-import com.ardc.arkdust.Items.blocks.ores.Pau_ore;
-import com.ardc.arkdust.Items.blocks.terra_energy.EOirReactorControlBoard;
-import com.ardc.arkdust.enums.TechMaterial;
 import com.ardc.arkdust.Utils;
+import com.ardc.arkdust.blocks.*;
+import com.ardc.arkdust.blocks.cworld.*;
+import com.ardc.arkdust.blocks.ores.Pau_ore;
+import com.ardc.arkdust.blocks.orirock.CreepOIBlock;
+import com.ardc.arkdust.blocks.terra_energy.EOirReactorControlBoard;
+import com.ardc.arkdust.blockstate.*;
+import com.ardc.arkdust.enums.TechMaterial;
+import com.ardc.arkdust.helper.BlockRenderHelper;
+import com.ardc.arkdust.helper.LootHelper;
 import com.ardc.arkdust.model.modelblock.LifeBlockModel;
+import com.ardc.arkdust.obj_property.ExtraMaterial;
+import com.ardc.arkdust.playmethod.oi.OIItem.PreOIBlock;
+import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBlock;
+import com.ardc.arkdust.blocks.cworld.C7LabStructureBlock;
+import com.ardc.arkdust.blocks.cworld.MineshaftBoard;
+import com.ardc.arkdust.blocks.terra_industrial.StructureFrameBlock;
+import com.ardc.arkdust.preobject.PreBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -38,7 +37,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> pau_block = BLOCKS.register("pau_block", ()->new PreBlock(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(3,6).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));//赤金块
     public static final RegistryObject<Block> pau_fluorescence_glass = BLOCKS.register("pau_fluorescence_glass", ()->new HardGlassBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(2,15).lightLevel((level)->12).noOcclusion()));//赤金光辉玻璃
     public static final RegistryObject<Block> blue_crystal = BLOCKS.register("blue_crystal", ()->new ArkCrystalBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(2,2).noOcclusion()));//蓝水晶
-    public static final RegistryObject<Block> blaze_rod_plant = BLOCKS.register("blaze_rod_plant", Blaze_rod_plant::new);//
+//    public static final RegistryObject<Block> blaze_rod_plant = BLOCKS.register("blaze_rod_plant", Blaze_rod_plant::new);//
     public static final RegistryObject<Block> common_food_box = BLOCKS.register("common_food_box", ()->new PreBlock(AbstractBlock.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).strength(3)));//普通食物盒子
     public static final RegistryObject<Block> blackstone_lamp = BLOCKS.register("blackstone_lamp", BlackstoneLamp::new);//黑石灯
     public static final RegistryObject<Block> blackstone_sand = BLOCKS.register("blackstone_sand", ()->new GravelBlock(AbstractBlock.Properties.of(Material.SAND, MaterialColor.STONE).harvestTool(ToolType.SHOVEL).strength(1)));//黑石沙砾
@@ -85,6 +84,8 @@ public class BlockRegistry {
     public static final RegistryObject<Block> stone_oak_log = BLOCKS.register("stone_oak_log", ()->new RotatedPillarBlock(AbstractBlock.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> stone_oak_wood = BLOCKS.register("stone_oak_wood", ()->new RotatedPillarBlock(AbstractBlock.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> stone_oak_plank = BLOCKS.register("stone_oak_plank", ()->new PreBlock(AbstractBlock.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> fractured_oak_log = BLOCKS.register("fractured_oak_log", ()->new FracturedOakLog(AbstractBlock.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion(),true));
+    public static final RegistryObject<Block> mycelium_pile = BLOCKS.register("mycelium_pile", ()->new BoardShapeBlock(AbstractBlock.Properties.of(Material.SAND, MaterialColor.STONE).instabreak().sound(SoundType.SAND).noCollission()));
 
 
 
@@ -92,8 +93,8 @@ public class BlockRegistry {
     public static final RegistryObject<Block> e_oir_reactor_control_board = BLOCKS.register("e_oir_reactor_control_board", EOirReactorControlBoard::new);//E类源石反应堆控制方块
 
     //泰拉工业
-    public static final RegistryObject<Block> iron_structure_frame = BLOCKS.register("iron_structure_frame",()->new StructureFrameBlock(AbstractBlock.Properties.of(Material.HEAVY_METAL).strength(5,40).noOcclusion().harvestLevel(3).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops(), TechMaterial.C_IRON));
-    public static final RegistryObject<Block> iron_structure_frame_creator = BLOCKS.register("iron_structure_frame_creator", Iron_sfblock_creator::new);
+    public static final RegistryObject<Block> iron_structure_frame = BLOCKS.register("iron_structure_frame",()->new StructureFrameBlock(AbstractBlock.Properties.of(Material.HEAVY_METAL).strength(5,40).noOcclusion().harvestLevel(3).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().lightLevel((i)->6), TechMaterial.C_IRON));
+    public static final RegistryObject<Block> iron_structure_frame_creator = BLOCKS.register("iron_structure_frame_creator", IronSfblockCreator::new);
 
     //特殊方块
     public static final RegistryObject<Block> life_model = BLOCKS.register("life_model", LifeBlockModel::new);

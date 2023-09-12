@@ -21,14 +21,23 @@ public class Arkdust {
         BlockRegistry.BLOCKS.register(BUS);//方块注册
         TileEntityTypeRegistry.TE.register(BUS);//方块实体注册
 
-        //结构注册
-        StructureRegistryHelper.STRUCTURES.register(BUS);
-        BUS.addListener(this::ardStructureRegistrySetup);
-        SurfaceBuilderRegistry.SURFACE_BUILDER.register(BUS);
-
         //生物群系注册
         BiomeRegistry.BIOMES.register(BUS);
         BiomeKey.generateBiome();
+
+        //粒子注册
+        ParticleRegistry.PARTICLE.register(BUS);
+        //ParticleFactoryRegistry工厂注册
+
+        //结构注册
+        StructureRegistryHelper.STRUCTURES.register(BUS);
+        StructurePieceTypeRegistry.bootstrap();
+        BUS.addListener(this::ardStructureRegistrySetup);
+        SurfaceBuilderRegistry.SURFACE_BUILDER.register(BUS);
+        FeatureRegistry.FEATURES.register(BUS);
+        PlacementRegistry.PLACEMENT.register(BUS);
+
+
 
         //Ard内部信息注册-见FMLFinishEventHandler
     }

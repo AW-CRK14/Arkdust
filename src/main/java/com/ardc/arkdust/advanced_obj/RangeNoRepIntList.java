@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class RangeNoRepIntList extends AbstractList<Integer> {
@@ -95,6 +97,19 @@ public class RangeNoRepIntList extends AbstractList<Integer> {
             l.add(i);
         }
         return this;
+    }
+
+    public int getFirstNotExistInt(){
+        for(int i = min;i<= max;i++){
+            if(!l.contains(i)) return i;
+        }
+        return min-1;
+    }
+
+    public List<Integer> getNotExistInt(){
+        List<Integer> list = IntStream.range(min,max).boxed().collect(Collectors.toList());
+        list.removeAll(l);
+        return list;
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.resourcelocation.LootTable;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
-import com.ardc.arkdust.worldgen.structure.StructurePieceTypeAdd;
+import com.ardc.arkdust.registry.StructurePieceTypeRegistry;
 import com.ardc.arkdust.worldgen.structure.preobj.AAStructureStart;
 import com.ardc.arkdust.worldgen.structure.preobj.CommonCWTemplatePiece;
 import com.mojang.serialization.Codec;
@@ -106,11 +106,11 @@ public class CWBoat extends Structure<NoFeatureConfig> implements ArdStructureAd
     public static class Piece extends CommonCWTemplatePiece {
 
         public Piece(TemplateManager templateManager, ResourceLocation structurePlace, BlockPos addPos, Rotation aRotation, Random random) {
-            super(StructurePieceTypeAdd.CW_BOAT, templateManager, structurePlace, addPos, aRotation, random);
+            super(StructurePieceTypeRegistry.CW_BOAT, templateManager, structurePlace, addPos, aRotation, random);
         }
 
         public Piece(TemplateManager templateManager, CompoundNBT nbt) {
-            super(StructurePieceTypeAdd.CW_BOAT, templateManager, nbt);
+            super(StructurePieceTypeRegistry.CW_BOAT, templateManager, nbt);
         }
 
         @Override

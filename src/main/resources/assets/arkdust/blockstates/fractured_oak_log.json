@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "arkdust:block/fractured_oak_log",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "arkdust:block/fractured_oak_log",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "arkdust:block/fractured_oak_log",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "arkdust:block/fractured_oak_log",
+      "x": -90
+    },
+    "facing=up": {
+      "model": "arkdust:block/fractured_oak_log"
+    },
+    "facing=west": {
+      "model": "arkdust:block/fractured_oak_log",
+      "x": 90,
+      "y": -90
+    }
+  }
+}

@@ -30,6 +30,7 @@ public class Tag
         public static final Tags.IOptionalNamedTag<Block> STRUCTURE$WASTELAND_MINESHAFT_GROUND = tag("structure/wasteland_mineshaft_ground");
         public static final Tags.IOptionalNamedTag<Block> STRUCTURE$WASTELAND_MINESHAFT_DIRTY_CONCRETE = tag("structure/wasteland_mineshaft_dirty_concrete");
         public static final Tags.IOptionalNamedTag<Block> STRUCTURE$WASTELAND_MINESHAFT_PILLAR_DOWN = tag("structure/wasteland_mineshaft_pillar_down");
+        public static final Tags.IOptionalNamedTag<Block> OVERWORLD_ORES = tag("generate_ore/overworld_ore");
 
         private static net.minecraftforge.common.Tags.IOptionalNamedTag<Block> tag(String name)
         {

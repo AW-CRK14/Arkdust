@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": [
+      { "model": "arkdust:block/mycelium_pile" },
+      { "model": "arkdust:block/mycelium_pile" , "y": 90},
+      { "model": "arkdust:block/mycelium_pile" , "y": 180},
+      { "model": "arkdust:block/mycelium_pile" , "y": 270}
+    ]
+  }
+}

@@ -9,6 +9,7 @@ import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -77,6 +78,19 @@ public class PosHelper {
     public static Pair<ChunkPos,ChunkPos> boundingBoxToChunkPos(MutableBoundingBox box){
         Pair<BlockPos,BlockPos> p = boundingBoxToBlockPos(box);
         return Pair.of(new ChunkPos(p.getFirst()),new ChunkPos(p.getSecond()));
+    }
+
+    public static List<BlockPos> createBox(int x,int y,int z){
+        if(x<0||y<0||z<0) return Collections.EMPTY_LIST;
+        List<BlockPos> list = new ArrayList<>();
+        for(int a=0;a<=x;a++){
+            for(int b=0;b<=y;b++){
+                for(int c=0;c<=z;c++){
+                    list.add(new BlockPos(a,b,c));
+                }
+            }
+        }
+        return list;
     }
 
     public static class PosMoveBag{

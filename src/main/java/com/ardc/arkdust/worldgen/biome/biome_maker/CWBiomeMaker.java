@@ -1,11 +1,20 @@
 package com.ardc.arkdust.worldgen.biome.biome_maker;
 
+import com.ardc.arkdust.particle.environment.FlyingGravelParticle;
+import com.ardc.arkdust.registry.FeatureRegistry;
+import com.ardc.arkdust.registry.ParticleRegistry;
 import com.ardc.arkdust.registry.SurfaceBuilderRegistry;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.particles.BasicParticleType;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleType;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Features;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.StructureFeatures;
 
 public class CWBiomeMaker{
@@ -29,6 +38,10 @@ public class CWBiomeMaker{
         DefaultBiomeFeatures.addBadlandsTrees(generationSettingBuilder);
         DefaultBiomeFeatures.addDefaultCarvers(generationSettingBuilder);
 
-        return (new Biome.Builder()).precipitation(Biome.RainType.NONE).biomeCategory(Biome.Category.MESA).depth(0.3F).scale(0.02F).temperature(1.7F).downfall(0.0F).specialEffects((new BiomeAmbience.Builder()).waterColor(11974616).waterFogColor(9211297).fogColor(13678511).skyColor(13681838).foliageColorOverride(10268042).grassColorOverride(12896433).ambientMoodSound(MoodSoundAmbience.LEGACY_CAVE_SETTINGS).build()).mobSpawnSettings(mobInfoBuilder.build()).generationSettings(generationSettingBuilder.build()).build();
+        return (new Biome.Builder()).precipitation(Biome.RainType.NONE).biomeCategory(Biome.Category.MESA).depth(0.3F).scale(0.02F).temperature(1.7F).downfall(0.0F)
+                .specialEffects((new BiomeAmbience.Builder()).waterColor(11974616).waterFogColor(9211297).fogColor(13678511).skyColor(13681838).foliageColorOverride(10268042).grassColorOverride(12896433)
+                        .ambientMoodSound(MoodSoundAmbience.LEGACY_CAVE_SETTINGS).ambientParticle(new ParticleEffectAmbience(new FlyingGravelParticle.Type(),0.03F)).build())
+//                        .ambientMoodSound(MoodSoundAmbience.LEGACY_CAVE_SETTINGS).ambientParticle(new ParticleEffectAmbience((IParticleData) ParticleRegistry.FLYING_GRAVEL.get(),0.07F)).build())
+                .mobSpawnSettings(mobInfoBuilder.build()).generationSettings(generationSettingBuilder.build()).build();
     }
 }

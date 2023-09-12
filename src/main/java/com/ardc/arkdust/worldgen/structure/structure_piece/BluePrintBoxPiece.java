@@ -1,7 +1,7 @@
 package com.ardc.arkdust.worldgen.structure.structure_piece;
 
 import com.ardc.arkdust.resourcelocation.LootTable;
-import com.ardc.arkdust.worldgen.structure.StructurePieceTypeAdd;
+import com.ardc.arkdust.registry.StructurePieceTypeRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,12 +21,12 @@ public class BluePrintBoxPiece {
     public static class Piece extends StructurePiece {
 
         public Piece(BlockPos setPos) {
-            super(StructurePieceTypeAdd.BLUE_PRINT_BOX,0);
+            super(StructurePieceTypeRegistry.BLUE_PRINT_BOX,0);
             this.boundingBox = new MutableBoundingBox(setPos.getX(),setPos.getY(),setPos.getZ(),setPos.getX(),setPos.getY(),setPos.getZ());
         }
 
         public Piece(TemplateManager p_i51343_1_, CompoundNBT p_i51343_2_) {
-            super(StructurePieceTypeAdd.BLUE_PRINT_BOX, p_i51343_2_);
+            super(StructurePieceTypeRegistry.BLUE_PRINT_BOX, p_i51343_2_);
         }
 
         @Override

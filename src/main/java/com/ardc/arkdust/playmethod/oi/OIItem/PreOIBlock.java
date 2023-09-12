@@ -1,7 +1,7 @@
 package com.ardc.arkdust.playmethod.oi.OIItem;
 
 import com.ardc.arkdust.resourcelocation.Damage;
-import com.ardc.arkdust.preobject.pre.PreBlock;
+import com.ardc.arkdust.preobject.PreBlock;
 import com.ardc.arkdust.playmethod.oi.ori_infection.IOIBlock;
 import com.ardc.arkdust.registry.CapabilityRegistry;
 import net.minecraft.block.BlockState;

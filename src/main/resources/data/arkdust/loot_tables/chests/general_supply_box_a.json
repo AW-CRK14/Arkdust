@@ -297,22 +297,6 @@
           ]
         }
       ]
-    },
-    {
-      "rolls": {
-        "min": 0,
-        "max": 2
-      },
-      "entries": [
-        {
-          "type": "minecraft:loot_table",
-          "name": "arkdust:chests/pretable/treasure_a",
-          "weight": 3
-        },{
-          "type": "minecraft:empty",
-          "weight": 7
-        }
-      ]
     }
   ]
 }

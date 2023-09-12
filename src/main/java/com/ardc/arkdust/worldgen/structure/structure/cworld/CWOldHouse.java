@@ -5,7 +5,7 @@ import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.resourcelocation.LootTable;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
-import com.ardc.arkdust.worldgen.structure.StructurePieceTypeAdd;
+import com.ardc.arkdust.registry.StructurePieceTypeRegistry;
 import com.ardc.arkdust.worldgen.structure.ExtraStructureProcessorList;
 import com.ardc.arkdust.worldgen.structure.preobj.AAStructureStart;
 import com.ardc.arkdust.worldgen.structure.preobj.CommonCWTemplatePiece;
@@ -113,11 +113,11 @@ public class CWOldHouse extends Structure<NoFeatureConfig> implements ArdStructu
 
 
         public Piece(TemplateManager templateManager, ResourceLocation structurePlace, BlockPos addPos, Rotation aRotation, Random random) {
-            super(StructurePieceTypeAdd.CW_OLD_HOUSE, templateManager, structurePlace, addPos, aRotation, random);
+            super(StructurePieceTypeRegistry.CW_OLD_HOUSE, templateManager, structurePlace, addPos, aRotation, random);
         }
 
         public Piece(TemplateManager templateManager, CompoundNBT nbt) {
-            super(StructurePieceTypeAdd.CW_OLD_HOUSE, templateManager, nbt);
+            super(StructurePieceTypeRegistry.CW_OLD_HOUSE, templateManager, nbt);
         }
 
         public boolean postProcess(ISeedReader p_230383_1_, StructureManager p_230383_2_, ChunkGenerator p_230383_3_, Random p_230383_4_, MutableBoundingBox p_230383_5_, ChunkPos p_230383_6_, BlockPos p_230383_7_) {

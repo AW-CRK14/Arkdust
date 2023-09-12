@@ -1,6 +1,6 @@
 package com.ardc.arkdust.gui.screen.menu;
 
-import com.ardc.arkdust.preobject.pre.PreItem;
+import com.ardc.arkdust.preobject.PreItem;
 import com.ardc.arkdust.registry.ModGroupRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

@@ -1,7 +1,7 @@
 package com.ardc.arkdust.playmethod.story.blockanditem;
 
 import com.ardc.arkdust.capability.story.IStorySaveCapability;
-import com.ardc.arkdust.preobject.pre.PreBlock;
+import com.ardc.arkdust.preobject.PreBlock;
 import com.ardc.arkdust.registry.CapabilityRegistry;
 import com.ardc.arkdust.registry.ItemRegistry;
 import net.minecraft.block.BlockState;
@@ -11,9 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ShulkerBoxTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -52,23 +50,23 @@ public class StoryPointBlock extends PreBlock {
 
 
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult ray) {
-        TileEntity blockEntity = world.getBlockEntity(pos);
-        if(blockEntity instanceof StoryPointBE){
+        StoryPointBE blockEntity = (StoryPointBE)world.getBlockEntity(pos);
+        if(blockEntity != null){
 //            System.out.println("StoryPointTest:" + ((StoryPointBE) blockEntity).dataToNBT().toString());
             if(!world.isClientSide()){
-                if(((StoryPointBE) blockEntity).bagMode) {
+                if(blockEntity.bagMode) {
                     LazyOptional<IStorySaveCapability> cap = playerEntity.getCapability(CapabilityRegistry.STORY_CAPABILITY);
                     cap.ifPresent((i) -> {
-                        if(i.contains(((StoryPointBE) blockEntity).bag, ((StoryPointBE) blockEntity).stage) || i.add(((StoryPointBE) blockEntity).bag, ((StoryPointBE) blockEntity).stage)) {
-                            playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getTitleContext(), false);
-                            playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getContext(), false);
+                        if(i.contains(blockEntity.bag, blockEntity.stage) || i.add(blockEntity.bag,blockEntity.stage,playerEntity)) {
+                            playerEntity.displayClientMessage(blockEntity.getTitleContext(blockEntity.stage), false);
+                            playerEntity.displayClientMessage(blockEntity.getContext(), false);
                         }else {
                             playerEntity.displayClientMessage(new TranslationTextComponent("story.info.locked"), false);
                         }
                     });
                 }else {
-                    playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getTitleContext(), false);
-                    playerEntity.displayClientMessage(((StoryPointBE) blockEntity).getContext(), false);
+                    playerEntity.displayClientMessage(blockEntity.getTitleContext(blockEntity.stage), false);
+                    playerEntity.displayClientMessage(blockEntity.getContext(), false);
                 }
             }
             return ActionResultType.SUCCESS;

@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class StoryPointBE extends TileEntity {
@@ -80,14 +81,14 @@ public class StoryPointBE extends TileEntity {
 
 
     //信息显示部分
-    public TranslationTextComponent getTitleContext() {
+    public IFormattableTextComponent getTitleContext(int stage) {
         initialize();
         if (!bagMode)
             return new TranslationTextComponent("story.trans.title.common." + title);
-        return new TranslationTextComponent("story.trans.title.$" + bag.getName());
+        return bag.createMessage(stage,false);
     }
 
-    public TranslationTextComponent getContext() {
+    public IFormattableTextComponent getContext() {
         initialize();
         if (bag == null)
             return new TranslationTextComponent("story.trans.common." + translateKey);

@@ -8,8 +8,10 @@ import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.FlatGenerationSettings;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraftforge.registries.DeferredRegister;
 
 public class ConfiguredStructures {
+
     public static StructureFeature<?,?> cfed_undertree_blueprint = StructureRegistry.UNDERTREE_BLUEPRINT.get().configured(IFeatureConfig.NONE);
     public static StructureFeature<?,?> cfed_cw_old_house_0 = StructureRegistry.CW_OLD_HOUSE_0.get().configured(IFeatureConfig.NONE);
     public static StructureFeature<?,?> cfed_pixark_library = StructureRegistry.PIXARK_LIBRARY.get().configured(IFeatureConfig.NONE);
@@ -23,6 +25,7 @@ public class ConfiguredStructures {
 
 
     public static void registryCfedStructure(){
+
         Registry<StructureFeature<?,?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
 
         Registry.register(registry,new ResourceLocation(Utils.MOD_ID,"cw/cfed_undertree_blueprint"),cfed_undertree_blueprint);

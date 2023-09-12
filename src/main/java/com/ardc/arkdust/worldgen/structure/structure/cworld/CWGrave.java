@@ -7,10 +7,10 @@ import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.resourcelocation.LootTable;
 import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBE;
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.preobject.BlockState.RotateBlock;
+import com.ardc.arkdust.blockstate.RotateBlock;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
-import com.ardc.arkdust.worldgen.structure.StructurePieceTypeAdd;
+import com.ardc.arkdust.registry.StructurePieceTypeRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
@@ -123,7 +123,7 @@ public class CWGrave extends Structure<NoFeatureConfig> implements ArdStructureA
         public final Rotation rotation;
 
         public Piece(TemplateManager templateManager, ResourceLocation[] structurePlace, BlockPos addPos, Rotation aRotation, Random random) {
-            super(StructurePieceTypeAdd.CW_GRAVE, 3);
+            super(StructurePieceTypeRegistry.CW_GRAVE, 3);
             this.templateLocation = structurePlace[random.nextInt(structurePlace.length)];
             this.templatePosition = addPos;
             this.rotation = aRotation;
@@ -137,7 +137,7 @@ public class CWGrave extends Structure<NoFeatureConfig> implements ArdStructureA
         }
 
         public Piece(TemplateManager templateManager, CompoundNBT nbt) {
-            super(StructurePieceTypeAdd.CW_GRAVE, nbt);
+            super(StructurePieceTypeRegistry.CW_GRAVE, nbt);
             this.templateLocation = new ResourceLocation(nbt.getString("Template"));
             this.rotation = Rotation.valueOf(nbt.getString("Rot"));
             this.loadTemplate(templateManager);

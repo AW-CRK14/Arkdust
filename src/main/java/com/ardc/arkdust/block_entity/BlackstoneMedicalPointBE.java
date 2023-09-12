@@ -1,6 +1,6 @@
 package com.ardc.arkdust.block_entity;
 
-import com.ardc.arkdust.Items.blocks.BlackstoneMedicalPoint;
+import com.ardc.arkdust.blocks.cworld.BlackstoneMedicalPoint;
 import com.ardc.arkdust.playmethod.camp.Camp;
 import com.ardc.arkdust.playmethod.camp.CampHelper;
 import com.ardc.arkdust.registry.BlockRegistry;

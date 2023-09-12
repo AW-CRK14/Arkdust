@@ -4,6 +4,7 @@ import com.ardc.arkdust.Utils;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
+import java.util.function.Function;
 
 public class ListAndMapHelper {
 
@@ -63,6 +64,27 @@ public class ListAndMapHelper {
         if(map.containsKey(key)) map.get(key).addAll(obj);
         else map.put(key,copyList(obj));
     }
+
+    public static <T,K> void tryDeleteElementToMapList(Map<K,List<T>> map,K key,List<T> obj){
+        if(map.containsKey(key)) map.get(key).removeAll(obj);
+        else map.put(key,new ArrayList<>());
+    }
+
+    public static <T,K,C> void tryTransListToMapList(Map<K,List<T>> map, List<C> list, Function<C,? extends K> createKey,Function<C,T> createValue){
+        for (C c:list){
+            K key = createKey.apply(c);
+            T value = createValue.apply(c);
+            if(key!=null && value!=null){
+                if(map.containsKey(key)) map.get(key).add(value);
+                else {
+                    List<T> values = new ArrayList<>();
+                    values.add(value);
+                    map.put(key,values);
+                }
+            }
+        }
+    }
+
 
     public static <T,K> List<T> getNonnullListInMap(Map<K,List<T>> map, K key){
         return map.get(key) == null ? Collections.EMPTY_LIST : map.get(key);

@@ -1,7 +1,7 @@
 package com.ardc.arkdust.worldgen.structure.preobj;
 
 import com.ardc.arkdust.helper.DirectionAndRotationHelper;
-import com.ardc.arkdust.preobject.BlockState.RotateBlock;
+import com.ardc.arkdust.blockstate.RotateBlock;
 import com.ardc.arkdust.worldgen.structure.ExtraStructureProcessorList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

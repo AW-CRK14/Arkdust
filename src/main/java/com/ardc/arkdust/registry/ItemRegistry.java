@@ -1,15 +1,18 @@
 package com.ardc.arkdust.registry;
 
+import com.ardc.arkdust.Items.sugar.Industrial_sugar;
+import com.ardc.arkdust.Items.sugar.Sugar_lump;
+import com.ardc.arkdust.Items.sugar.Sugar_pack;
+import com.ardc.arkdust.Items.sugar.Sugar_substitute;
 import com.ardc.arkdust.obj_property.MaterialTier;
-import com.ardc.arkdust.Items.items.EnderEnergyRadar;
+import com.ardc.arkdust.Items.EnderEnergyRadar;
 import com.ardc.arkdust.gui.screen.menu.MenuTestItem;
-import com.ardc.arkdust.preobject.item.OIRVaccineItem;
+import com.ardc.arkdust.Items.pre.OIRVaccineItem;
 import com.ardc.arkdust.playmethod.oi.OIItem.PreOIBlockItem;
 import com.ardc.arkdust.playmethod.oi.OIItem.PreOIItem;
-import com.ardc.arkdust.preobject.pre.PreBlockItem;
-import com.ardc.arkdust.preobject.pre.PreItem;
-import com.ardc.arkdust.Items.items.Bc;
-import com.ardc.arkdust.Items.items.sugar.*;
+import com.ardc.arkdust.preobject.PreBlockItem;
+import com.ardc.arkdust.preobject.PreItem;
+import com.ardc.arkdust.Items.Bc;
 import com.ardc.arkdust.Utils;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
@@ -141,7 +144,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> stone_oak_log = ITEMS.register("stone_oak_log",()->new PreBlockItem(BlockRegistry.stone_oak_log.get(), P_CW));
     public static final RegistryObject<Item> stone_oak_wood = ITEMS.register("stone_oak_wood",()->new PreBlockItem(BlockRegistry.stone_oak_wood.get(), P_CW));
     public static final RegistryObject<Item> stone_oak_plank = ITEMS.register("stone_oak_plank",()->new PreBlockItem(BlockRegistry.stone_oak_plank.get(), P_CW));
+    public static final RegistryObject<Item> fractured_oak_log = ITEMS.register("fractured_oak_log",()->new PreBlockItem(BlockRegistry.fractured_oak_log.get(), P_CW));
     public static final RegistryObject<Item> stone_wood_stick = ITEMS.register("stone_wood_stick",()->new PreItem(P_CW));
+    public static final RegistryObject<Item> mycelium_pile = ITEMS.register("mycelium_pile",()->new PreBlockItem(BlockRegistry.mycelium_pile.get(), P_CW));
 
 
     //TerraTools泰拉工具工具 注册

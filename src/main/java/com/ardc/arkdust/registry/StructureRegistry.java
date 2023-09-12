@@ -1,6 +1,9 @@
 package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.Utils;
+import com.ardc.arkdust.worldgen.config.ListNBTFeatureConfig;
+import com.ardc.arkdust.worldgen.config.RandomPosOffsetConfig;
+import com.ardc.arkdust.worldgen.config.SingleBlockPlacementConfig;
 import com.ardc.arkdust.worldgen.feature.OreFeature;
 import com.ardc.arkdust.worldgen.structure.ConfiguredStructures;
 import com.ardc.arkdust.helper.StructureRegistryHelper;
@@ -8,6 +11,8 @@ import com.ardc.arkdust.worldgen.structure.structure.cworld.*;
 import com.ardc.arkdust.worldgen.structure.structure.story.moonfall.SMoonfallOasis;
 import com.ardc.arkdust.worldgen.structure.structure_pool.OldHouse0Pool;
 import com.ardc.arkdust.worldgen.structure.structure_pool.UndertreeBlueprintPool;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
@@ -89,7 +94,13 @@ public class StructureRegistry {
             }
             if(event.getName().equals(BiomeRegistry.CW$FAULT_LINE.getId())){
                 gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, OreFeature.ORE_PAU);
+                gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION.ordinal(),()-> FeatureRegistry.FAULTLINE$STONE_OAK_TREE.get().configured(NoFeatureConfig.INSTANCE).chance(24).decorated(PlacementRegistry.RANDOM_OFFSET.get().configured(new RandomPosOffsetConfig(7))));
+                gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION.ordinal(),()-> FeatureRegistry.OVERWORLD_ORE_PILE.get().configured(NoFeatureConfig.INSTANCE).chance(56).decorated(PlacementRegistry.RANDOM_OFFSET.get().configured(new RandomPosOffsetConfig(5))));
+                gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION.ordinal(),()-> FeatureRegistry.ABS$SINGLE_BLOCK_ON.get().configured(new SingleBlockPlacementConfig(Arrays.asList(Blocks.MYCELIUM,Blocks.GRAVEL),BlockRegistry.mycelium_pile.get().defaultBlockState())).decorated(PlacementRegistry.RANDOM_OFFSET.get().configured(new RandomPosOffsetConfig(7))).count(8));
+//                gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION.ordinal(),()-> FeatureRegistry.ABS$LIST_NBT_FEATURE.get().configured(new ListNBTFeatureConfig(Utils.MOD_ID+":biomefeature/faultline/hole_",Arrays.asList("0","1","2"),-4,true,Blocks.STONE,1)).decorated(PlacementRegistry.RANDOM_OFFSET.get().configured(new RandomPosOffsetConfig(7))).chance(12));
+                gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION.ordinal(),()-> FeatureRegistry.ABS$LIST_NBT_FEATURE.get().configured(new ListNBTFeatureConfig(Utils.MOD_ID+":biomefeature/faultline/ruin_",6,Arrays.asList(Blocks.GRAVEL,Blocks.COBBLESTONE, Blocks.STONE),-1,true,0.85F)).decorated(PlacementRegistry.RANDOM_OFFSET.get().configured(new RandomPosOffsetConfig(7))).chance(196));
                 gen.addStructureStart(ConfiguredStructures.cfed_gravelly_wasteland_mineshaft);
+//                event.getEffects().getAmbientParticleSettings().
             }
         }
     }

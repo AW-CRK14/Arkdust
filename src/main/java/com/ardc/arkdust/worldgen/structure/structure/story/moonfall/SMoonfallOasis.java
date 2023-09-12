@@ -9,7 +9,7 @@ import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBE;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.worldgen.WorldStructureSavaData;
 import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
-import com.ardc.arkdust.worldgen.structure.StructurePieceTypeAdd;
+import com.ardc.arkdust.registry.StructurePieceTypeRegistry;
 import com.ardc.arkdust.worldgen.structure.preobj.AAStructureStart;
 import com.ardc.arkdust.worldgen.structure.preobj.CommonCWTemplatePiece;
 import com.mojang.serialization.Codec;
@@ -108,11 +108,11 @@ public class SMoonfallOasis extends Structure<NoFeatureConfig> implements ArdStr
     public static class Piece extends CommonCWTemplatePiece {
 
         public Piece(TemplateManager templateManager, ResourceLocation structurePlace, BlockPos addPos, Rotation aRotation, Random random) {
-            super(StructurePieceTypeAdd.STORY_MOONFALL_OASIS, templateManager, structurePlace, addPos, aRotation, random);
+            super(StructurePieceTypeRegistry.STORY_MOONFALL_OASIS, templateManager, structurePlace, addPos, aRotation, random);
         }
 
         public Piece(TemplateManager templateManager, CompoundNBT nbt) {
-            super(StructurePieceTypeAdd.STORY_MOONFALL_OASIS, templateManager, nbt);
+            super(StructurePieceTypeRegistry.STORY_MOONFALL_OASIS, templateManager, nbt);
         }
 
         @Override
