@@ -7,10 +7,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.function.Function;
 
 public class StoryAchListener<T extends Event> {
     public final Class<T> clazz;
@@ -24,6 +21,10 @@ public class StoryAchListener<T extends Event> {
     public static class Pre{
         public static StoryAchListener<PlayerEvent.ItemPickupEvent> itemPickup(ResourceLocation regName){
             return new StoryAchListener<>(PlayerEvent.ItemPickupEvent.class,(event -> event.getStack().getItem().getRegistryName().equals(regName)));
+        }
+
+        public static StoryAchListener<PlayerEvent.ItemPickupEvent> itemPickup(Call<PlayerEvent.ItemPickupEvent> call){
+            return new StoryAchListener<>(PlayerEvent.ItemPickupEvent.class,call);
         }
     }
 

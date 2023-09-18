@@ -1,5 +1,6 @@
 package com.ardc.arkdust.Items.sugar;
 
+import com.ardc.arkdust.registry.ItemRegistry;
 import com.ardc.arkdust.registry.ModGroupRegistry;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
@@ -16,6 +17,6 @@ public class Sugar_lump extends Item {
             .alwaysEat()
             .build();
     public Sugar_lump() {
-        super(new Properties().food(food).tab(ModGroupRegistry.TERRA_WORLD_COMMON_MATERIAL));
+        super(new Properties().food(food).tab(ModGroupRegistry.TERRA_WORLD_COMMON_MATERIAL).rarity(ItemRegistry.Rar.TREASURE));
     }
 }

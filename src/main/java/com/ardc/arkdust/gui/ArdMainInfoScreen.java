@@ -6,6 +6,7 @@ import com.ardc.arkdust.gui.widget.MenuReturnButton;
 import com.ardc.arkdust.gui.widget.pre.AbstractBlackButton;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.Entity;
@@ -51,12 +52,12 @@ public class ArdMainInfoScreen extends Screen {
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
         defaultAlpha();
-        this.blit(ms,0,0,0,0,this.width,this.height,this.width,this.height);
+        blit(ms,0,0,0,0,this.width,this.height,this.width,this.height);
 
         this.minecraft.getTextureManager().bind(white_slash);
 
         setAlpha(0.12F);
-        this.blit(ms,0,0,0,0,this.width,this.height/8,this.height/2,this.height/8);
+        blit(ms,0,0,0,0,this.width,this.height/8,this.height/2,this.height/8);
 
 
         defaultAlpha();
@@ -64,7 +65,7 @@ public class ArdMainInfoScreen extends Screen {
         this.closeButton.renderButton(ms,mouseX,mouseY,partialTicks);
 
         this.minecraft.getTextureManager().bind(AbstractBlackButton.RESOURCE);
-        this.blit(ms,(int)(this.width/7.1F),this.height/36+2,3*this.width,0,1,this.height/15-4,this.width*4,this.height);
+        blit(ms,(int)(this.width/7.1F),this.height/36+2,3*this.width,0,1,this.height/15-4,this.width*4,this.height);
     }
 
     public boolean isPauseScreen() {

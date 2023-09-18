@@ -2,7 +2,12 @@ package com.ardc.arkdust.helper;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.util.math.vector.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.math.vector.Vector4f;
+
+import java.awt.*;
 
 public class RenderHelper {
     public static Vector4f m4fPosTrans(Matrix4f m4f, float x, float y, float z){
@@ -10,9 +15,17 @@ public class RenderHelper {
         v4f.transform(m4f);
         return v4f;
     }
-//    public static int overlayCoords(byte type,byte strength){
-//
-//    }
+
+    public static Color itemStackColor(ItemStack stack){
+        try {
+            if (stack == null || stack.isEmpty()) return new Color(1F, 1F, 1F);
+            return new Color(stack.getDisplayName().getStyle().getColor().getValue());
+        }catch (Throwable ignore){
+            return new Color(1F,1F,1F);
+        }
+    }
+
+
 
     public static void vertex(MatrixStack stack, BufferBuilder builder, Vector4f relativeV4f, ColorPack color, float u, float v, int overlay, int light){
         relativeV4f.transform(stack.last().pose());

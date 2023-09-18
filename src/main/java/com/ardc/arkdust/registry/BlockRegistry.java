@@ -86,6 +86,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> stone_oak_plank = BLOCKS.register("stone_oak_plank", ()->new PreBlock(AbstractBlock.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> fractured_oak_log = BLOCKS.register("fractured_oak_log", ()->new FracturedOakLog(AbstractBlock.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion(),true));
     public static final RegistryObject<Block> mycelium_pile = BLOCKS.register("mycelium_pile", ()->new BoardShapeBlock(AbstractBlock.Properties.of(Material.SAND, MaterialColor.STONE).instabreak().sound(SoundType.SAND).noCollission()));
+    public static final RegistryObject<Block> se_rcu_machine = BLOCKS.register("se_rcu_machine", SeRcuMachine::new);
 
 
 

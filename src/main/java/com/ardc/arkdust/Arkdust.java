@@ -20,6 +20,7 @@ public class Arkdust {
         Item$BlueprintRegistry.BLUEPRINTS.register(BUS);
         BlockRegistry.BLOCKS.register(BUS);//方块注册
         TileEntityTypeRegistry.TE.register(BUS);//方块实体注册
+        ContainerRegistry.CONTAINER.register(BUS);//方块容器注册
 
         //生物群系注册
         BiomeRegistry.BIOMES.register(BUS);
