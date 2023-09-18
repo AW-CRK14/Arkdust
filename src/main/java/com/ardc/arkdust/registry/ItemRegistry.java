@@ -14,11 +14,15 @@ import com.ardc.arkdust.preobject.PreBlockItem;
 import com.ardc.arkdust.preobject.PreItem;
 import com.ardc.arkdust.Items.Bc;
 import com.ardc.arkdust.Utils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.item.*;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ItemRegistry {
 
@@ -31,13 +35,13 @@ public class ItemRegistry {
 
 
     public static class Rar{
-        public static final Rarity NULL = Rarity.create("ard_null", TextFormatting.DARK_GRAY);
-        public static final Rarity COMMON = Rarity.create("ard_common", TextFormatting.WHITE);
-        public static final Rarity SPECIAL = Rarity.create("ard_special", TextFormatting.DARK_GREEN);
-        public static final Rarity VALUABLE = Rarity.create("ard_valuable", TextFormatting.BLUE);
-        public static final Rarity TREASURE = Rarity.create("ard_treasure", TextFormatting.DARK_PURPLE);
-        public static final Rarity RARE = Rarity.create("ard_rare", TextFormatting.YELLOW);
-        public static final Rarity EPIC = Rarity.create("ard_epic", TextFormatting.GOLD);
+        public static final Rarity NULL = Rarity.create("ard_null", ChatFormatting.DARK_GRAY);
+        public static final Rarity COMMON = Rarity.create("ard_common", ChatFormatting.WHITE);
+        public static final Rarity SPECIAL = Rarity.create("ard_special", ChatFormatting.DARK_GREEN);
+        public static final Rarity VALUABLE = Rarity.create("ard_valuable", ChatFormatting.BLUE);
+        public static final Rarity TREASURE = Rarity.create("ard_treasure", ChatFormatting.DARK_PURPLE);
+        public static final Rarity RARE = Rarity.create("ard_rare", ChatFormatting.YELLOW);
+        public static final Rarity EPIC = Rarity.create("ard_epic", ChatFormatting.GOLD);
     }
 
 

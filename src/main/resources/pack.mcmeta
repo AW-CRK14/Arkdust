@@ -1,7 +1,8 @@
 {
-    "pack": {
-        "description": "arkdust resources",
-        "pack_format": 6,
-        "_comment": "the resources of arkdust."
-    }
+  "pack": {
+    "description": {
+      "text": "${mod_id} resources"
+    },
+    "pack_format": 15
+  }
 }

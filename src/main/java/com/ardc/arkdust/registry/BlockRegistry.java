@@ -3,12 +3,11 @@ package com.ardc.arkdust.registry;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.blocks.*;
 import com.ardc.arkdust.blocks.cworld.*;
-import com.ardc.arkdust.blocks.ores.Pau_ore;
+import com.ardc.arkdust.blocks.ores.PauOre;
 import com.ardc.arkdust.blocks.orirock.CreepOIBlock;
 import com.ardc.arkdust.blocks.terra_energy.EOirReactorControlBoard;
 import com.ardc.arkdust.blockstate.*;
 import com.ardc.arkdust.enums.TechMaterial;
-import com.ardc.arkdust.helper.BlockRenderHelper;
 import com.ardc.arkdust.helper.LootHelper;
 import com.ardc.arkdust.model.modelblock.LifeBlockModel;
 import com.ardc.arkdust.obj_property.ExtraMaterial;
@@ -24,16 +23,18 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Utils.MOD_ID);
 
     //闭环区方块
-    public static final RegistryObject<Block> pau_ore = BLOCKS.register("pau_ore", Pau_ore::new);//赤金矿石
+    public static final RegistryObject<Block> pau_ore = BLOCKS.register("pau_ore", PauOre::new);//赤金矿石
     public static final RegistryObject<Block> pau_block = BLOCKS.register("pau_block", ()->new PreBlock(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(3,6).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));//赤金块
     public static final RegistryObject<Block> pau_fluorescence_glass = BLOCKS.register("pau_fluorescence_glass", ()->new HardGlassBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(2,15).lightLevel((level)->12).noOcclusion()));//赤金光辉玻璃
     public static final RegistryObject<Block> blue_crystal = BLOCKS.register("blue_crystal", ()->new ArkCrystalBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(2,2).noOcclusion()));//蓝水晶

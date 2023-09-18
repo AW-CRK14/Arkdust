@@ -12,12 +12,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ToolType;
 
 
-public class Pau_ore extends Block{
-    public Pau_ore(){
-        super(Properties.of(Material.STONE).harvestTool(ToolType.PICKAXE).strength(8).harvestLevel(2).requiresCorrectToolForDrops());
+public class PauOre extends Block {
+    public PauOre(){
+        super(Properties.of().requiredFeatures(ToolType.PICKAXE).strength(8).harvestLevel(2).requiresCorrectToolForDrops());
         //strength是强度，等价于非官方版中的hardnessAndResistance
     }
 
