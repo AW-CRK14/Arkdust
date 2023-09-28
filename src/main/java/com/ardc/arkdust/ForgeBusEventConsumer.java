@@ -1,10 +1,10 @@
 package com.ardc.arkdust;
 
 import com.ardc.arkdust.helper.ISkipShiftBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,13 +17,13 @@ public class ForgeBusEventConsumer {
 
     @SubscribeEvent
     public static void OnShiftCheckBlock(PlayerInteractEvent.RightClickBlock event){
-        World world = event.getWorld();
+        Level world = event.getLevel();
         BlockState state = world.getBlockState(event.getHitVec().getBlockPos());
 //        LOGGER.warn("[ArkdustText]OnShiftCheckBlock event run. world:{} hand:{}",event.getWorld(),event.getHand());
         if(Screen.hasShiftDown() && state.getBlock() instanceof ISkipShiftBlock && ((ISkipShiftBlock) state.getBlock()).acceptHand(event.getHand())){
 //            LOGGER.warn("[ArkdustText]If mode get True result. world:{} hand:{}",event.getWorld(),event.getHand());
-            ActionResultType type = state.use(world, event.getPlayer(),event.getHand(),event.getHitVec());
-            if(type == ActionResultType.CONSUME || type == ActionResultType.SUCCESS){
+            InteractionResult type = state.use(world, event.getEntity(),event.getHand(),event.getHitVec());
+            if(type == InteractionResult.CONSUME || type == InteractionResult.SUCCESS){
                 event.setCanceled(true);
                 event.setCancellationResult(type);
             }

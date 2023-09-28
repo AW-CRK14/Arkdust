@@ -1,72 +1,59 @@
 package com.ardc.arkdust.blocks.cworld;
 
 import com.ardc.arkdust.block_entity.BlackstoneMedicalPointBE;
-import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.blockstate.DropSelfBlock;
-import com.ardc.arkdust.playmethod.camp.Camp;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
+import com.ardc.arkdust.registry.BlockRegistry;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
-
-public class BlackstoneMedicalPoint extends DropSelfBlock {
-    public static final IntegerProperty RUNNING_STATE = IntegerProperty.create("running_state", 0, 3);
+public class BlackstoneMedicalPoint extends DropSelfBlock implements EntityBlock {
+    public static final BooleanProperty WORKING = BooleanProperty.create("working");
     public BlackstoneMedicalPoint() {
-        super(Properties.of(Material.HEAVY_METAL).strength(2, 6).harvestTool(ToolType.PICKAXE).noOcclusion().requiresCorrectToolForDrops());
-        this.registerDefaultState(this.defaultBlockState().setValue(RUNNING_STATE, 0));
+        super(Properties.copy(Blocks.BLACKSTONE).strength(2, 6).noOcclusion().lightLevel((s)->s.getValue(WORKING) ? 8 : 2).requiresCorrectToolForDrops());
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource randomSource) {
+        ((BlackstoneMedicalPointBE)world.getBlockEntity(pos)).tick();
+        world.scheduleTick(pos,this,40);
     }
 
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new BlackstoneMedicalPointBE();
-    }
-
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        BlackstoneMedicalPointBE blockBE = (BlackstoneMedicalPointBE) worldIn.getBlockEntity(pos);//??????????
-        if (blockBE == null) return ActionResultType.FAIL;
-        ActionResultType reType = ActionResultType.SUCCESS;
-        if (!blockBE.ifDefaultSet()) {
-            blockBE.setDefaultValue(0, 4.5F, 1, 60, 100, false, false, true,false,6, BlackstoneMedicalPointBE.mode.BSMP);
-            blockBE.setCampBelong(Collections.singletonList(Camp.PLAYER));
-            blockBE.setBelongUs(true);
-            if(!worldIn.isClientSide()) player.displayClientMessage(new TranslationTextComponent("mes.bs_medical_point.activation").withStyle(TextFormatting.GREEN), false);
-            reType = ActionResultType.CONSUME;
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (worldIn.getBlockState(pos.below()).getBlock().equals(BlockRegistry.pau_block.get())) {
+            if(!worldIn.isClientSide()) player.displayClientMessage(Component.translatable("mes.bs_medical_point.activation").withStyle(ChatFormatting.DARK_GREEN), false);
+            worldIn.setBlock(pos, state.setValue(WORKING, true), 1);
+            worldIn.scheduleTick(pos,this,40);
+            return InteractionResult.SUCCESS;
         }
-        int toState = getState(pos, state, worldIn);
-        worldIn.setBlock(pos, state.setValue(RUNNING_STATE, toState), 1);
-        if ((toState == 1 || toState == 2) && !worldIn.isClientSide())
-            player.displayClientMessage(new TranslationTextComponent("mes.bs_medical_point.inactivation"), false);
-        return reType;
+        return InteractionResult.PASS;
     }
 
-    private int getState(BlockPos pos, BlockState blockState, World worldIn) {
-        int state = blockState.getValue(RUNNING_STATE);
-        boolean b = worldIn.getBlockState(pos.below()).getBlock() == BlockRegistry.pau_block.get();
-        if (state == 1 || state == 2) return b ? 3 : 1;
-        return b ? 3 : 2;
-    }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block,BlockState> builder){
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder){
         super.createBlockStateDefinition(builder);
-        builder.add(RUNNING_STATE);
+        builder.add(WORKING);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new BlackstoneMedicalPointBE(p_153215_,p_153216_);
     }
 }
 

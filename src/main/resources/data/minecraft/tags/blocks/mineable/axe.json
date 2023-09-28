@@ -1,3 +1,10 @@
 {
-  "values": []
+  "values": [
+    "arkdust:pau_fluorescence_glass",
+    "arkdust:common_food_box",
+    "arkdust:rushed_iron_mineshaft_board",
+    "arkdust:rushed_iron_mineshaft_net",
+    "arkdust:broken_rushed_iron_mineshaft_net",
+    "#arkdust:material/wood/stone_wood"
+  ]
 }

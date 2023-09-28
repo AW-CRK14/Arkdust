@@ -1,14 +1,15 @@
 package com.ardc.arkdust.block_entity;
 
 import com.ardc.arkdust.registry.TileEntityTypeRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class SFBlockCreatorBE extends TileEntity {
+public class SFBlockCreatorBE extends BlockEntity {
     public int count = 0;
-    public SFBlockCreatorBE() {
-        super(TileEntityTypeRegistry.SF_BLOCK_CREATOR_BE.get());
+    public SFBlockCreatorBE(BlockPos pos, BlockState state) {
+        super(TileEntityTypeRegistry.SF_BLOCK_CREATOR_BE.get(),pos,state);
     }
     
     public int increaseCount(int number){
@@ -24,14 +25,14 @@ public class SFBlockCreatorBE extends TileEntity {
 
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
         count = nbt.getInt("counter");
-        super.load(state, nbt);
+        super.load(nbt);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt("counter", count);
-        return super.save(compound);
     }
 }

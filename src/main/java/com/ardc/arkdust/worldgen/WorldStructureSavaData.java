@@ -1,46 +1,31 @@
 package com.ardc.arkdust.worldgen;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.DimensionSavedDataManager;
-import net.minecraft.world.storage.WorldSavedData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.storage.DimensionDataStorage;
 
-public class WorldStructureSavaData extends WorldSavedData {
+public class WorldStructureSavaData extends SavedData {
     private static final String NAME = "ArdStructureCreateData";
-    public CompoundNBT dNbt;
+    public CompoundTag nbt = new CompoundTag();
 
-    public WorldStructureSavaData(){
-        super(NAME);
-    }
+    public WorldStructureSavaData(){}
+    public WorldStructureSavaData(CompoundTag tag){this.nbt = tag;}
 
-    public static WorldStructureSavaData get(World worldIn){
-        if(worldIn instanceof ServerWorld){
-            ServerWorld world = worldIn.getServer().getLevel(World.OVERWORLD);
-            DimensionSavedDataManager s = world.getDataStorage();
-            return s.computeIfAbsent(WorldStructureSavaData::new, NAME);
-        }
-        throw new RuntimeException("you shouldn't use the client world");
-    }
-    private CompoundNBT chuckNBT(CompoundNBT nbt){
-        return nbt == null ? new CompoundNBT() : nbt;
+    public static WorldStructureSavaData get(ServerLevel worldIn){
+        return worldIn.getDataStorage().computeIfAbsent(WorldStructureSavaData::new,WorldStructureSavaData::new, NAME);
     }
 
     public void setData(String key,boolean state){
-        dNbt = chuckNBT(dNbt);
-        dNbt.putBoolean(key,state);
+        nbt.putBoolean(key,state);
         setDirty();
     }
 
-    public CompoundNBT getData(){
-        return chuckNBT(dNbt);
+    public CompoundTag getData(){
+        return nbt;
     }
-
-    public void load(CompoundNBT nbt) {
-        this.dNbt = nbt.getCompound("ArdStructure");
-    }
-    public CompoundNBT save(CompoundNBT nbt) {
-        nbt.put("ArdStructure",this.dNbt);
+    public CompoundTag save(CompoundTag nbt) {
+        nbt.put("ArdStructure",this.nbt);
         return nbt;
     }
 }

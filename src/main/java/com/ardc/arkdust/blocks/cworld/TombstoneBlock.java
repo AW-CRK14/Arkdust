@@ -1,27 +1,27 @@
 package com.ardc.arkdust.blocks.cworld;
 
 import com.ardc.arkdust.blockstate.WaterLoggedRotateBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.monster.SkeletonEntity;
-import net.minecraft.entity.monster.WitherSkeletonEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.WitherSkeleton;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.Random;
 
@@ -30,45 +30,45 @@ public class TombstoneBlock extends WaterLoggedRotateBlock {
     public final VoxelShape voxelShape_NS;
     public final VoxelShape voxelShape_EW;
     public TombstoneBlock(boolean black,VoxelShape shape_ns,VoxelShape shape_ew) {
-        super(Properties.of(Material.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1).randomTicks().strength(4,5).requiresCorrectToolForDrops().lightLevel((state)->5).sound(SoundType.STONE).noOcclusion());
+        super(Properties.copy(Blocks.BLACKSTONE).randomTicks().strength(4,5).requiresCorrectToolForDrops().lightLevel((state)->5).noOcclusion());
         this.isBlack = black;
         this.voxelShape_NS = shape_ns;
         this.voxelShape_EW = shape_ew;
 //        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false));
     }
 
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context){
         if(state.getValue(HORIZONTAL_FACING).equals(Direction.NORTH) || state.getValue(HORIZONTAL_FACING).equals(Direction.SOUTH))//如果方向为南北向
-            return VoxelShapes.or(VoxelShapes.box(0,0,0,1,0.125F,1), voxelShape_NS);
-        return VoxelShapes.or(VoxelShapes.box(0,0,0,1,0.125F,1), voxelShape_EW);
+            return Shapes.or(Shapes.box(0,0,0,1,0.125F,1), voxelShape_NS);
+        return Shapes.or(Shapes.box(0,0,0,1,0.125F,1), voxelShape_EW);
     }
 
-    public void onRemove(BlockState state1, World world, BlockPos pos, BlockState state2, boolean i) {
+    public void onRemove(BlockState state1, Level world, BlockPos pos, BlockState state2, boolean i) {
         super.onRemove(state1,world,pos,state2,i);
-        if(!world.isClientSide() && world instanceof ServerWorld && !i){
-            ((ServerWorld)world).sendParticles(isBlack ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.FLAME,pos.getX()+0.5F,pos.getY()+1,pos.getZ()+0.5F, 32,1,1,1,1);
-            PlayerEntity entity = world.getNearestPlayer(pos.getX(),pos.getY(),pos.getZ(),5,true);
+        if(!world.isClientSide() && world instanceof ServerLevel && !i){
+            ((ServerLevel)world).sendParticles(isBlack ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.FLAME,pos.getX()+0.5F,pos.getY()+1,pos.getZ()+0.5F, 32,1,1,1,1);
+            Player entity = world.getNearestPlayer(pos.getX(),pos.getY(),pos.getZ(),5,true);
             if(entity != null){
-                entity.addEffect(new EffectInstance(Effects.BLINDNESS,30,2));
+                entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,30,2));
             }
         }
     }
 
-    public void onPlace(BlockState blockState1,World world, BlockPos blockPos, BlockState blockState2, boolean b) {
-        world.getBlockTicks().scheduleTick(blockPos,this,20);
+    public void onPlace(BlockState blockState1,Level world, BlockPos blockPos, BlockState blockState2, boolean b) {
+        world.scheduleTick(blockPos,this,20);
     }
 
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         super.tick(state,world,pos,random);
         world.sendParticles(ParticleTypes.ASH,pos.getX()+0.5F,pos.getY()+1,pos.getZ()+0.5F, 64,1,1,1,1);
-        world.getBlockTicks().scheduleTick(pos,this,20);
+        world.scheduleTick(pos,this,20);
     }
 
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         if(random.nextFloat() <= 0.01){
-            MobEntity entity = random.nextInt(10) == 0 ? new WitherSkeletonEntity(EntityType.WITHER_SKELETON,world) : new SkeletonEntity(EntityType.SKELETON,world);
+            Mob entity = random.nextInt(10) == 0 ? new WitherSkeleton(EntityType.WITHER_SKELETON,world) : new Skeleton(EntityType.SKELETON,world);
             entity.setPos(pos.getX(),pos.getY()+1,pos.getZ());
-            entity.finalizeSpawn(world,world.getCurrentDifficultyAt(entity.blockPosition()), SpawnReason.MOB_SUMMONED,null,null);
+            ForgeEventFactory.onFinalizeSpawn(entity,world,world.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER,null,null);
             world.addFreshEntity(entity);
         }
     }

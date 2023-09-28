@@ -2,7 +2,7 @@ package com.ardc.arkdust.playmethod.blueprint;
 
 import com.ardc.arkdust.enums.BlueprintTypeEnum;
 import com.ardc.arkdust.enums.BlueprintValueEnum;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 

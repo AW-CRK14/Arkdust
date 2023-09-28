@@ -1,8 +1,9 @@
 package com.ardc.arkdust.helper;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
 import java.util.Random;
@@ -18,6 +19,17 @@ public class BlockHelper {
         }
 
         public Block getRandomBlock(Random random){
+            int allLength = blockList.size() + registryBlockList.size();
+            if(allLength <= 0)
+                return Blocks.AIR;
+            int nextInt = random.nextInt(allLength);
+            if(nextInt <= blockList.size() - 1)
+                return blockList.get(nextInt);
+            else
+                return registryBlockList.get(nextInt - blockList.size()).get();
+        }
+
+        public Block getRandomBlock(RandomSource random){
             int allLength = blockList.size() + registryBlockList.size();
             if(allLength <= 0)
                 return Blocks.AIR;

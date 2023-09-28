@@ -1,9 +1,10 @@
 package com.ardc.arkdust.preobject;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class PreBlock extends Block {
-    public PreBlock(Properties properties){
+    public PreBlock(BlockBehaviour.Properties properties){
         super(properties);
     }
 }

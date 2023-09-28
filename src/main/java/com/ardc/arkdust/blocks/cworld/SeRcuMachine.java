@@ -2,46 +2,34 @@ package com.ardc.arkdust.blocks.cworld;
 
 import com.ardc.arkdust.block_entity.SeRcuMachineBE;
 import com.ardc.arkdust.preobject.PreBlock;
-import com.ardc.arkdust.registry.ItemRegistry;
-import com.ardc.arkdust.registry.TileEntityTypeRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nullable;
-import java.util.Properties;
-
-public class SeRcuMachine extends PreBlock {
+public class SeRcuMachine extends PreBlock implements EntityBlock {
     public SeRcuMachine() {
-        super(Properties.of(Material.METAL).strength(4,10).noOcclusion().harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops());
+        super(Properties.copy(Blocks.IRON_BLOCK).strength(4,10).noOcclusion().requiresCorrectToolForDrops());
     }
-
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new SeRcuMachineBE();
-    }
-
-    @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
-        if(!world.isClientSide && hand.equals(Hand.MAIN_HAND)){
-            NetworkHooks.openGui((ServerPlayerEntity) player, (SeRcuMachineBE)world.getBlockEntity(pos),(buffer)->buffer.writeBlockPos(pos));
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult) {
+        if(!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
+            NetworkHooks.openScreen((ServerPlayer) player, (SeRcuMachineBE)world.getBlockEntity(pos),(buffer)->buffer.writeBlockPos(pos));
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new SeRcuMachineBE(pos,state);
     }
 }

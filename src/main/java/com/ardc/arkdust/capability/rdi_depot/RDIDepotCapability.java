@@ -1,35 +1,39 @@
 package com.ardc.arkdust.capability.rdi_depot;
 
+import com.ardc.arkdust.capability.AbsCapabilityProvider;
 import com.ibm.icu.impl.Pair;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.Collections;
 import java.util.List;
 
-public class RDIDepotCapability implements IRDIDepotCapability {
-    private CompoundNBT nbt;
+@AutoRegisterCapability
+public class RDIDepotCapability implements AbsCapabilityProvider.CommonEntityCap {
+    private CompoundTag nbt;
 
     public RDIDepotCapability(){
-        this.nbt = new CompoundNBT();
+        this.nbt = new CompoundTag();
     }
 
-    public RDIDepotCapability(CompoundNBT nbt){
+    public RDIDepotCapability(CompoundTag nbt){
         this.nbt = nbt;
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
+    public CompoundTag serializeNBT() {
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         this.nbt = nbt;
     }
 
-    @Override
-    public CompoundNBT getNbt() {
+    public CompoundTag getNbt() {
         return nbt;
     }
 
@@ -46,8 +50,7 @@ public class RDIDepotCapability implements IRDIDepotCapability {
         return putObject(object,-num);
     }
 
-    @Override
-    public void createNBT(CompoundNBT nbt) {
+    public void createNBT(CompoundTag nbt) {
         this.nbt = nbt;
     }
 
@@ -62,6 +65,11 @@ public class RDIDepotCapability implements IRDIDepotCapability {
         return list;
     }
 
+    @Override
+    public void sendToClient(ServerPlayer player) {
+        RDIDepotDataNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new RDIDepotDataNetwork.RDIDepotDataPack(getNbt()));
+    }
+
     public enum DepotObject {
         TEST_OBJ("test_obj"),
         LMB("lmb"),
@@ -74,8 +82,8 @@ public class RDIDepotCapability implements IRDIDepotCapability {
             this.NAME = name;
         }
 
-        public TranslationTextComponent getNameTrans(){
-            return new TranslationTextComponent("depot_obj/" + NAME);
+        public Component getNameTrans(){
+            return Component.translatable("depot_obj/" + NAME);
         }
 
         public static DepotObject getObj(String name){

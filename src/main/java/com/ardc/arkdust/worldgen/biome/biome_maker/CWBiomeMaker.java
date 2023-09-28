@@ -1,46 +1,47 @@
 package com.ardc.arkdust.worldgen.biome.biome_maker;
 
-import com.ardc.arkdust.particle.environment.FlyingGravelParticle;
-import com.ardc.arkdust.registry.FeatureRegistry;
 import com.ardc.arkdust.registry.ParticleRegistry;
-import com.ardc.arkdust.registry.SurfaceBuilderRegistry;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.world.biome.*;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.data.worldgen.BiomeDefaultFeatures;
+import net.minecraft.data.worldgen.biome.OverworldBiomes;
+import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class CWBiomeMaker{
-    public static Biome faultLineBiomeMaker(){
-        MobSpawnInfo.Builder mobInfoBuilder = new MobSpawnInfo.Builder();
-        mobInfoBuilder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.RABBIT, 15, 2, 3));
-        mobInfoBuilder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.HUSK, 200, 1, 7));
-        DefaultBiomeFeatures.monsters(mobInfoBuilder, 25, 120, 10);
+    public static Biome faultLineBiomeMaker(HolderGetter<PlacedFeature> f, HolderGetter<ConfiguredWorldCarver<?>> c){
+        MobSpawnSettings.Builder mobInfoBuilder = new MobSpawnSettings.Builder();
+        mobInfoBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.RABBIT, 15, 2, 3));
+        mobInfoBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.HUSK, 200, 1, 7));
+        BiomeDefaultFeatures.monsters(mobInfoBuilder, 25, 120, 10,false);
 
-        BiomeGenerationSettings.Builder generationSettingBuilder = (new BiomeGenerationSettings.Builder()).surfaceBuilder(SurfaceBuilderRegistry.CW$FAULT_LINE::get);
-        generationSettingBuilder.addStructureStart(StructureFeatures.MINESHAFT);
-        generationSettingBuilder.addStructureStart(StructureFeatures.RUINED_PORTAL_STANDARD);
-        DefaultBiomeFeatures.addDefaultCarvers(generationSettingBuilder);
-        DefaultBiomeFeatures.addDefaultMonsterRoom(generationSettingBuilder);
-        DefaultBiomeFeatures.addDefaultUndergroundVariety(generationSettingBuilder);
-        DefaultBiomeFeatures.addDefaultOres(generationSettingBuilder);
-        DefaultBiomeFeatures.addDefaultSoftDisks(generationSettingBuilder);
-        DefaultBiomeFeatures.addDefaultMushrooms(generationSettingBuilder);
-        DefaultBiomeFeatures.addBadlandExtraVegetation(generationSettingBuilder);
-        generationSettingBuilder.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.SPRING_LAVA);
-        DefaultBiomeFeatures.addBadlandsTrees(generationSettingBuilder);
-        DefaultBiomeFeatures.addDefaultCarvers(generationSettingBuilder);
+//        BiomeGenerationSettings.Builder generationSettingBuilder = (new BiomeGenerationSettings.Builder(f,c)).surfaceBuilder(SurfaceBuilderRegistry.CW$FAULT_LINE::get);
+        BiomeGenerationSettings.Builder generationSettingBuilder = (new BiomeGenerationSettings.Builder(f,c));
 
-        return (new Biome.Builder()).precipitation(Biome.RainType.NONE).biomeCategory(Biome.Category.MESA).depth(0.3F).scale(0.02F).temperature(1.7F).downfall(0.0F)
-                .specialEffects((new BiomeAmbience.Builder()).waterColor(11974616).waterFogColor(9211297).fogColor(13678511).skyColor(13681838).foliageColorOverride(10268042).grassColorOverride(12896433)
-                        .ambientMoodSound(MoodSoundAmbience.LEGACY_CAVE_SETTINGS).ambientParticle(new ParticleEffectAmbience(new FlyingGravelParticle.Type(),0.03F)).build())
+        BiomeDefaultFeatures.addDefaultCrystalFormations(generationSettingBuilder);
+        BiomeDefaultFeatures.addDefaultMonsterRoom(generationSettingBuilder);
+        BiomeDefaultFeatures.addDefaultUndergroundVariety(generationSettingBuilder);
+        BiomeDefaultFeatures.addDefaultSprings(generationSettingBuilder);
+//        generationSettingBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_STRUCTURES, BuiltinStructures.MINESHAFT);
+//        generationSettingBuilder.addStructureStart(StructureFeatures.RUINED_PORTAL_STANDARD);
+        OverworldBiomes.globalOverworldGeneration(generationSettingBuilder);
+        BiomeDefaultFeatures.addDefaultUndergroundVariety(generationSettingBuilder);
+        BiomeDefaultFeatures.addDefaultOres(generationSettingBuilder);
+        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettingBuilder);
+        BiomeDefaultFeatures.addDefaultMushrooms(generationSettingBuilder);
+        BiomeDefaultFeatures.addBadlandExtraVegetation(generationSettingBuilder);
+        generationSettingBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, MiscOverworldPlacements.SPRING_LAVA);
+        BiomeDefaultFeatures.addBadlandsTrees(generationSettingBuilder);
+//        BiomeDefaultFeatures.addDefaultCarvers(generationSettingBuilder);
+
+        return (new Biome.BiomeBuilder()).hasPrecipitation(false).temperature(1.7F).downfall(0.1F)
+                .specialEffects((new BiomeSpecialEffects.Builder()).waterColor(11974616).waterFogColor(9211297).fogColor(13678511).skyColor(13681838).foliageColorOverride(10268042).grassColorOverride(12896433)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).ambientParticle(new AmbientParticleSettings((ParticleOptions) ParticleRegistry.FLYING_GRAVEL.get(),0.03F)).build())
 //                        .ambientMoodSound(MoodSoundAmbience.LEGACY_CAVE_SETTINGS).ambientParticle(new ParticleEffectAmbience((IParticleData) ParticleRegistry.FLYING_GRAVEL.get(),0.07F)).build())
                 .mobSpawnSettings(mobInfoBuilder.build()).generationSettings(generationSettingBuilder.build()).build();
     }

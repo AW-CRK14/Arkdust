@@ -1,7 +1,7 @@
 package com.ardc.arkdust.helper;
 
 import com.ardc.arkdust.Utils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.*;
 import java.util.function.Function;
@@ -11,6 +11,12 @@ public class ListAndMapHelper {
     //T[]到List<T>的映射
     public static <T> List<T> toList(T[] l){
         return Arrays.stream(l).collect(ArrayList::new,ArrayList::add,ArrayList::addAll);
+    }
+
+    public static <T> T multiListGetElement(Random random,T[]... lists){
+        List<T> compList = new ArrayList<>();
+        Arrays.stream(lists).forEach((o)->compList.addAll(List.of(o)));
+        return compList.get(random.nextInt(compList.size()));
     }
 
     //复制列表

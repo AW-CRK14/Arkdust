@@ -2,11 +2,14 @@ package com.ardc.arkdust.playmethod.blueprint;
 
 import com.ardc.arkdust.enums.BlueprintTypeEnum;
 import com.ardc.arkdust.enums.BlueprintValueEnum;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 //@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlueprintTargetHandler {

@@ -1,7 +1,7 @@
 package com.ardc.arkdust.registry;
 
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.resourcelocation.Tag;
+import com.ardc.arkdust.resource.Tag;
 import com.ardc.arkdust.worldgen.config.ListNBTFeatureConfig;
 import com.ardc.arkdust.worldgen.config.SingleBlockPlacementConfig;
 import com.ardc.arkdust.worldgen.feature.faultline.FaultlineStoneOakTreeFeature;

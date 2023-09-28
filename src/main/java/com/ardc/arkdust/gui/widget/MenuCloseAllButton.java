@@ -2,21 +2,22 @@ package com.ardc.arkdust.gui.widget;
 
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.gui.widget.pre.AbstractBlackButton;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 public class MenuCloseAllButton extends AbstractBlackButton {
-    public MenuCloseAllButton(int screenX, int screenY, IPressable progress) {
-        super((int)(screenX/7.1F),screenY/36,(int)(screenX/6.4F),screenY/15,new TranslationTextComponent("gui." + Utils.MOD_ID + "menu.button.close_all"),progress);
+    public MenuCloseAllButton(int screenX, int screenY, Entity entity) {
+        super((int)(screenX/7.1F),screenY/36,(int)(screenX/6.4F),screenY/15, Component.translatable("gui." + Utils.MOD_ID + "menu.button.close_all"),
+                (b)->{if(entity instanceof Player) ((Player) entity).closeContainer();
+        });
     }
 
     @Override
-    public void renderButton(MatrixStack stack, int mouseX, int mouseY, float p_230431_4_) {
-        super.renderButton(stack,mouseX,mouseY,p_230431_4_);
+    public void renderWidget(GuiGraphics stack, int mouseX, int mouseY, float p_230431_4_) {
+        super.renderWidget(stack,mouseX,mouseY,p_230431_4_);
 
-        Minecraft minecraft = Minecraft.getInstance();
-        minecraft.getTextureManager().bind(CLOSE_RESOURCE);
-        this.blit(stack, this.x, this.y, 0, 0, this.width, this.height,width,this.height);
+        stack.blit(CLOSE_RESOURCE, this.getX(), this.getY(), 0, 0, this.width, this.height,width,this.height);
     }
 }

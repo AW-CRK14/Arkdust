@@ -1,6 +1,6 @@
 package com.ardc.arkdust.blocks.infac;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 
 public interface IConnectRenderInfo {
     ConnectRenderInfo getInfo();

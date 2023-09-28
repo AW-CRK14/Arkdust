@@ -1,5 +1,25 @@
 {
   "values": [
-    "arkdust:pau_ore"
+    "arkdust:pau_ore",
+    "arkdust:pau_pau_block",
+    "arkdust:blackstone_lamp",
+    "arkdust:hang_screened_table",
+    "arkdust:blackstone_medical_point",
+    "arkdust:c_originium_block",
+    "arkdust:d_originium_block",
+    "arkdust:tombstone_2_1",
+    "arkdust:tombstone_2_2",
+    "arkdust:tombstone_2_3",
+    "arkdust:rushed_iron_block",
+    "arkdust:dark_rushed_iron_block",
+    "arkdust:red_paint_rushed_iron_block",
+    "arkdust:wasteland_mineshaft_spandrel_girder",
+    "arkdust:dirty_concrete",
+    "arkdust:cracked_dirty_concrete",
+    "arkdust:basic_blueprint_reduce_box",
+    "arkdust:se_rcu_machine",
+    "arkdust:iron_structure_frame",
+    "arkdust:iron_structure_frame_creator",
+    "arkdust:blackstone_medical_point"
   ]
 }

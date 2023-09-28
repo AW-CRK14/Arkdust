@@ -3,13 +3,13 @@ package com.ardc.arkdust.capability.rdi_depot;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.registry.CapabilityRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.function.Supplier;
 
@@ -32,28 +32,28 @@ public class RDIDepotDataNetwork {
         INSTANCE.messageBuilder(RDIDepotDataPack.class,nextID())
                 .encoder(RDIDepotDataPack::toBytes)
                 .decoder(RDIDepotDataPack::new)
-                .consumer(RDIDepotDataPack::handler)
+                .consumerMainThread(RDIDepotDataPack::handler)
                 .add();
     }
 
     public static class RDIDepotDataPack {
-        private final CompoundNBT nbt;
+        private final CompoundTag nbt;
 
-        public RDIDepotDataPack(CompoundNBT nbt){
+        public RDIDepotDataPack(CompoundTag nbt){
             this.nbt = nbt;
         }
 
-        public RDIDepotDataPack(PacketBuffer buffer){
+        public RDIDepotDataPack(FriendlyByteBuf buffer){
             this.nbt = buffer.readNbt();
         }
 
-        public void toBytes(PacketBuffer buffer){
+        public void toBytes(FriendlyByteBuf buffer){
             buffer.writeNbt(nbt);
         }
 
         public void handler(Supplier<NetworkEvent.Context> context){
             context.get().enqueueWork(()-> {
-                ClientPlayerEntity e = Minecraft.getInstance().player;
+                LocalPlayer e = Minecraft.getInstance().player;
                 if(e != null){
                     e.getCapability(CapabilityRegistry.RDI_DEPOT_CAPABILITY).ifPresent((i)->{
                         i.createNBT(nbt);

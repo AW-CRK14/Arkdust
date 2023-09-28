@@ -1,18 +1,18 @@
 package com.ardc.arkdust.helper;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.math.vector.Vector4f;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.item.ItemStack;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import java.awt.*;
 
 public class RenderHelper {
     public static Vector4f m4fPosTrans(Matrix4f m4f, float x, float y, float z){
         Vector4f v4f = new Vector4f(x, y, z, 1.0F);
-        v4f.transform(m4f);
+        v4f.mul(m4f);
         return v4f;
     }
 
@@ -27,10 +27,10 @@ public class RenderHelper {
 
 
 
-    public static void vertex(MatrixStack stack, BufferBuilder builder, Vector4f relativeV4f, ColorPack color, float u, float v, int overlay, int light){
-        relativeV4f.transform(stack.last().pose());
+    public static void vertex(GuiGraphics stack, BufferBuilder builder, Vector4f relativeV4f, ColorPack color, float u, float v, int overlay, int light){
+        relativeV4f.mul(stack.pose().last().pose());
         Vector3f v3f = new Vector3f(0,0,0);
-        v3f.transform(stack.last().normal());
+        v3f.mul(stack.pose().last().normal());
         builder.vertex(relativeV4f.x(),relativeV4f.y(),relativeV4f.z(),color.r,color.b,color.g,color.a,u,v,overlay,light,v3f.x(),v3f.y(),v3f.z());
     }
 

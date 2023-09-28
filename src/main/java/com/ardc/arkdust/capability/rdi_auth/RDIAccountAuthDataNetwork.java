@@ -3,12 +3,12 @@ package com.ardc.arkdust.capability.rdi_auth;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.registry.CapabilityRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.function.Supplier;
 
@@ -31,7 +31,7 @@ public class RDIAccountAuthDataNetwork {
         INSTANCE.messageBuilder(RDIAccountAuthDataPack.class,nextID())
                 .encoder(RDIAccountAuthDataPack::toBytes)
                 .decoder(RDIAccountAuthDataPack::new)
-                .consumer(RDIAccountAuthDataPack::handler)
+                .consumerMainThread(RDIAccountAuthDataPack::handler)
                 .add();
     }
 
@@ -44,18 +44,18 @@ public class RDIAccountAuthDataNetwork {
             this.sanity = sanity;
         }
 
-        public RDIAccountAuthDataPack(PacketBuffer buffer){
+        public RDIAccountAuthDataPack(FriendlyByteBuf buffer){
             this.exp = buffer.readInt();
             this.sanity = buffer.readInt();
         }
 
-        public void toBytes(PacketBuffer buffer){
+        public void toBytes(FriendlyByteBuf buffer){
             buffer.writeInt(exp).writeInt(sanity);
         }
 
         public void handler(Supplier<NetworkEvent.Context> context){
             context.get().enqueueWork(()-> {
-                ClientPlayerEntity e = Minecraft.getInstance().player;
+                LocalPlayer e = Minecraft.getInstance().player;
                 if(e != null){
                     e.getCapability(CapabilityRegistry.RDI_ACCOUNT_AUTH_CAPABILITY).ifPresent((i)->{
                         i.setAExp(exp);

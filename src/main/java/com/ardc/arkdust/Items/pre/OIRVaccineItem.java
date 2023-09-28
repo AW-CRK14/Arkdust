@@ -2,75 +2,54 @@ package com.ardc.arkdust.Items.pre;
 
 import com.ardc.arkdust.preobject.PreItem;
 import com.ardc.arkdust.registry.CapabilityRegistry;
-import com.ardc.arkdust.registry.ModGroupRegistry;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
 public class OIRVaccineItem extends PreItem {
-    public final int vaccineLevel;
-    public final float therapeuticFactors;
-    public OIRVaccineItem(boolean exp, int vaccineLevel, float therapeuticFactors) {
-        super(new Properties().fireResistant().rarity(Rarity.UNCOMMON).stacksTo(8).tab(ModGroupRegistry.WORLD_MATERIAL), exp);
-        this.vaccineLevel = Math.max(vaccineLevel,1);
-        this.therapeuticFactors = Math.min(Math.max(therapeuticFactors,0.1F),5);
+    public final int decPoint;
+    public OIRVaccineItem(boolean exp, int decrease) {
+        super(new Properties().fireResistant().rarity(Rarity.UNCOMMON).stacksTo(8), exp);
+        this.decPoint = decrease;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-        list.add(new TranslationTextComponent("pma.oi.OIRVaccineLevel",vaccineLevel));
-        list.add(new TranslationTextComponent("pma.oi.OIRVaccineFactors",therapeuticFactors).withStyle(therapeuticFactors >= 1 ? TextFormatting.GREEN : TextFormatting.RED));
+        list.add(Component.translatable("pma.oi.OIRVaccineLevel",decPoint));
     }
 
     public int getUseDuration(ItemStack itemStack) {
-        return this.vaccineLevel * 15 + 15;
+        return 15;
     }
 
-    public ItemStack finishUsingItem(ItemStack itemStack, World world, LivingEntity livingEntity) {
-        if(livingEntity instanceof PlayerEntity) {
+    public ItemStack finishUsingItem(ItemStack itemStack, Level world, LivingEntity livingEntity) {
+        if(livingEntity instanceof Player) {
             livingEntity.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)->{
-                int rLevel = i.ORI$getRLevel();
-                if (this.vaccineLevel == rLevel + 1) {
-                    i.ORI$addRLevel();
-                    i.ORI$resetPoint();
-                    if(world.isClientSide)
-                        ((PlayerEntity) livingEntity).displayClientMessage(new TranslationTextComponent("pma.oi.OIPointReset").withStyle(TextFormatting.GREEN), false);
-                    itemStack.shrink(1);
-                } else if (this.vaccineLevel <= rLevel) {
-                    int minus = (int) (-vaccineLevel * vaccineLevel * 24 * therapeuticFactors);
-                    i.ORI$addPoint(minus);
-                    System.out.println(minus);
-                    itemStack.shrink(1);
-                } else {
-                    if(world.isClientSide)
-                        ((PlayerEntity) livingEntity).displayClientMessage(new TranslationTextComponent("pma.oi.vaccineLevelTooHigh").withStyle(TextFormatting.RED), false);
-                }
+                i.ORI$addPoint(-decPoint);
             });
         }
         return itemStack;
     }
 
-    public UseAction getUseAnimation(ItemStack p_77661_1_) {
-        return UseAction.CROSSBOW;
+    public UseAnim getUseAnimation(ItemStack p_77661_1_) {
+        return UseAnim.CROSSBOW;
     }
 
-    public ActionResult<ItemStack> use(World p_77659_1_, PlayerEntity playerEntity, Hand p_77659_3_) {
+    public InteractionResultHolder<ItemStack> use(Level p_77659_1_, Player playerEntity, InteractionHand p_77659_3_) {
         playerEntity.startUsingItem(p_77659_3_);
-        return ActionResult.success(playerEntity.getMainHandItem());
+        return InteractionResultHolder.success(playerEntity.getMainHandItem());
     }
 }

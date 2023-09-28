@@ -1,142 +1,93 @@
 package com.ardc.arkdust.worldgen.structure.structure.cworld;
 
+import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.helper.PosHelper;
 import com.ardc.arkdust.helper.StructureHelper;
-import com.ardc.arkdust.resourcelocation.LootTable;
-import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.worldgen.structure.ArdStructureAddInfo;
-import com.ardc.arkdust.registry.StructurePieceTypeRegistry;
-import com.ardc.arkdust.worldgen.structure.ExtraStructureProcessorList;
-import com.ardc.arkdust.worldgen.structure.preobj.AAStructureStart;
+import com.ardc.arkdust.resource.LootTable;
+import com.ardc.arkdust.worldgen.structure.ExtraStructurePieceType;
 import com.ardc.arkdust.worldgen.structure.preobj.CommonCWTemplatePiece;
 import com.mojang.serialization.Codec;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.QuartPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
-import java.util.List;
-import java.util.Random;
+import java.util.Optional;
 
-public class CWOldHouse extends Structure<NoFeatureConfig> implements ArdStructureAddInfo {
+import static com.ardc.arkdust.worldgen.structure.ExtraStructureType.CW$OLD_HOUSE;
 
+public class CWOldHouse extends Structure {
+
+    public static final StructureHelper.StructureAndVariation H0 = new StructureHelper.StructureAndVariation(new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_0"),0.2F,new ResourceLocation[]{new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_1"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_2"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_3"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_4")});
     public static final StructureHelper.StructureAndVariation H1 = new StructureHelper.StructureAndVariation(new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_0"),0.2F,new ResourceLocation[]{new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_1"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_2"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_3"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_4"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_5")});
     public static final StructureHelper.StructureAndVariation H2 = new StructureHelper.StructureAndVariation(new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_3_0"),0.4F,new ResourceLocation[]{new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_3_1"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_3_2")});
 
-    public CWOldHouse(Codec<NoFeatureConfig> p_i231997_1_) {
-        super(p_i231997_1_);
+    public static final Codec<CWOldHouse> CODEC = simpleCodec(CWOldHouse::new);
+
+    public CWOldHouse(Structure.StructureSettings settings) {
+        super(settings);
     }
 
     @Override
-    public GenerationStage.Decoration step() {//与生成的位置有关，大概。
-        return GenerationStage.Decoration.SURFACE_STRUCTURES;
+    public GenerationStep.Decoration step() {//与生成的位置有关，大概。
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 
     @Override
-    protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider biomeSource,
-                                     long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ,
-                                     Biome biome, ChunkPos chunkPos, NoFeatureConfig featureConfig) {
-        BlockPos centerOfChunk = new BlockPos(chunkX << 4, 0, chunkZ << 4);
+    protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
 
-        return StructureHelper.isEachPlaceAvailable(chunkGenerator, Heightmap.Type.WORLD_SURFACE_WG,3,
-                PosHelper.getCenterAndSquareVertexPos(centerOfChunk,8,false,true)
-        );//获取此位置是否为流体（防止生成在水上）
-
+        BlockPos center = PosHelper.randomSkew(context,12);
+        Holder<Biome> biome = context.biomeSource().getNoiseBiome(QuartPos.fromBlock(center.getX()), QuartPos.fromBlock(center.getY()), QuartPos.fromBlock(center.getZ()), context.randomState().sampler());
+        if(StructureHelper.isEachPlaceAvailable(context.chunkGenerator(), Heightmap.Types.WORLD_SURFACE_WG,3, PosHelper.getCenterAndSquareVertexPos(center,6,false,true),context.heightAccessor(),context.randomState()))
+            return Optional.of(new GenerationStub(center,(builder)->builder.addPiece(new Piece(context.structureTemplateManager(),context.random(),center))));
+        return Optional.empty();
     }
 
     @Override
-    public int spacing() {
-        return 60;
+    public StructureType<?> type() {
+        return CW$OLD_HOUSE;
     }
-
-    @Override
-    public int separation() {
-        return 20;
-    }
-
-    @Override
-    public int salt() {
-        return 247384829;
-    }
-
-    @Override
-    public buildMode mode() {
-        return buildMode.OVERWORLD;
-    }
-
-    @Override
-    public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return Start::new;
-    }
-
-    public static class Start extends AAStructureStart {
-
-        public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ, MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
-            super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
-        }
-
-        @Override
-        public void addChildren(TemplateManager templateManagerIn, List<StructurePiece> pieces, SharedSeedRandom random, BlockPos centerPos) {
-//            Piece piece = new Piece(templateManagerIn,new ResourceLocation(Utils.MOD_ID,"cworld/tower/tower_4_0"),centerPos, Rotation.getRandom(random),random);
-            Piece piece = new Piece(templateManagerIn,randomLocation(random),centerPos, Rotation.getRandom(random),random);
-            pieces.add(piece);
-        }
-
-        @Override
-        public int yRemove() {
-            return -3;
-        }
-    }
-
-    public static ResourceLocation randomLocation(Random random){
-        Random r = new Random(random.nextLong());
-        return r.nextFloat() >=0.35F ? H1.getRandomPart(random) : H2.getRandomPart(random);
+    public static ResourceLocation randomLocation(RandomSource random){
+        return switch (random.nextInt(3)){
+            case 0 -> H0.getRandomPart(random);
+            case 1 -> H1.getRandomPart(random);
+            default -> H2.getRandomPart(random);
+        };
     }
 
     public static class Piece extends CommonCWTemplatePiece {
 //        private final LazyValue<BlockIgnoreStructureProcessor> STRUCTURE_BLOCK_AND_ARD_IGNBLOCK = new LazyValue<>(()->new BlockIgnoreStructureProcessor(ImmutableList.of(Blocks.STRUCTURE_BLOCK, BlockRegistry.structure_ignore_block.get()))) ;
 
 
-        public Piece(TemplateManager templateManager, ResourceLocation structurePlace, BlockPos addPos, Rotation aRotation, Random random) {
-            super(StructurePieceTypeRegistry.CW_OLD_HOUSE, templateManager, structurePlace, addPos, aRotation, random);
+        public Piece(StructureTemplateManager templateManager, RandomSource random, BlockPos pos) {
+            super(ExtraStructurePieceType.CW$OLD_HOUSE, templateManager, random, pos,randomLocation(random));
         }
 
-        public Piece(TemplateManager templateManager, CompoundNBT nbt) {
-            super(StructurePieceTypeRegistry.CW_OLD_HOUSE, templateManager, nbt);
-        }
-
-        public boolean postProcess(ISeedReader p_230383_1_, StructureManager p_230383_2_, ChunkGenerator p_230383_3_, Random p_230383_4_, MutableBoundingBox p_230383_5_, ChunkPos p_230383_6_, BlockPos p_230383_7_) {
-            this.placeSettings.addProcessor(ExtraStructureProcessorList.STRUCTURE_BLOCK_AND_ARD_IGNBLOCK.get());
-            return super.postProcess(p_230383_1_, p_230383_2_, p_230383_3_, p_230383_4_, p_230383_5_, p_230383_6_, p_230383_7_);
+        public Piece(StructureTemplateManager manager, CompoundTag tag) {
+            super(ExtraStructurePieceType.CW$OLD_HOUSE, manager,tag);
         }
 
         @Override
-        protected void handleDataMarker(String meta, BlockPos pos, IServerWorld world, Random random, MutableBoundingBox box) {
-            Random r = PosHelper.posToRandom(pos);
+        protected void handleDataMarker(String meta, BlockPos pos, ServerLevelAccessor levelAccessor, RandomSource randomSource, BoundingBox boundingBox) {
             switch (meta) {
                 case "chest":
 //                    createChest(world, box, random, pos, LootTable.CW_BLUEPRINT_BOX, null);
 //                    break;
                 case "poor_chest":
-                    if (r.nextFloat() <= 0.3F) {
-                        createChest(world, box, r, pos, LootTable.CW_BLUEPRINT_BOX, null);
+                    if (randomSource.nextFloat() <= 0.3F) {
+                        createChest(levelAccessor, boundingBox, randomSource, pos, LootTable.CW_BLUEPRINT_BOX, null);
                     } else {
-                        createChest(world, box, r, pos, LootTable.getRandomLootTable(LootTable.SUNDRIES, random), null);
+                        createChest(levelAccessor, boundingBox, randomSource, pos, LootTable.getRandomLootTable(LootTable.SUNDRIES, randomSource), null);
                     }
                     break;
             }

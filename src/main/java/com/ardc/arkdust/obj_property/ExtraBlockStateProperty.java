@@ -1,6 +1,6 @@
 package com.ardc.arkdust.obj_property;
 
-import net.minecraft.state.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class ExtraBlockStateProperty {
     public static final BooleanProperty WDN = BooleanProperty.create("wdn");

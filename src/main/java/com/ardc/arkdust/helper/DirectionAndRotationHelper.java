@@ -1,10 +1,10 @@
 package com.ardc.arkdust.helper;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Rotations;
-import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Rotation;
+import org.joml.Vector3i;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +26,7 @@ public class DirectionAndRotationHelper {
         }
     }
 
-    public static Rotation direction2Rotation(Direction from,Direction to){
+    public static Rotation direction2Rotation(Direction from, Direction to){
         for(Rotation t : Rotation.values()){
             if(t.rotate(from) == to) return t;
         }
@@ -37,13 +37,10 @@ public class DirectionAndRotationHelper {
         for(Rotation t : Rotation.values()){
             if(t.rotate(from) == to) return t;
         }
-        return random==null ? Rotation.NONE : Rotation.getRandom(random);
+        return random==null ? Rotation.NONE : Rotation.getRandom(RandomSource.create(random.nextLong()));
     }
 
-    public static Direction RandomDirection(direcList direcList ,Random r){
-        if(r == null) {
-            r = new Random();
-        }
+    public static Direction RandomDirection(direcList direcList ,RandomSource r){
         return direcList.getList().get(r.nextInt(direcList.getList().size()));
     }
 
@@ -75,10 +72,10 @@ public class DirectionAndRotationHelper {
 
 
     public static int pos2FactorInX(BlockPos centerPos, Vector3i structureCenterPos){
-        return structureCenterPos.getX() - centerPos.getX() >=0 ? 1 : -1;
+        return structureCenterPos.x - centerPos.getX() >=0 ? 1 : -1;
     }
     public static int pos2FactorInZ(BlockPos centerPos, Vector3i structureCenterPos){
-        return structureCenterPos.getZ() - centerPos.getZ() >=0 ? 1 : -1;
+        return structureCenterPos.z - centerPos.getZ() >=0 ? 1 : -1;
     }
 
     public static int direc2FactorInX(Direction direction){
@@ -96,17 +93,12 @@ public class DirectionAndRotationHelper {
     }
 
     public static Direction rotation2Direction(Rotation rotation){
-        switch (rotation){
-            case CLOCKWISE_90:
-                return Direction.EAST;
-            case CLOCKWISE_180:
-                return Direction.SOUTH;
-            case COUNTERCLOCKWISE_90:
-                return Direction.WEST;
-            case NONE:
-            default:
-                return Direction.NORTH;
-        }
+        return switch (rotation) {
+            case CLOCKWISE_90 -> Direction.EAST;
+            case CLOCKWISE_180 -> Direction.SOUTH;
+            case COUNTERCLOCKWISE_90 -> Direction.WEST;
+            case NONE, default -> Direction.NORTH;
+        };
     }
 
 

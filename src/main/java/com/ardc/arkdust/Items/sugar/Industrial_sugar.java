@@ -1,17 +1,16 @@
 package com.ardc.arkdust.Items.sugar;
 
 import com.ardc.arkdust.registry.ItemRegistry;
-import com.ardc.arkdust.registry.ModGroupRegistry;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
 
-public class Industrial_sugar extends Item{
-    private static final Food food = (new Food.Builder())
+public class Industrial_sugar extends Item {
+    private static final FoodProperties food = (new FoodProperties.Builder())
             .saturationMod(2)
             .nutrition(3)
             .build();
 
     public Industrial_sugar() {
-        super(new Properties().food(food).tab(ModGroupRegistry.TERRA_WORLD_COMMON_MATERIAL).rarity(ItemRegistry.Rar.SPECIAL));
+        super(new Properties().food(food).rarity(ItemRegistry.Rar.SPECIAL));
     }
 }

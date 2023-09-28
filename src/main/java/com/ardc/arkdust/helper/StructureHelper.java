@@ -1,105 +1,92 @@
 package com.ardc.arkdust.helper;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.RandomState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 
 public class StructureHelper {
+
+    public static boolean checkPosNoWater(Structure.GenerationContext context, BlockPos pos){
+        int yWorld = context.chunkGenerator().getBaseHeight(pos.getX(),pos.getZ(), Heightmap.Types.WORLD_SURFACE_WG,context.heightAccessor(),context.randomState());
+        return context.chunkGenerator().getBaseColumn(pos.getX(), pos.getZ(),context.heightAccessor(),context.randomState()).getBlock(yWorld-1).getFluidState().isEmpty();
+    }
     public static StructurePiece setRotation(List<StructurePiece> list, int num, Direction direction) {
         StructurePiece piece = list.get(num);
         piece.setOrientation(direction);
         return piece;
     }
 
-    public static BlockPos getEndPos(MutableBoundingBox box, BlockPos beginPos) {
+    public static BlockPos getEndPos(BoundingBox box, BlockPos beginPos) {
         int x = beginPos.getX();
         int z = beginPos.getZ();
-        if (box.x0 == x) x = box.x1;
-        if (box.z0 == z) z = box.z1;
+        if (box.minX() == x) x = box.maxX();
+        if (box.minZ() == z) z = box.maxZ();
         return new BlockPos(x, 64, z);
     }
 
-    public static boolean isEachPlaceAvailable(ChunkGenerator chunkGenerator, Heightmap.Type type, int allowHeightScope, @Nonnull List<BlockPos> pos){
-        return isEachPlaceAvailable(chunkGenerator,type,allowHeightScope,pos,false);
-    }
-
-    public static void movePieceToCenter(BlockPos centerPos,MutableBoundingBox box,List<StructurePiece> pieceList){
-        Vector3i boxCenter = box.getCenter();
+    public static void movePieceToCenter(BlockPos centerPos, BoundingBox box, List<StructurePiece> pieceList){
+        BlockPos boxCenter = box.getCenter();
         pieceList.forEach((p)->p.move(centerPos.getX()-boxCenter.getX(),0,centerPos.getZ()-boxCenter.getZ()));
     }
 
-    public static boolean isEachPlaceAvailable(ChunkGenerator chunkGenerator, Heightmap.Type type, int allowHeightScope, @Nonnull List<BlockPos> pos,boolean testMode) {
+    public static boolean isEachPlaceAvailable(ChunkGenerator chunkGenerator, Heightmap.Types type, int allowHeightScope, @Nonnull List<BlockPos> pos, LevelHeightAccessor accessor, RandomState randomState) {
         if (pos.size() == 0) return false;
         boolean heightTestFlag = allowHeightScope >= 0;//是否启用高度限制
-//        int maxHeight = -1;
-//        if(testMode) System.out.println("#isEachPlaceAvailable testMode load!");
-//        if(testMode) System.out.println("heightTestFlag:" + heightTestFlag + "---scope:" + allowHeightScope);
         if (heightTestFlag) {
             List<Integer> heightList = new ArrayList<>();
             for (BlockPos fPos : pos) {
-                if(testMode) System.out.println(PosHelper.posInfo(fPos));
-                int height = chunkGenerator.getBaseHeight(fPos.getX(), fPos.getZ(), type);
-//                if(testMode) System.out.println("    PosSurfaceHeight:" + height);
-
+                int height = chunkGenerator.getBaseHeight(fPos.getX(), fPos.getZ(), type,accessor,randomState);
                 //添加位置高度至List
                 heightList.add(height);
-
-
                 //y高度判定
                 if(height <= 0 || height > 256) return false;
                 //方块状态判定
-                BlockState state = chunkGenerator.getBaseColumn(fPos.getX(), fPos.getZ()).getBlockState(new BlockPos(fPos.getX(),Math.max(height-1,1),fPos.getZ()));
-//                if(testMode) System.out.println("    BlockStateChuck-Block:" + state.getBlock().toString() + "-Fluid:" + state.getFluidState().toString());
+                BlockState state = chunkGenerator.getBaseColumn(fPos.getX(), fPos.getY(),accessor,randomState).getBlock(Math.max(height - 1, -63));
                 if(!state.getFluidState().isEmpty()) return false;
             }
             heightList.sort(Comparator.naturalOrder());
-            if(testMode) {
-//                System.out.println("    HeightList:");
-                ListAndMapHelper.printList(heightList);
-            }
-            if(heightList.isEmpty() || (heightList.get(heightList.size()-1) - heightList.get(0) >allowHeightScope))
-                return false;
+            return !heightList.isEmpty() && (heightList.get(heightList.size() - 1) - heightList.get(0) <= allowHeightScope);
         }else {
             for (BlockPos fPos : pos) {
-                if(testMode) System.out.println(PosHelper.posInfo(fPos));
-                int height = chunkGenerator.getBaseHeight(fPos.getX(), fPos.getZ(), type);
+                int height = chunkGenerator.getBaseHeight(fPos.getX(), fPos.getZ(), type,accessor,randomState);
 
-//                if(testMode) System.out.println("    PosSurfaceHeight:" + height);
                 //y高度判定
                 if (height <= 0 || height > 256) return false;
                 //方块状态判定
-                BlockState state = chunkGenerator.getBaseColumn(fPos.getX(), fPos.getY()).getBlockState(new BlockPos(fPos.getX(), Math.max(height - 1, 1), fPos.getZ()));
-//                if(testMode) System.out.println("    BlockStateChuck-Block:" + state.getBlock().toString() + "-Fluid:" + state.getFluidState().toString());
+                BlockState state = chunkGenerator.getBaseColumn(fPos.getX(), fPos.getY(),accessor,randomState).getBlock(Math.max(height - 1, -63));
                 if (!state.getFluidState().isEmpty()) return false;
             }
         }
-//        if(testMode) System.out.println("[return]Chuck finish:each pos is valuable" );
         return true;
     }
 
-    public static boolean isEachPlaceWater(ChunkGenerator chunkGenerator, @Nonnull List<BlockPos> posList){
+    public static boolean isEachPlaceWater(ChunkGenerator chunkGenerator, @Nonnull List<BlockPos> posList, LevelHeightAccessor accessor, RandomState randomState){
         for (BlockPos pos : posList){
-            int height = chunkGenerator.getBaseHeight(pos.getX(), pos.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
-            FluidState state = chunkGenerator.getBaseColumn(pos.getX(), pos.getZ()).getFluidState(new BlockPos(pos.getX(),Math.max(height-1,1),pos.getZ()));
-            if(state.getType() != Fluids.WATER) return false;
+            int height = chunkGenerator.getBaseHeight(pos.getX(), pos.getZ(), Heightmap.Types.WORLD_SURFACE_WG,accessor,randomState);
+            BlockState state = chunkGenerator.getBaseColumn(pos.getX(), pos.getZ(),accessor,randomState).getBlock(Math.max(height-1,-63));
+            if(!state.getFluidState().isEmpty()) return false;
         }
         return true;
     }
 
-    public static Template.BlockInfo setTemplateBlock(Template.BlockInfo info,BlockState state){
-        return new Template.BlockInfo(info.pos,state,info.nbt);
+    public static StructureTemplate.StructureBlockInfo setTemplateBlock(StructureTemplate.StructureBlockInfo info, BlockState state){
+        return new StructureTemplate.StructureBlockInfo(info.pos(),state,info.nbt());
     }
     public static class StructureAndVariation{
         public final ResourceLocation MAIN_STRUCTURE;
@@ -157,7 +144,7 @@ public class StructureHelper {
             this.possibility = possibility;
         }
 
-        public ResourceLocation getRandomPart(Random r){
+        public ResourceLocation getRandomPart(RandomSource r){
             if(VARIATION_STRUCTURE == null || VARIATION_STRUCTURE.length == 0 || possibility >= 1){//只有Main的时候
                 return MAIN_STRUCTURE;
             }else if(possibility == -1){//possibility取-1时，平均分配可能性
@@ -168,8 +155,7 @@ public class StructureHelper {
             }else {//按比重分配Main
                 if(r.nextFloat() <= possibility)
                     return MAIN_STRUCTURE;
-                Random newR = new Random(r.nextLong());
-                return VARIATION_STRUCTURE[newR.nextInt(VARIATION_STRUCTURE.length)];
+                return VARIATION_STRUCTURE[r.nextInt(VARIATION_STRUCTURE.length)];
             }
         }
     }

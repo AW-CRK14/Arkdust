@@ -1,7 +1,6 @@
 package com.ardc.arkdust.helper;
 
-import com.ardc.arkdust.playmethod.story.Story;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.StackLocatorUtil;
@@ -19,7 +18,7 @@ public class ArdRegHelper {
         Map<ResourceLocation,T> map;
         IGetRegObjName<T> nameSupplier;
 
-        public RegistryContainer(Map<ResourceLocation,T> map,IGetRegObjName<T> nameSupplier){
+        public RegistryContainer(Map<ResourceLocation,T> map, IGetRegObjName<T> nameSupplier){
             this.regFrom = StackLocatorUtil.getCallerClass(2);
             this.map = map;
             this.nameSupplier = nameSupplier;

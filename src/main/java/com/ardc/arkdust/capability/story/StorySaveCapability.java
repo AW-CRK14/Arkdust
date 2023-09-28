@@ -1,24 +1,35 @@
 package com.ardc.arkdust.capability.story;
 
+import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.advanced_obj.RangeNoRepIntList;
+import com.ardc.arkdust.capability.AbsCapabilityProvider;
+import com.ardc.arkdust.capability.rdi_auth.RDIAccountAuthDataNetwork;
 import com.ardc.arkdust.helper.ListAndMapHelper;
 import com.ardc.arkdust.playmethod.story.Story;
 import com.ardc.arkdust.playmethod.story.StoryAchListener;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.network.PacketDistributor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class StorySaveCapability implements IStorySaveCapability{
+@AutoRegisterCapability
+public class StorySaveCapability implements AbsCapabilityProvider.CommonEntityCap {
+    public void sendToClient(ServerPlayer entity) {
+//        RDIAccountAuthDataNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> entity), new Story(getAExp(),getAExp()));
+//        Utils.LOGGER.debug("[ArdNetwork-RDIAccount]Player#" + entity.getName().getString() + " send pack from server");
+//        Utils.LOGGER.debug("[ArdNetwork-RDIAccount]RDIAccAuthCap in server:" + this);
+    }
     private static final Logger LOGGER = LogManager.getLogger();
     public Map<Story, RangeNoRepIntList> saveDataBagList = new HashMap<>();
 
@@ -29,16 +40,16 @@ public class StorySaveCapability implements IStorySaveCapability{
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
+    public CompoundTag serializeNBT() {
 //        initialize();
-        CompoundNBT nbt = new CompoundNBT();
+        CompoundTag nbt = new CompoundTag();
         saveDataBagList.forEach((s,p)-> nbt.putIntArray(s.name.toString(),p));
         LOGGER.debug("[ArdCap-StorySaveCap]SerializeNBT finished:{player:{},capNbt:{}}", Minecraft.getInstance().player,nbt);
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
 //        initialize();
         Story.storyMap.forEach((res, story)->{
             if(nbt.contains(res.toString())){
@@ -50,20 +61,17 @@ public class StorySaveCapability implements IStorySaveCapability{
     }
 
 
-    @Override
     public Map<Story, RangeNoRepIntList> getStoryProcess() {
 //        initialize();
         return saveDataBagList;
     }
 
-    @Override
     public boolean contains(Story story, int storyIndex) {
 //        initialize();
         return saveDataBagList.containsKey(story) && saveDataBagList.get(story).contains(storyIndex);
     }
 
-    @Override
-    public boolean add(Story storyIns, int storyIndex,PlayerEntity player){
+    public boolean add(Story storyIns, int storyIndex, Player player){
         if(storyIndex <= 0 || storyIndex > storyIns.length)
             return false;
         boolean result = addIn(storyIns,storyIndex);
@@ -77,7 +85,7 @@ public class StorySaveCapability implements IStorySaveCapability{
             if(listener2!=null) ListAndMapHelper.tryAddElementToMapList(this.listenerMap,listener2.listener.clazz, listener2);
         }
 
-        if(!player.level.isClientSide) player.displayClientMessage(storyIns.createMessage(storyIndex,true),false);
+        if(!player.level().isClientSide) player.displayClientMessage(storyIns.createMessage(storyIndex,true),false);
 
         return true;
     }
@@ -99,7 +107,6 @@ public class StorySaveCapability implements IStorySaveCapability{
 
     }
 
-    @Override
     public void finishStory(Story story) {
 //        initialize();
         if(saveDataBagList.containsKey(story)){
@@ -109,7 +116,6 @@ public class StorySaveCapability implements IStorySaveCapability{
         }
     }
 
-    @Override
     public void buildListener() {
         List<StoryAchListener.AdvStoryAchieveListener<?>> listenerList = new ArrayList<>();
         Story.storyMap.forEach((r,s)->{
@@ -139,13 +145,11 @@ public class StorySaveCapability implements IStorySaveCapability{
         return true;
     }
 
-    @Override
     public boolean isStoryFinished(Story s) {
         return saveDataBagList.containsKey(s) && saveDataBagList.get(s).size()==s.length;
     }
 
-    @Override
-    public void pushEvent(Event event, PlayerEntity player) {
+    public void pushEvent(Event event, Player player) {
         for(StoryAchListener.AdvStoryAchieveListener<?> l : ListAndMapHelper.copyList(listenerMap.getOrDefault(event.getClass(), Collections.emptyList()))){
             if (l.listener.call.preCall(event)) {
                 add(l.story, l.stage, player);

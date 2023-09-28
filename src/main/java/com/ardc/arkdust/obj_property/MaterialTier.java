@@ -1,29 +1,28 @@
 package com.ardc.arkdust.obj_property;
 
 import com.ardc.arkdust.registry.ItemRegistry;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Supplier;
 
-public enum MaterialTier implements IItemTier {
-    PURE_GOLD(3,656,4.0F,7.0F,19,()->Ingredient.of(ItemRegistry.pau_ingot.get()));
+public enum MaterialTier implements Tier {
+    PURE_GOLD(3,656,4.0F,7.0F,19,()-> Ingredient.of(ItemRegistry.pau_ingot.get()));
 
     private final int level;
     private final int uses;
     private final float speed;
     private final float damage;
     private final int enchantmentValue;
-    private final LazyValue<Ingredient> repairIngredient;
+    private final Supplier<Ingredient> repairIngredient;
 
-    MaterialTier(int p_i48458_3_, int p_i48458_4_, float p_i48458_5_, float p_i48458_6_, int p_i48458_7_, Supplier<Ingredient> p_i48458_8_) {
-        this.level = p_i48458_3_;
-        this.uses = p_i48458_4_;
-        this.speed = p_i48458_5_;
-        this.damage = p_i48458_6_;
-        this.enchantmentValue = p_i48458_7_;
-        this.repairIngredient = new LazyValue<>(p_i48458_8_);
+    MaterialTier(int level, int uses, float speed, float damage, int enchantment, Supplier<Ingredient> repair) {
+        this.level = level;
+        this.uses = uses;
+        this.speed = speed;
+        this.damage = damage;
+        this.enchantmentValue = enchantment;
+        this.repairIngredient = repair;
     }
 
     public int getUses() {

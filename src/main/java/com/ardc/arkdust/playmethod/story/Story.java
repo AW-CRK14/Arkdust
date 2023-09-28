@@ -2,10 +2,9 @@ package com.ardc.arkdust.playmethod.story;
 
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.registry.StoryRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -68,12 +67,12 @@ public class Story{
         return new StoryAchListener.AdvStoryAchieveListener<>(stage,this,this.achieveListenerMap.get(stage));
     }
 
-    public TranslationTextComponent createTitle(){
-        return new TranslationTextComponent("story.trans.title.$" + this.name);
+    public Component createTitle(){
+        return Component.translatable("story.trans.title.$" + this.name);
     }
 
-    public IFormattableTextComponent createMessage(int stage,boolean in){
-        return new TranslationTextComponent("story.trans.common."+ (in ? "write" : "title")).append(createTitle()).append(new TranslationTextComponent("story.trans.common.stage",stage));
+    public Component createMessage(int stage, boolean in){
+        return Component.translatable("story.trans.common."+ (in ? "write" : "title")).append(createTitle()).append(Component.translatable("story.trans.common.stage",stage));
     }
 
     @Override
@@ -92,7 +91,7 @@ public class Story{
     public static final IOnStoryAchieve empty = (a,b,c)->{};
 
     public interface IOnStoryAchieve {
-        void call(int achieveValue, Story bag, PlayerEntity player);
+        void call(int achieveValue, Story bag, Player player);
     }
 
     public static Story nameToBag(String name){

@@ -1,18 +1,18 @@
 package com.ardc.arkdust.blockstate;
 
+import com.ardc.arkdust.helper.LootHelper;
 import com.ardc.arkdust.preobject.PreBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Rotation;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.storage.loot.LootParams;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ThreeAxisBlock extends PreBlock {
@@ -28,28 +28,26 @@ public class ThreeAxisBlock extends PreBlock {
         switch(rotation) {
             case COUNTERCLOCKWISE_90:
             case CLOCKWISE_90:
-                switch(state.getValue(AXIS)) {
-                    case X:
-                        return state.setValue(AXIS, Direction.Axis.Z);
-                    case Z:
-                        return state.setValue(AXIS, Direction.Axis.X);
-                    default:
-                        return state;
-                }
+                return switch (state.getValue(AXIS)) {
+                    case X -> state.setValue(AXIS, Direction.Axis.Z);
+                    case Z -> state.setValue(AXIS, Direction.Axis.X);
+                    default -> state;
+                };
             default:
                 return state;
         }
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> p_206840_1_) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) {
         p_206840_1_.add(AXIS);
+        super.createBlockStateDefinition(p_206840_1_);
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_) {
+    public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
         return this.defaultBlockState().setValue(AXIS, p_196258_1_.getClickedFace().getAxis());
     }
 
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-        return d ? Collections.singletonList(new ItemStack(this)) : super.getDrops(state,builder);
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        return d ? LootHelper.dropSelfWhenNoLoot(state,builder) : super.getDrops(state,builder);
     }
 }

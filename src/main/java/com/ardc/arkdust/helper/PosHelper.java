@@ -1,12 +1,13 @@
 package com.ardc.arkdust.helper;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +15,10 @@ import java.util.List;
 import java.util.Random;
 
 public class PosHelper {
+    public static BlockPos randomSkew(Structure.GenerationContext context,int r){
+        return context.chunkPos().getBlockAt(context.random().nextInt(-r,r+1),0,context.random().nextInt(-r,r+1));
+    }
+
     public static List<BlockPos> getCenterAndSquareVertexPos(BlockPos centerPos,int halfLength,boolean sideCenterPoint,boolean vertexPoint){
         List<BlockPos> posList = new ArrayList<>();
         posList.add(centerPos);
@@ -41,7 +46,7 @@ public class PosHelper {
     }
 
     public static BlockPos entityPosToBlock(LivingEntity entity){
-        return new BlockPos(Math.floor(entity.getX()),(int)entity.getY(),Math.floor(entity.getZ())).below();
+        return new BlockPos((int) Math.floor(entity.getX()),(int)entity.getY(), (int) Math.floor(entity.getZ())).below();
     }
 
     public static BlockPos getRandomPosNearPos(BlockPos pos,int xRange,int zRange,int yMin,int yMax){
@@ -68,14 +73,14 @@ public class PosHelper {
     }
 
     public static int limitY(int y){
-        return Math.max(1,Math.min(y,256));
+        return Math.max(-63,Math.min(y,299));
     }
 
-    public static Pair<BlockPos,BlockPos> boundingBoxToBlockPos(MutableBoundingBox box){
-        return Pair.of(new BlockPos(box.x0,box.y0,box.z0),new BlockPos(box.x1,box.y1,box.z1));
+    public static Pair<BlockPos,BlockPos> boundingBoxToBlockPos(BoundingBox box){
+        return Pair.of(new BlockPos(box.minX(),box.minY(),box.minZ()),new BlockPos(box.maxX(),box.maxY(),box.maxZ()));
     }
 
-    public static Pair<ChunkPos,ChunkPos> boundingBoxToChunkPos(MutableBoundingBox box){
+    public static Pair<ChunkPos, ChunkPos> boundingBoxToChunkPos(BoundingBox box){
         Pair<BlockPos,BlockPos> p = boundingBoxToBlockPos(box);
         return Pair.of(new ChunkPos(p.getFirst()),new ChunkPos(p.getSecond()));
     }

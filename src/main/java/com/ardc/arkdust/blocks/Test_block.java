@@ -1,37 +1,36 @@
 package com.ardc.arkdust.blocks;
 
-import com.ardc.arkdust.obj_property.ExtraMaterial;
-import com.ardc.arkdust.resourcelocation.LootTable;
 import com.ardc.arkdust.preobject.PreBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import com.ardc.arkdust.resource.LootTable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.Random;
 
 public class Test_block extends PreBlock {
     public Test_block(){
-        super(Properties.of(ExtraMaterial.TEST1).strength(2));
+        super(Properties.copy(Blocks.COMMAND_BLOCK));
         //strength是强度，等价于非官方版中的hardnessAndResistance
     }
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit){
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit){
         if(!worldIn.isClientSide()) {
             worldIn.setBlock(pos.above(),Blocks.CHEST.defaultBlockState(),3);
-            TileEntity tileEntity = worldIn.getBlockEntity(pos.above());
-            if(tileEntity instanceof LockableLootTileEntity){
-                ((LockableLootTileEntity) tileEntity).setLootTable(LootTable.GENERAL_SUPPLY_BOX_A,new Random().nextLong());
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos.above());
+            if(tileEntity instanceof RandomizableContainerBlockEntity){
+                ((RandomizableContainerBlockEntity) tileEntity).setLootTable(LootTable.GENERAL_SUPPLY_BOX_A,new Random().nextLong());
             }
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
 }

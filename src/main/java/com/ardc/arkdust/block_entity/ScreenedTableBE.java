@@ -1,26 +1,27 @@
 package com.ardc.arkdust.block_entity;
 
 import com.ardc.arkdust.registry.TileEntityTypeRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class ScreenedTableBE extends TileEntity {
+public class ScreenedTableBE extends BlockEntity {
     public int guarantee = 0;
     public boolean hasItem = false;
     public int dropNumUpgrade = 0;
     //0对标原物品，1对标返回物品
     public NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
-    public ScreenedTableBE() {
-        super(TileEntityTypeRegistry.SCREENED_TABLE_BE.get());
+    public ScreenedTableBE(BlockPos pos, BlockState state) {
+        super(TileEntityTypeRegistry.SCREENED_TABLE_BE.get(),pos,state);
     }
 
     //尝试放入方块
-    public boolean tryToPlaceIn(Item fromItem,Item toItem){
+    public boolean tryToPlaceIn(Item fromItem, Item toItem){
         if(hasItem){
             return false;
         }else{
@@ -74,24 +75,24 @@ public class ScreenedTableBE extends TileEntity {
 
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
         guarantee = nbt.getInt("guarantee");
         dropNumUpgrade = Math.max(Math.min(nbt.getInt("dropNumUpgrade"), 12), 0);
         hasItem = nbt.getBoolean("hasItem");
-        ItemStackHelper.loadAllItems(nbt,items);
+        ContainerHelper.loadAllItems(nbt,items);
 //        System.out.println("block on load with nbt:" + nbt);
 //        System.out.println("items:"+items);
 //        System.out.println("of0:"+items.get(0));
 //        System.out.println("of1:"+items.get(1));
-        super.load(state, nbt);
+        super.load(nbt);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT nbt) {
+    protected void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         nbt.putInt("guarantee", guarantee);
         nbt.putInt("dropNumUpgrade", dropNumUpgrade);
         nbt.putBoolean("hasItem", hasItem);
-        ItemStackHelper.saveAllItems(nbt, items);
-        return super.save(nbt);
+        ContainerHelper.saveAllItems(nbt, items);
     }
 }

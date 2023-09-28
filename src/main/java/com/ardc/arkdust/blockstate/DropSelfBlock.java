@@ -1,12 +1,12 @@
 package com.ardc.arkdust.blockstate;
 
 import com.ardc.arkdust.preobject.PreBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,15 +36,15 @@ public class DropSelfBlock extends PreBlock {
     }
 
     public interface ICreateDrops{
-        List<ItemStack> create(BlockState state,LootContext context);
+        List<ItemStack> create(BlockState state, LootParams context);
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
 
         List<ItemStack> dropsOriginal = super.getDrops(state, builder);
         if (!dropsOriginal.isEmpty())
             return dropsOriginal;
-        return i.create(state,builder.withParameter(LootParameters.BLOCK_STATE, state).create(LootParameterSets.BLOCK));
+        return i.create(state,builder.withParameter(LootContextParams.BLOCK_STATE, state).create(LootContextParamSets.BLOCK));
     }
 }

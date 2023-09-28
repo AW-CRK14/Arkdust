@@ -1,62 +1,77 @@
 package com.ardc.arkdust.capability.health_system;
 
-import net.minecraft.nbt.CompoundNBT;
 
-public class HealthSystemCapability implements IHealthSystemCapability {
-    private int nORIPoint;
-    private byte nORIRLevel;
+import com.ardc.arkdust.Utils;
+import com.ardc.arkdust.capability.AbsCapabilityProvider;
+import com.ardc.arkdust.capability.rdi_auth.RDIAccountAuthDataNetwork;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
+import net.minecraftforge.network.PacketDistributor;
+
+@AutoRegisterCapability
+public class HealthSystemCapability implements AbsCapabilityProvider.CommonEntityCap {
+    public void sendToClient(ServerPlayer entity) {
+        CompoundTag tag = new CompoundTag();
+        deserializeNBT(tag);
+        RDIAccountAuthDataNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> entity), new HealthSystemDataNetwork.Pack(tag));
+        Utils.LOGGER.debug("[ArdNetwork-HealthSystem]Player#" + entity.getName().getString() + " send pack from server");
+        Utils.LOGGER.debug("[ArdNetwork-HealthSystem]HealthSystem in server:" + this);
+    }
+
+
+
+    private int oriPoint;
+    public static final int MAX_ORINFEC_LEVEL = 16;
+    public static final int MAX_ORINFEC_POINT = ORI$level2Point(MAX_ORINFEC_LEVEL);
     public static int ORI$level2Point(int level){
-        return 100 + 100*level + 20*level*level;
+        return 10*level*(level+1)*(2*level+1)/6;
+    }
+    public static Pair<Integer,Integer> ORI$Point2Level(int point){
+        int last = 0;
+        for (int i = 1 ; i < 16 ;i ++){
+            int p = ORI$level2Point(i);
+            if(p > point)
+                return Pair.of(i,point-last);
+            last = p;
+        }
+        return Pair.of(16,0);
     }
 
     public HealthSystemCapability(){
-        this.nORIPoint = 0;
-        this.nORIPoint = 0;
+        this.oriPoint = 0;
     }
 
     public int ORI$getPoint() {
-        return nORIPoint;
+        return oriPoint;
     }
 
     public int ORI$addPoint(int num) {
-        nORIPoint += num;
-        if(nORIPoint < 0) nORIPoint = 0;
-        return nORIPoint;
+        ORI$setPoint(oriPoint+num);
+        return oriPoint;
     }
 
     public void ORI$setPoint(int num) {
-        nORIPoint = num;
+        oriPoint = Math.max(0,Math.min(num, MAX_ORINFEC_POINT));
     }
 
-    public byte ORI$getRLevel() {
-        return nORIRLevel;
-    }
 
-    public void ORI$addRLevel(byte level) {
-        nORIRLevel += level;
-    }
 
-    public void ORI$setRLevel(byte level) {
-        nORIRLevel = level;
-    }
-
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.putInt("ori_point",nORIPoint);
-        nbt.putByte("ori_level",nORIRLevel);
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = new CompoundTag();
+        nbt.putInt("ori_point", oriPoint);
         return nbt;
     }
 
-    public void deserializeNBT(CompoundNBT nbt) {
-        nORIPoint = nbt.getInt("ori_point");
-        nORIRLevel = nbt.getByte("ori_level");
+    public void deserializeNBT(CompoundTag nbt) {
+        oriPoint = nbt.getInt("ori_point");
     }
 
     @Override
     public String toString() {
         return "HealthSystemCapability{ORI:{" +
-                "point=" + nORIPoint +
-                ",level=" + nORIRLevel +
+                "point=" + oriPoint +
                 "}}";
     }
 }

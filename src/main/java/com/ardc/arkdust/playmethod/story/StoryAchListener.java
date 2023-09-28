@@ -1,8 +1,9 @@
 package com.ardc.arkdust.playmethod.story;
 
-import com.ardc.arkdust.capability.story.IStorySaveCapability;
+import com.ardc.arkdust.capability.story.StorySaveCapability;
 import com.ardc.arkdust.registry.CapabilityRegistry;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -20,7 +21,7 @@ public class StoryAchListener<T extends Event> {
 
     public static class Pre{
         public static StoryAchListener<PlayerEvent.ItemPickupEvent> itemPickup(ResourceLocation regName){
-            return new StoryAchListener<>(PlayerEvent.ItemPickupEvent.class,(event -> event.getStack().getItem().getRegistryName().equals(regName)));
+            return new StoryAchListener<>(PlayerEvent.ItemPickupEvent.class,(event -> BuiltInRegistries.ITEM.getKey(event.getStack().getItem()).equals(regName)));
         }
 
         public static StoryAchListener<PlayerEvent.ItemPickupEvent> itemPickup(Call<PlayerEvent.ItemPickupEvent> call){
@@ -53,12 +54,12 @@ public class StoryAchListener<T extends Event> {
     private static class Listener{
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event){
-            event.getPlayer().getCapability(CapabilityRegistry.STORY_CAPABILITY).ifPresent(IStorySaveCapability::buildListener);
+            event.getEntity().getCapability(CapabilityRegistry.STORY_CAPABILITY).ifPresent(StorySaveCapability::buildListener);
         }
 
         @SubscribeEvent
         public static void onPickUpItem(PlayerEvent.ItemPickupEvent event){
-            event.getPlayer().getCapability(CapabilityRegistry.STORY_CAPABILITY).ifPresent((i)->i.pushEvent(event,event.getPlayer()));
+            event.getEntity().getCapability(CapabilityRegistry.STORY_CAPABILITY).ifPresent((i)->i.pushEvent(event,event.getEntity()));
         }
     }
 }

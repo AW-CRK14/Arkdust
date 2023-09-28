@@ -1,19 +1,18 @@
 package com.ardc.arkdust.worldgen.biome;
 
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.registry.BiomeRegistry;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.fml.RegistryObject;
 
 public class BiomeKey {
-    public static RegistryKey<Biome> CW$FAULT_LINE = createKey(BiomeRegistry.CW$FAULT_LINE);
 
-    public static RegistryKey<Biome> createKey(RegistryObject<Biome> b){
-        return RegistryKey.create(Registry.BIOME_REGISTRY,b.getId());
+    public static final ResourceKey<Biome> CW$FAULT_LINE = register("cw/fault_line");
+
+    private static ResourceKey<Biome> register(String name) {
+        return ResourceKey.create(Registries.BIOME, new ResourceLocation(Utils.MOD_ID,name));
     }
 
     public static void generateBiome(){

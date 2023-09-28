@@ -1,13 +1,13 @@
 package com.ardc.arkdust.enums.BlockEntityAbout;
 
 import com.ardc.arkdust.registry.ItemRegistry;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.Random;
 
 public enum ScreenedTable {
-    GRAVEL          (1,Items.GRAVEL,
+    GRAVEL          (1, Items.GRAVEL,
             Items.FLINT,Items.IRON_NUGGET,Items.GOLD_NUGGET,Items.CLAY_BALL,Items.NAUTILUS_SHELL),
     SAND            (1,Items.SAND,
             Items.IRON_NUGGET,Items.GOLD_NUGGET,Items.BONE_MEAL,Items.MELON_SEEDS,Items.BONE,Items.BAMBOO,Items.STICK),

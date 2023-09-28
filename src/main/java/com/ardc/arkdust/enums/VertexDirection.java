@@ -1,11 +1,11 @@
 package com.ardc.arkdust.enums;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.core.Direction;
+import org.joml.Vector3i;
 
 public enum VertexDirection {
     WDN("wdn",Direction.WEST,Direction.DOWN,Direction.NORTH,new Vector3i(-1, -1, -1)),
-    WDS("wds",Direction.WEST,Direction.DOWN,Direction.SOUTH,new Vector3i(-1, -1, 1)),
+    WDS("wds", Direction.WEST,Direction.DOWN,Direction.SOUTH,new Vector3i(-1, -1, 1)),
     EDN("edn",Direction.EAST,Direction.DOWN,Direction.NORTH,new Vector3i(1, -1, -1)),
     EDS("eds",Direction.EAST,Direction.DOWN,Direction.SOUTH,new Vector3i(1, -1, -1)),
     WUN("wun",Direction.WEST,Direction.UP,Direction.NORTH,new Vector3i(-1, 1, -1)),

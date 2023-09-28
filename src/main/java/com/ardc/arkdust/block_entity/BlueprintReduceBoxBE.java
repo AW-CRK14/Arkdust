@@ -3,35 +3,34 @@ package com.ardc.arkdust.block_entity;
 import com.ardc.arkdust.enums.BlueprintTypeEnum;
 import com.ardc.arkdust.enums.BlueprintValueEnum;
 import com.ardc.arkdust.helper.EnumHelper;
-import com.ardc.arkdust.playmethod.blueprint.IBlueprintItem;
 import com.ardc.arkdust.playmethod.blueprint.BlueprintItem;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import com.ardc.arkdust.playmethod.blueprint.IBlueprintItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class BlueprintReduceBoxBE extends TileEntity {
-    protected BlueprintValueEnum value;
-    protected BlueprintTypeEnum type;
+public class BlueprintReduceBoxBE extends BlockEntity {
+    protected BlueprintValueEnum value = BlueprintValueEnum.NULL;
+    protected BlueprintTypeEnum type = BlueprintTypeEnum.NULL;
     protected final int maxContain;
     protected int count;
 
-    public BlueprintReduceBoxBE(TileEntityType<? extends BlueprintReduceBoxBE> type, int maxCount) {
-        super(type);
-        initialize();
+    public BlueprintReduceBoxBE(BlockEntityType<? extends BlueprintReduceBoxBE> type, BlockPos pos,BlockState state, int maxCount) {
+        super(type,pos,state);
         this.maxContain = maxCount;
     }
 
-    private void initialize(){
-        setValue(BlueprintValueEnum.NULL);
-        setObjType(BlueprintTypeEnum.NULL);
-    }
 
-    public int addBlueprint(ItemStack stack,boolean shift){
+    public int addBlueprint(ItemStack stack, boolean shift){
         if(test() || !(stack.getItem() instanceof BlueprintItem))
             return 0;
-        CompoundNBT nbt = stack.getOrCreateTagElement("blueprint");
+        CompoundTag nbt = stack.getOrCreateTagElement("blueprint");
         if(allowToPut(nbt)){
             int askedCount = shift ? Math.min((int) Math.ceil((double) (getMaxContain() - getCount()) / nbt.getInt("weight")),stack.getCount()) : 1;
             if(value == BlueprintValueEnum.NULL || type == BlueprintTypeEnum.NULL){
@@ -42,12 +41,13 @@ public class BlueprintReduceBoxBE extends TileEntity {
             setCount(getCount() + askedCount * nbt.getInt("weight"));
             int reCount = Math.max(getCount() - getMaxContain(),0);
             test();
+            setChanged();
             return reCount;
         }
         return 0;
     }
 
-    public boolean allowToPut(CompoundNBT nbt){
+    public boolean allowToPut(CompoundTag nbt){
 //        return !item.pieces() && (getValue() == BlueprintValueEnum.NULL || getValue() == item.value()) && (getBlueprintType() == BlueprintTypeEnum.NULL || getBlueprintType() == item.type());
         return  IBlueprintItem.canUseForReduce(nbt.getString("blueprint_type")) &&
                 (getValue() == BlueprintValueEnum.NULL || getValue().name().equals(nbt.getString("value"))) &&
@@ -64,21 +64,25 @@ public class BlueprintReduceBoxBE extends TileEntity {
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
         setValue(EnumHelper.valueOfOrDefault(BlueprintValueEnum.class,nbt.getString("value"),BlueprintValueEnum.NULL));
         setObjType(EnumHelper.valueOfOrDefault(BlueprintTypeEnum.class,nbt.getString("type"),BlueprintTypeEnum.NULL));
         setCount(nbt.getInt("count"));
         test();
-        super.load(state, nbt);
+        super.load(nbt);
     }
 
-    @Override
-    public CompoundNBT save(CompoundNBT nbt) {
+//    @Override
+    public void saveAdditional(CompoundTag nbt) {
         nbt.putString("value", getValue().name());
         nbt.putInt("count", getCount());
         nbt.putString("type", getObjType().name());
-        return super.save(nbt);
+        super.saveAdditional(nbt);
     }
+
+
+
+
 
 
     public BlueprintValueEnum getValue() {
@@ -110,13 +114,15 @@ public class BlueprintReduceBoxBE extends TileEntity {
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(super.getUpdateTag());
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        saveAdditional(tag);
+        return tag;
     }
 
+
     @Override
-    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        load(state,tag);
-        super.handleUpdateTag(state, tag);
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }

@@ -1,9 +1,21 @@
 package com.ardc.arkdust.capability.rdi_auth;
 
+import com.ardc.arkdust.Utils;
+import com.ardc.arkdust.capability.AbsCapabilityProvider;
 import com.ibm.icu.impl.Pair;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
+import net.minecraftforge.network.PacketDistributor;
 
-public class RDIAccountAuthCapability implements IRDIAccountAuthCapability {
+@AutoRegisterCapability
+public class RDIAccountAuthCapability implements AbsCapabilityProvider.CommonEntityCap {
+    public void sendToClient(ServerPlayer entity) {
+        RDIAccountAuthDataNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> entity), new RDIAccountAuthDataNetwork.RDIAccountAuthDataPack(getAExp(),getAExp()));
+        Utils.LOGGER.debug("[ArdNetwork-RDIAccount]Player#" + entity.getName().getString() + " send pack from server");
+        Utils.LOGGER.debug("[ArdNetwork-RDIAccount]RDIAccAuthCap in server:" + this);
+    }
+
     public static Pair<Integer,Integer> toNum(int p,int levelAdd,int dif){
         int level = 1;
         int level2Point;
@@ -42,7 +54,7 @@ public class RDIAccountAuthCapability implements IRDIAccountAuthCapability {
             return 30000;
     }
 
-    @Override
+
     public String toString() {
         return "RhodesIslandAuthorityAccountCapability{" +
                 "exp=" + nAExp +
@@ -54,49 +66,72 @@ public class RDIAccountAuthCapability implements IRDIAccountAuthCapability {
     private int nAExp;
     private int nSanity;
 
-    @Override
+
     public int getAExp() {
         return nAExp;
     }
 
-    @Override
+
     public void setAExp(int num) {
         nAExp = num;
     }
 
-    @Override
+
     public int addAExp(int num) {
         nAExp += num;
         return nAExp;
     }
 
-    @Override
+
     public int getSanity() {
         return nSanity;
     }
 
-    @Override
+
     public void setSanity(int num) {
         nSanity = num;
     }
 
-    @Override
+
     public int addSanity(int num) {
         nSanity += num;
         return nSanity;
     }
 
-    @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
+
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = new CompoundTag();
         nbt.putInt("exp",nAExp);
         nbt.putInt("sanity",nSanity);
         return nbt;
     }
 
-    @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+
+    public void deserializeNBT(CompoundTag nbt) {
         nAExp = nbt.getInt("exp");
         nSanity = nbt.getInt("sanity");
+    }
+
+
+    public void addSanity(){addSanity(1);}
+    public void resetSanity(){setSanity(getMaxSanity());}
+    public int getMaxSanity(){return 70 + AExp$getFlowAndLevel().second / 2;}
+
+
+    public static int range1 = 41000;
+    public static int range2 = range1 + 244000;
+    public static int range3 = range2 + 810000;//1095000
+    public Pair<Integer,Integer> AExp$getFlowAndLevel(){
+        int p = getAExp();
+        if(p < range1)
+            return RDIAccountAuthCapability.toNum(p,0,50);
+        else if (p < range2)
+            return RDIAccountAuthCapability.toNum(p-range1,40,200);
+        else if(p < range3)
+            return RDIAccountAuthCapability.toNum(p,80,500);
+        else {
+            setAExp(range3);
+            return Pair.of(RDIAccountAuthCapability.levelIncludeAExp(120), 120);
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.ardc.arkdust.worldgen.biome.surface_builder;
 
-import com.ardc.arkdust.registry.SurfaceBuilderRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
 import net.minecraft.world.biome.Biome;

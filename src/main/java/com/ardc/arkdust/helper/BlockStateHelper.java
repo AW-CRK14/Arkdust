@@ -1,35 +1,32 @@
 package com.ardc.arkdust.helper;
 
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.command.arguments.BlockStateParser;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
-import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING;
-import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
 public class BlockStateHelper {
-    public static BlockState waterloggedRotateBlock(Block t, BlockItemUseContext context){
+    public static BlockState waterloggedRotateBlock(BlockState t, BlockPlaceContext context){
+        return waterloggedBlock(t,context).setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
+    }
+
+    public static BlockState waterloggedBlock(BlockState t, BlockPlaceContext context){
         BlockPos pos = context.getClickedPos();
         BlockState state = context.getLevel().getBlockState(pos);
-        if(state.is(t)){
-            return t.defaultBlockState().setValue(WATERLOGGED,false).setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
+        if(state.is(t.getBlock())){
+            return t.setValue(WATERLOGGED,false);
         }else{
             FluidState fluid = context.getLevel().getFluidState(pos);
-            return t.defaultBlockState().setValue(WATERLOGGED,fluid.getType() == Fluids.WATER).setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
+            return t.setValue(WATERLOGGED,fluid.getType() == Fluids.WATER);
         }
     }
 
-    public interface ISetBlockFromInfoState{
-        void call(ISeedReader world, Template.BlockInfo info,BlockState state);
-    }
+//    public interface ISetBlockFromInfoState{
+//        void call(ISeedReader world, Template.BlockInfo info,BlockState state);
+//    }
 }

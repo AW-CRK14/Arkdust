@@ -2,7 +2,7 @@ package com.ardc.arkdust.blocks.orirock;
 
 import com.ardc.arkdust.playmethod.oi.OIItem.PreOIBlock;
 import com.ardc.arkdust.registry.BlockRegistry;
-import com.ardc.arkdust.resourcelocation.Tag;
+import com.ardc.arkdust.resource.Tag;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;

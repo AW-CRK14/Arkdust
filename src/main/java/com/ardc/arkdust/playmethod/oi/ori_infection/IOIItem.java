@@ -1,8 +1,7 @@
 package com.ardc.arkdust.playmethod.oi.ori_infection;
 
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 
 public interface IOIItem{
     int getOILevel();//源石感染等级
@@ -19,11 +18,11 @@ public interface IOIItem{
         return true;
     }
 
-    default TranslationTextComponent transText(){//在无法接受时发出的信息
-        return new TranslationTextComponent("pma.oi.getOIItem");
+    default Component transText(){//在无法接受时发出的信息
+        return Component.translatable("pma.oi.getOIItem");
     }
 
-    default IFormattableTextComponent infoAddOfOI(){//添加的信息
-        return new TranslationTextComponent("pma.oi.OIInfo",getOILevel()).withStyle(TextFormatting.RED);
+    default Component infoAddOfOI(){//添加的信息
+        return Component.translatable("pma.oi.OIInfo",getOILevel()).withStyle(ChatFormatting.RED);
     }
 }

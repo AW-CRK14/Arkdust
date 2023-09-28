@@ -1,6 +1,6 @@
 package com.ardc.arkdust.playmethod.oi.OIItem;
 
-import com.ardc.arkdust.resourcelocation.Damage;
+import com.ardc.arkdust.resource.DamageTypes;
 import com.ardc.arkdust.preobject.PreBlock;
 import com.ardc.arkdust.playmethod.oi.ori_infection.IOIBlock;
 import com.ardc.arkdust.registry.CapabilityRegistry;
@@ -54,7 +54,7 @@ public class PreOIBlock extends PreBlock implements IOIBlock {
         AtomicInteger rLevel = new AtomicInteger();
         entity.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)-> rLevel.set(i.ORI$getRLevel()));
         if(new Random().nextFloat() <= touchTickDamageProbability()){
-            entity.hurt(Damage.ORIROCK_INFECTION, rLevel.get() >= this.needOIRLevel ? 0.2F : touchTickDamage);
+            entity.hurt(DamageTypes.ORIROCK_INFECTION, rLevel.get() >= this.needOIRLevel ? 0.2F : touchTickDamage);
         }
     }
 

@@ -1,13 +1,12 @@
 package com.ardc.arkdust.preobject;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -27,14 +26,14 @@ public class PreItem extends Item {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
         if(explain) {
             if (!Screen.hasShiftDown()) {
-                list.add(new TranslationTextComponent("explain.exp." + this.getDescriptionId()));
+                list.add(Component.translatable("explain.exp." + this.getDescriptionId()));
             } else {
-                list.add(new TranslationTextComponent("basmes.way_to_get").withStyle(TextFormatting.GOLD));
-                list.add(new TranslationTextComponent("explain.get." + this.getDescriptionId()));
+                list.add(Component.translatable("basmes.way_to_get").withStyle(ChatFormatting.GOLD));
+                list.add(Component.translatable("explain.get." + this.getDescriptionId()));
             }
         }
     }

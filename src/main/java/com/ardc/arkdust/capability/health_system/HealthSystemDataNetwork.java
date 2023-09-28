@@ -3,12 +3,13 @@ package com.ardc.arkdust.capability.health_system;
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.registry.CapabilityRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.function.Supplier;
 
@@ -28,38 +29,34 @@ public class HealthSystemDataNetwork {
                 (v)->v.equals(VERSION),
                 (v)->v.equals(VERSION)
         );
-        INSTANCE.messageBuilder(HealthSystemDataPack.class,nextID())
-                .encoder(HealthSystemDataPack::toBytes)
-                .decoder(HealthSystemDataPack::new)
-                .consumer(HealthSystemDataPack::handler)
+        INSTANCE.messageBuilder(Pack.class,nextID())
+                .encoder(Pack::toBytes)
+                .decoder(Pack::new)
+                .consumerMainThread(Pack::handler)
                 .add();
     }
 
-    public static class HealthSystemDataPack {
-        private final byte ori$level;
-        private final int ori$point;
+    public static class Pack {
+        private final CompoundTag tag;
 
-        public HealthSystemDataPack(byte ori$level, int ori$point){
-            this.ori$level = ori$level;
-            this.ori$point = ori$point;
+        public Pack(CompoundTag tag){
+            this.tag = tag;
         }
 
-        public HealthSystemDataPack(PacketBuffer buffer){
-            this.ori$level = buffer.readByte();
-            this.ori$point = buffer.readInt();
+        public Pack(FriendlyByteBuf buffer){
+            this.tag = buffer.readNbt();
         }
 
-        public void toBytes(PacketBuffer buffer){
-            buffer.writeByte(ori$level).writeInt(ori$point);
+        public void toBytes(FriendlyByteBuf buffer){
+            buffer.writeNbt(tag);
         }
 
         public void handler(Supplier<NetworkEvent.Context> context){
             context.get().enqueueWork(()-> {
-                ClientPlayerEntity e = Minecraft.getInstance().player;
+                LocalPlayer e = Minecraft.getInstance().player;
                 if(e != null){
                     e.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)->{
-                        i.ORI$setPoint(ori$point);
-                        i.ORI$setRLevel(ori$level);
+                        i.deserializeNBT(tag);
                         Utils.LOGGER.debug("[ArdNetwork-HealthSystem]Player#" + e.getName().getString() + " get pack from client");
                         Utils.LOGGER.debug("[ArdNetwork-HealthSystem]ORICapInClient:" + i);
                     });
