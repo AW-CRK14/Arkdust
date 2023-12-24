@@ -186,7 +186,12 @@ public class FlyingGravelParticle extends TextureSheetParticle {
         }
     }
 
-    public record Factory(SpriteSet sprite) implements ParticleProvider<Type> {
+    public static class Factory implements ParticleProvider<Type> {
+        private final SpriteSet sprite;
+        public Factory(SpriteSet sprite){
+            this.sprite = sprite;
+        }
+
         @Override
         public Particle createParticle(Type type, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             FlyingGravelParticle particle = new FlyingGravelParticle(world, x, y, z, new Vector3d(type.speed.x, type.speed.y, type.speed.z), type.color, type.diameter);

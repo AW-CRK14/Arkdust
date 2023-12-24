@@ -10,6 +10,7 @@ import net.minecraftforge.network.PacketDistributor;
 
 @AutoRegisterCapability
 public class RDIAccountAuthCapability implements AbsCapabilityProvider.CommonEntityCap {
+    public RDIAccountAuthCapability(){}
     public void sendToClient(ServerPlayer entity) {
         RDIAccountAuthDataNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> entity), new RDIAccountAuthDataNetwork.RDIAccountAuthDataPack(getAExp(),getAExp()));
         Utils.LOGGER.debug("[ArdNetwork-RDIAccount]Player#" + entity.getName().getString() + " send pack from server");

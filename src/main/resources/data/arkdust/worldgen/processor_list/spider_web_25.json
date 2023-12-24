@@ -1,0 +1,14 @@
+{
+  "processors": [
+    {
+      "air": 0.025,
+      "change_air": true,
+      "ignore": true,
+      "processor_type": "minecraft:tag_random_change_processor",
+      "state": {
+        "Name": "arkdust:dirty_concrete"
+      },
+      "tag": "arkdust:structure/tag_random_change_blacklist"
+    }
+  ]
+}

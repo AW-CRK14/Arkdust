@@ -1,21 +1,20 @@
 package com.ardc.arkdust.playmethod.oi.OIItem;
 
-import com.ardc.arkdust.resource.DamageTypes;
-import com.ardc.arkdust.preobject.PreBlock;
 import com.ardc.arkdust.playmethod.oi.ori_infection.IOIBlock;
-import com.ardc.arkdust.registry.CapabilityRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import com.ardc.arkdust.preobject.PreBlock;
+import com.ardc.arkdust.resource.DamageTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class PreOIBlock extends PreBlock implements IOIBlock {
     private final float touchTickDamage;
@@ -49,18 +48,15 @@ public class PreOIBlock extends PreBlock implements IOIBlock {
     }
 
     @Override
-    public void stepOn(World world, BlockPos pos, Entity entity) {
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if(!(entity instanceof LivingEntity) || !this.touchHurt()) return;
-        AtomicInteger rLevel = new AtomicInteger();
-        entity.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)-> rLevel.set(i.ORI$getRLevel()));
         if(new Random().nextFloat() <= touchTickDamageProbability()){
-            entity.hurt(DamageTypes.ORIROCK_INFECTION, rLevel.get() >= this.needOIRLevel ? 0.2F : touchTickDamage);
+            entity.hurt(new DamageSource(DamageTypes.createDamageSource(entity,DamageTypes.ORIROCK_INFECTION)),touchTickDamage);
         }
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> dropsOriginal = super.getDrops(state, builder);
         if (!dropsOriginal.isEmpty())
             return dropsOriginal;

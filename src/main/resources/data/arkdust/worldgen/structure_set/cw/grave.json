@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 784250928,
+    "separation": 8,
+    "frequency": 0.7,
+    "spacing": 25
+  },
+  "structures": [
+    {
+      "structure": "arkdust:cw/grave",
+      "weight": 1
+    }
+  ]
+}

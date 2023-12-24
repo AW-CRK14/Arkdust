@@ -9,6 +9,7 @@ import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBE;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.resource.LootTable;
 import com.ardc.arkdust.worldgen.structure.ExtraStructurePieceType;
+import com.ardc.arkdust.worldgen.structure.preobj.AboveWaterStructure;
 import com.ardc.arkdust.worldgen.structure.preobj.CommonCWTemplatePiece;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -38,7 +39,7 @@ import java.util.*;
 
 import static com.ardc.arkdust.worldgen.structure.ExtraStructureType.CW$GRAVE;
 
-public class CWGrave extends Structure {
+public class CWGrave extends AboveWaterStructure {
 
     public static final ResourceLocation[] SMALL_GRAVE = new ResourceLocation[]{new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_1"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_2"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_3"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_8"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_9"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_10")};
     public static final ResourceLocation[] LARGE_GRAVE = new ResourceLocation[]{new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_4"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_5"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_6"),new ResourceLocation(Utils.MOD_ID,"cworld/grave/cw_grave_7")};
@@ -49,19 +50,8 @@ public class CWGrave extends Structure {
         super(settings);
     }
 
-    @Override
-    public GenerationStep.Decoration step() {//与生成的位置有关，大概。
-        return GenerationStep.Decoration.SURFACE_STRUCTURES;
-    }
-
-    @Override
-    protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-
-        BlockPos center = PosHelper.randomSkew(context,12);
-
-        if(StructureHelper.isEachPlaceAvailable(context.chunkGenerator(), Heightmap.Types.WORLD_SURFACE_WG,4, PosHelper.getCenterAndSquareVertexPos(center,6,false,true),context.heightAccessor(),context.randomState()))
-            return Optional.of(new GenerationStub(center.below(2),(builder)->builder.addPiece(new Piece(context.structureTemplateManager(),context.random(),center.below(2)))));
-        return Optional.empty();
+    public Optional<GenerationStub> ifAboveWater(GenerationContext context, BlockPos surfaceCenterPos) {
+        return Optional.of(new GenerationStub(surfaceCenterPos,(builder)->builder.addPiece(new Piece(context,surfaceCenterPos))));
     }
 
     @Override
@@ -70,8 +60,8 @@ public class CWGrave extends Structure {
     }
 
     public static class Piece extends CommonCWTemplatePiece {
-        public Piece(StructureTemplateManager templateManager, RandomSource random, BlockPos pos) {
-            super(ExtraStructurePieceType.CW$GRAVE, templateManager, random, pos, ListAndMapHelper.multiListGetElement(new Random(random.nextLong()),SMALL_GRAVE,SMALL_GRAVE,LARGE_GRAVE));
+        public Piece(GenerationContext context, BlockPos pos) {
+            super(ExtraStructurePieceType.CW$GRAVE, context, pos, ListAndMapHelper.joinList(SMALL_GRAVE,SMALL_GRAVE,LARGE_GRAVE),true,-2);
         }
 
         public Piece(StructureTemplateManager manager, CompoundTag tag) {

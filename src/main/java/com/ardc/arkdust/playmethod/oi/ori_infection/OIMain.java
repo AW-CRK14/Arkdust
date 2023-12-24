@@ -1,28 +1,26 @@
 package com.ardc.arkdust.playmethod.oi.ori_infection;
 
-import net.minecraft.entity.player.PlayerEntity;
-
 public class OIMain {
-    public static class WorldOI {
-        public boolean ifWorldOIRun(net.minecraft.world.World worldIn){//检测世界OI是否启用
-            if(!worldIn.isClientSide()){
-                WorldOIData data = WorldOIData.get(worldIn);
-                return data.getWorldOIState();
-            }
-            return false;
-        }
-
-        public double getWholeOIDataHere(net.minecraft.world.World worldIn, double x, double y, double z, PlayerEntity player){//获取此玩家所在位置的感染总值
-            if(!worldIn.isClientSide()){
-                WorldOIData data = WorldOIData.get(worldIn);
-                return data.getEnvironmentOILevel(x, y, z);
-            }
-            return 0;
-        }
-
-        public double getWholeOIDataHere(net.minecraft.world.World worldIn, PlayerEntity player){
-            return getWholeOIDataHere(worldIn,player.getX(),player.getY(),player.getZ(),player);
-        }
+//    public static class WorldOI {
+//        public boolean ifWorldOIRun(net.minecraft.world.World worldIn){//检测世界OI是否启用
+//            if(!worldIn.isClientSide()){
+//                WorldOIData data = WorldOIData.get(worldIn);
+//                return data.getWorldOIState();
+//            }
+//            return false;
+//        }
+//
+//        public double getWholeOIDataHere(net.minecraft.world.World worldIn, double x, double y, double z, PlayerEntity player){//获取此玩家所在位置的感染总值
+//            if(!worldIn.isClientSide()){
+//                WorldOIData data = WorldOIData.get(worldIn);
+//                return data.getEnvironmentOILevel(x, y, z);
+//            }
+//            return 0;
+//        }
+//
+//        public double getWholeOIDataHere(net.minecraft.world.World worldIn, PlayerEntity player){
+//            return getWholeOIDataHere(worldIn,player.getX(),player.getY(),player.getZ(),player);
+//        }
     }
 
 //        public int getBoundary(int level,int state){
@@ -42,4 +40,4 @@ public class OIMain {
 //                    return 0;
 //            }
 //        }
-}
+//}

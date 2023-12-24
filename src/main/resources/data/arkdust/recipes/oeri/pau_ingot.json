@@ -1,0 +1,14 @@
+{
+  "type": "arkdust:oeri",
+  "time": 60,
+  "energy_cost": 4,
+  "inputs": [
+    {"item": "minecraft:gold_ingot"},
+    {"item": "minecraft:gold_ingot"},
+    {"item": "minecraft:redstone"},
+    {"item": "arkdust:originium_dust"}
+  ],
+  "output": {
+    "item": "arkdust:pau_ingot"
+  }
+}

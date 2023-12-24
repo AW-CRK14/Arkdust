@@ -4,6 +4,7 @@ import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.model.block.BlackstoneMedicalPointRenderer;
 import com.ardc.arkdust.model.block.BlueprintReduceBoxRenderer;
 import com.ardc.arkdust.model.block.HangScreenedTableRenderer;
+import com.ardc.arkdust.registry.item.Item$CommonWorld;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +19,7 @@ public class ClientSetupRegistry {
     public static void setup(FMLClientSetupEvent event){
         event.enqueueWork(()->{
             //物品材质变化
-            ItemProperties.register(ItemRegistry.ender_energy_radar.get(),new ResourceLocation(Utils.MOD_ID,"damage"),(itemStack, level, livingEntity,num)->itemStack.getDamageValue());
+            ItemProperties.register(Item$CommonWorld.ender_energy_radar.get(),new ResourceLocation(Utils.MOD_ID,"damage"),(itemStack, level, livingEntity, num)->itemStack.getDamageValue());
 
             //方块实体额外渲染器
             BlockEntityRenderers.register(TileEntityTypeRegistry.SCREENED_TABLE_BE.get(), HangScreenedTableRenderer::new);

@@ -1,7 +1,6 @@
 package com.ardc.arkdust.gui.screen.menu;
 
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.capability.health_system.HealthSystemCapability;
 import com.ardc.arkdust.capability.rdi_auth.RDIAccountAuthCapability;
 import com.ardc.arkdust.capability.rdi_depot.RDIDepotCapability;
 import com.ardc.arkdust.gui.ArdMainInfoScreen;
@@ -38,9 +37,10 @@ public class MenuScreen extends ArdMainInfoScreen {
                     stack.blit(new ResourceLocation(Utils.MOD_ID,"textures/gui/info/material/health_card_add.png"),fx-3,fy,0,0,(int)(ay*0.375F),ay,(int)(ay*0.375F),ay);
                     drawHealthLine(stack, fx + 30, fy + 3, ax - 35, 16, (int)entity.getHealth(), (int)entity.getMaxHealth(), 0xFF0000, 5);
 
-                    entity.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)->
-                            drawHealthLine(stack, fx + 30, fy + 47, ax - 35, 16,i.ORI$getPoint(), HealthSystemCapability.ORI$level2Point(i.ORI$getRLevel()), 0xA51412, 14)
-                    );
+                    entity.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)->{
+                        Pair<Integer, Integer> pair = i.ORI$point2Level();
+                        drawHealthLine(stack, fx + 30, fy + 47, ax - 35, 16,pair.second,pair.first*pair.first, 0xA51412, 14);//TODO orinfect system need to be overwrite
+                    });
                     entity.getCapability(CapabilityRegistry.RDI_ACCOUNT_AUTH_CAPABILITY).ifPresent((i)->{
                         drawHealthLine(stack,fx+30,fy+69,ax-35,16,i.getSanity(),i.getMaxSanity(),0x6CC9BA,9);
                         Pair<Integer,Integer> p = i.AExp$getFlowAndLevel();

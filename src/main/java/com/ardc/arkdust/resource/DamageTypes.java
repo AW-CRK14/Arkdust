@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageEffects;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 public class DamageTypes {
@@ -24,7 +25,7 @@ public class DamageTypes {
         return access.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(typesResourceKey);
     }
 
-    public static Holder<DamageType> createDamageSource(Player player, ResourceKey<DamageType> typesResourceKey){
+    public static Holder<DamageType> createDamageSource(Entity player, ResourceKey<DamageType> typesResourceKey){
         return player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(typesResourceKey);
     }
 

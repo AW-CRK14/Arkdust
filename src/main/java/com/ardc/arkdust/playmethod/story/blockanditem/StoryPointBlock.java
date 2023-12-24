@@ -1,5 +1,6 @@
 package com.ardc.arkdust.playmethod.story.blockanditem;
 
+import com.ardc.arkdust.capability.story.StorySaveCapability;
 import com.ardc.arkdust.preobject.PreBlock;
 import com.ardc.arkdust.registry.CapabilityRegistry;
 import com.ardc.arkdust.registry.ItemRegistry;
@@ -42,7 +43,7 @@ public class StoryPointBlock extends PreBlock implements EntityBlock {
 //            System.out.println("StoryPointTest:" + ((StoryPointBE) blockEntity).dataToNBT().toString());
             if(!world.isClientSide()){
                 if(blockEntity.checkBagMode()) {
-                    LazyOptional<IStorySaveCapability> cap = playerEntity.getCapability(CapabilityRegistry.STORY_CAPABILITY);
+                    LazyOptional<StorySaveCapability> cap = playerEntity.getCapability(CapabilityRegistry.STORY_CAPABILITY);
                     cap.ifPresent((i) -> {
                         if(i.contains(blockEntity.bag, blockEntity.stage) || i.add(blockEntity.bag,blockEntity.stage,playerEntity)) {
                             playerEntity.displayClientMessage(blockEntity.getTitleContext(blockEntity.stage), false);

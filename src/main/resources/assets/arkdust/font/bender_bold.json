@@ -1,0 +1,10 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "arkdust:bender_bold.otf",
+      "size": 6,
+      "oversample": 25
+    }
+  ]
+}

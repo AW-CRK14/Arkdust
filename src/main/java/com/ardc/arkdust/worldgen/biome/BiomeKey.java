@@ -9,13 +9,13 @@ import net.minecraftforge.common.BiomeManager;
 
 public class BiomeKey {
 
-    public static final ResourceKey<Biome> CW$FAULT_LINE = register("cw/fault_line");
+    public static final ResourceKey<Biome> CW$FAULT_LINE = register("fault_line");
 
     private static ResourceKey<Biome> register(String name) {
         return ResourceKey.create(Registries.BIOME, new ResourceLocation(Utils.MOD_ID,name));
     }
 
-    public static void generateBiome(){
+    public static void bootstrap(){
         BiomeManager.addBiome(BiomeManager.BiomeType.DESERT,new BiomeManager.BiomeEntry(CW$FAULT_LINE, 18));
     }
 }

@@ -1,0 +1,10 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "arkdust:msyh.ttf",
+      "size": 6,
+      "oversample": 25
+    }
+  ]
+}

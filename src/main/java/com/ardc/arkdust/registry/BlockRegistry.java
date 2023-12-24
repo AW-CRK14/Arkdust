@@ -12,7 +12,6 @@ import com.ardc.arkdust.blockstate.DropSelfBlock;
 import com.ardc.arkdust.blockstate.DropSelfWhenSilkTouchBlock;
 import com.ardc.arkdust.blockstate.FaceCullingWhenSameBlock;
 import com.ardc.arkdust.blockstate.ThreeAxisBlock;
-import com.ardc.arkdust.enums.TechMaterial;
 import com.ardc.arkdust.model.modelblock.LifeBlockModel;
 import com.ardc.arkdust.playmethod.oi.OIItem.PreOIBlock;
 import com.ardc.arkdust.playmethod.story.blockanditem.StoryPointBlock;
@@ -79,8 +78,8 @@ public class BlockRegistry {
     public static final RegistryObject<Block> basic_blueprint_reduce_box = BLOCKS.register("basic_blueprint_reduce_box", CWorldBlueprintReduceBox::new);
     public static final RegistryObject<Block> stone_oak_log = BLOCKS.register("stone_oak_log", ()->new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(2.5F)));
     public static final RegistryObject<Block> stone_oak_wood = BLOCKS.register("stone_oak_wood", ()->new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(2.5F)));
-    public static final RegistryObject<Block> stone_oak_plank = BLOCKS.register("stone_oak_plank", ()->new PreBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(2.5F)));
-    public static final RegistryObject<Block> fractured_oak_log = BLOCKS.register("fractured_oak_log", ()->new FracturedOakLog(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(2.0F).noOcclusion(),true));
+    public static final RegistryObject<Block> stone_oak_plank = BLOCKS.register("stone_oak_plank", ()->new PreBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2.5F)));
+    public static final RegistryObject<Block> fractured_oak_log = BLOCKS.register("fractured_oak_log", ()->new FracturedOakLog(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2.0F).noOcclusion(),true));
     public static final RegistryObject<Block> mycelium_pile = BLOCKS.register("mycelium_pile", ()->new BoardShapeBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL).instabreak().noCollission()));
     public static final RegistryObject<Block> se_rcu_machine = BLOCKS.register("se_rcu_machine", SeRcuMachine::new);
 
@@ -90,7 +89,7 @@ public class BlockRegistry {
 //    public static final RegistryObject<Block> e_oir_reactor_control_board = BLOCKS.register("e_oir_reactor_control_board", EOirReactorControlBoard::new);//E类源石反应堆控制方块
 
     //泰拉工业
-    public static final RegistryObject<Block> iron_structure_frame = BLOCKS.register("iron_structure_frame",()->new StructureFrameBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(5,40).noOcclusion().requiresCorrectToolForDrops().lightLevel((i)->6), TechMaterial.C_IRON));
+    public static final RegistryObject<Block> iron_structure_frame = BLOCKS.register("iron_structure_frame",()->new StructureFrameBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(5,40).noOcclusion().requiresCorrectToolForDrops().lightLevel((i)->6)));
     public static final RegistryObject<Block> iron_structure_frame_creator = BLOCKS.register("iron_structure_frame_creator", IronSfblockCreator::new);
 
     //特殊方块

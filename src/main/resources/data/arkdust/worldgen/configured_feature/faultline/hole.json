@@ -1,0 +1,13 @@
+{
+  "type": "arkdust:abs/list_nbt_feature",
+  "config": {
+    "cen": true,
+    "cpt": 1.0,
+    "head": "arkdust:biomefeature/faultline/hole_",
+    "id": [
+      "0",
+      "1",
+      "2"
+    ]
+  }
+}

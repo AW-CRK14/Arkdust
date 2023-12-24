@@ -1,6 +1,6 @@
 package com.ardc.arkdust.blocks.cworld;
 
-import com.ardc.arkdust.block_entity.SeRcuMachineBE;
+import com.ardc.arkdust.block_entity.OERIMachineBE;
 import com.ardc.arkdust.preobject.PreBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,14 +22,15 @@ public class SeRcuMachine extends PreBlock implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult) {
         if(!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
-            NetworkHooks.openScreen((ServerPlayer) player, (SeRcuMachineBE)world.getBlockEntity(pos),(buffer)->buffer.writeBlockPos(pos));
+            NetworkHooks.openScreen((ServerPlayer) player, (OERIMachineBE)world.getBlockEntity(pos),(buffer)->buffer.writeBlockPos(pos));
         }
+//        world.getBlockEntity(pos).setChanged();
         return InteractionResult.SUCCESS;
     }
 
     @org.jetbrains.annotations.Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new SeRcuMachineBE(pos,state);
+        return new OERIMachineBE(pos,state);
     }
 }

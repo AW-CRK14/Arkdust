@@ -1,0 +1,7 @@
+{
+  "type": "arkdust:cw/gravelly_wasteland_mineshaft",
+  "biomes": "#arkdust:allow_gravel_wasteland_mineshaft_gen",
+  "spawn_overrides": {},
+  "step": "underground_structures",
+  "terrain_adaptation": "beard_box"
+}

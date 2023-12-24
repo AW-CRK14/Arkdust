@@ -1,0 +1,33 @@
+{
+  "feature": "arkdust:faultline/ore_pua",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 5,
+          "min_inclusive": 2
+        }
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:trapezoid",
+        "max_inclusive": {
+          "absolute": 32
+        },
+        "min_inclusive": {
+          "absolute": 4
+        }
+      }
+    },
+    {
+      "type": "arkdust:surface_biome"
+    }
+  ]
+}

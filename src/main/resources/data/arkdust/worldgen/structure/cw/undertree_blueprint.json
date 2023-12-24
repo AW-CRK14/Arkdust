@@ -1,0 +1,6 @@
+{
+  "type": "arkdust:cw/undertree_blueprint",
+  "biomes": "#arkdust:is_land",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "frequency": 0.7,
+    "salt": 23847287,
+    "separation": 10,
+    "spacing": 35
+  },
+  "structures": [
+    {
+      "structure": "arkdust:cw/undertree_blueprint",
+      "weight": 1
+    }
+  ]
+}

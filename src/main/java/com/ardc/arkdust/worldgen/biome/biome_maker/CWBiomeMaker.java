@@ -1,6 +1,7 @@
 package com.ardc.arkdust.worldgen.biome.biome_maker;
 
 import com.ardc.arkdust.registry.ParticleRegistry;
+import com.ardc.arkdust.registry.worldgen.PlacedFeatureRegistry;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
@@ -22,21 +23,21 @@ public class CWBiomeMaker{
 
 //        BiomeGenerationSettings.Builder generationSettingBuilder = (new BiomeGenerationSettings.Builder(f,c)).surfaceBuilder(SurfaceBuilderRegistry.CW$FAULT_LINE::get);
         BiomeGenerationSettings.Builder generationSettingBuilder = (new BiomeGenerationSettings.Builder(f,c));
-
-        BiomeDefaultFeatures.addDefaultCrystalFormations(generationSettingBuilder);
-        BiomeDefaultFeatures.addDefaultMonsterRoom(generationSettingBuilder);
-        BiomeDefaultFeatures.addDefaultUndergroundVariety(generationSettingBuilder);
-        BiomeDefaultFeatures.addDefaultSprings(generationSettingBuilder);
 //        generationSettingBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_STRUCTURES, BuiltinStructures.MINESHAFT);
 //        generationSettingBuilder.addStructureStart(StructureFeatures.RUINED_PORTAL_STANDARD);
         OverworldBiomes.globalOverworldGeneration(generationSettingBuilder);
-        BiomeDefaultFeatures.addDefaultUndergroundVariety(generationSettingBuilder);
+//        BiomeDefaultFeatures.addDefaultUndergroundVariety(generationSettingBuilder);
         BiomeDefaultFeatures.addDefaultOres(generationSettingBuilder);
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettingBuilder);
+        BiomeDefaultFeatures.addBadlandsTrees(generationSettingBuilder);
         BiomeDefaultFeatures.addDefaultMushrooms(generationSettingBuilder);
         BiomeDefaultFeatures.addBadlandExtraVegetation(generationSettingBuilder);
-        generationSettingBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, MiscOverworldPlacements.SPRING_LAVA);
-        BiomeDefaultFeatures.addBadlandsTrees(generationSettingBuilder);
+        generationSettingBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PlacedFeatureRegistry.FAULTLINE$ORE_PUA);
+        generationSettingBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureRegistry.FAULTLINE$HOLE);
+        generationSettingBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureRegistry.FAULTLINE$RUIN);
+        generationSettingBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureRegistry.FAULTLINE$STONE_OAK_TREE);
+        generationSettingBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureRegistry.OVERWORLD_ORE_PILE);
+        generationSettingBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureRegistry.FAULTLINE$MYCELIUM_PILE);
 //        BiomeDefaultFeatures.addDefaultCarvers(generationSettingBuilder);
 
         return (new Biome.BiomeBuilder()).hasPrecipitation(false).temperature(1.7F).downfall(0.1F)

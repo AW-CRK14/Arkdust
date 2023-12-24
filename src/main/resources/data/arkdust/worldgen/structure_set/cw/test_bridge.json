@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 8246613,
+    "separation": 20,
+    "frequency": 0.7,
+    "spacing": 45
+  },
+  "structures": [
+    {
+      "structure": "arkdust:cw/test_bridge",
+      "weight": 1
+    }
+  ]
+}

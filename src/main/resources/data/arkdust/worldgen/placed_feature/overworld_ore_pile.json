@@ -1,0 +1,26 @@
+{
+  "feature": "arkdust:overworld_ore_pile",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 72
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "OCEAN_FLOOR_WG"
+    },
+    {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "blocks": "minecraft:stone"
+      }
+    }
+  ]
+}

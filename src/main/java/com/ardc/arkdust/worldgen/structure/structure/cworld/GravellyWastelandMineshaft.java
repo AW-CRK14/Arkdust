@@ -1,9 +1,10 @@
 package com.ardc.arkdust.worldgen.structure.structure.cworld;
 
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.advanced_obj.AATemJigsawPiece;
+import com.ardc.arkdust.worldgen.structure.preobj.AATemJigsawPiece;
 import com.ardc.arkdust.helper.ListAndMapHelper;
 import com.ardc.arkdust.helper.PosHelper;
+import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.helper.TagHelper;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.resource.LootTable;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -49,9 +51,7 @@ public class GravellyWastelandMineshaft extends Structure {
 
     @Override
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-
-        BlockPos center = PosHelper.randomSkew(context,12).above(context.random().nextInt(-16,32));
-
+        BlockPos center = context.chunkPos().getMiddleBlockPosition(8+context.random().nextInt(-32,32));
         return Optional.of(new GenerationStub(center,(builder)->AATemJigsawPiece.iterateAATemJigsawPiece(builder,
                 new Piece(context.structureTemplateManager(),new ResourceLocation(Utils.MOD_ID,"cworld/wasteland_mineshaft/center"),center, Rotation.getRandom(context.random()),8),
                 context.structureTemplateManager())));
@@ -61,36 +61,6 @@ public class GravellyWastelandMineshaft extends Structure {
     public StructureType<?> type() {
         return CW$GRAVELLY_WASTELAND_MINESHAFT;
     }
-
-
-//    public static class Start extends AAStructureStart {
-//
-//        public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ, MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
-//            super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
-//        }
-//
-//        @Override
-//        public void addChildren(TemplateManager templateManagerIn, List<StructurePiece> pieces, SharedSeedRandom random, BlockPos centerPos) {
-//            Piece piece = new Piece(templateManagerIn,new ResourceLocation(Utils.MOD_ID,"cworld/wasteland_mineshaft/center"),centerPos, Rotation.getRandom(random),8);
-//            iterateAATemJigsawPiece(piece,templateManagerIn);
-//            piece.clearMap();
-//        }
-//
-//        @Override
-//        public BlockPos getCenterPos(int x, int z, int landHeight) {
-//            return new BlockPos(x,20,z);
-//        }
-//
-//        @Override
-//        public int yRemove() {
-//            return 10;
-//        }
-//
-//        @Override
-//        public boolean shouldMoveToCenter() {
-//            return false;
-//        }
-//    }
 
     public static class Piece extends AATemJigsawPiece {
         public static Map<String,List<ResourceLocation>> randomPart = new HashMap<>();
@@ -129,7 +99,7 @@ public class GravellyWastelandMineshaft extends Structure {
 //            boolean b = key2ElementMap.get("minecraft:pipeline").contains(this.templateLocation) || !jigsawInfo.nbt.getString("target").equals("minecraft:pipeline") || PosHelper.posToRandom(defaultSpawnPos).nextInt(2)==0;
 //            boolean b = !jigsawInfo.nbt.getString("target").equals("minecraft:pipeline");
 //            Utils.LOGGER.info("info:{RL:" + resourceLocation.toString() + ",generateFrom:" + this.generateFromKey + ",b:" + b + "}");
-            if(!this.generateFromKey.equals("minecraft:pipeline") && jigsawInfo.nbt().getString("target").equals("minecraft:pipeline") && PosHelper.posAdd(connectPos)%3==0){
+            if(!this.generateFromKey.equals("minecraft:pipeline") && jigsawInfo.nbt().getString("target").equals("minecraft:pipeline") && PosHelper.posAdd(connectPos)%3==0){//我也看不懂这是什么 但是没有bug 所以不管
                 return Pair.of(Collections.EMPTY_LIST,false);
 //                return resourceLocation.getPath().equals("cworld/wasteland_mineshaft/shaft_2") ? Pair.of(Collections.singletonList(this.createPiece().create(manager,new ResourceLocation(Utils.MOD_ID,"cworld/wasteland_mineshaft/shaft_" + (connectPos.getY() >= 120 ? "top" : "2")),defaultSpawnPos,defaultRotation,PosHelper.posToRandom(connectPos),jigsawInfo.pos,3,connectPos,key2ElementMap,boundingBoxMap,jigsawInfo.nbt.getString("name"))),true) : null;
             }

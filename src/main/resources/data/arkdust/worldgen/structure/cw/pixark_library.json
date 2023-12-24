@@ -1,0 +1,6 @@
+{
+  "type": "arkdust:cw/pixark_library",
+  "biomes": "#arkdust:is_land",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

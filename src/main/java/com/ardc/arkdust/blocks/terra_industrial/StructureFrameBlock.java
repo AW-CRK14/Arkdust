@@ -1,6 +1,5 @@
 package com.ardc.arkdust.blocks.terra_industrial;
 
-import com.ardc.arkdust.enums.TechMaterial;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -35,9 +34,13 @@ public class StructureFrameBlock extends IndustrialBlock implements SimpleWaterl
         shape = Shapes.join(shape1 , Block.box(3,3,0,13,13,16), BooleanOp.ONLY_FIRST);
     }
 
-    public StructureFrameBlock(Properties properties,TechMaterial material) {
-        super(properties,material);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false));
+//    public StructureFrameBlock(Properties properties,TechMaterial material) {
+//        super(properties,material);
+//        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED,false));
+//    }
+
+    public StructureFrameBlock(Properties properties) {
+        super(properties);
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -15,23 +16,23 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class StructureHelper {
 
+    @Deprecated
     public static boolean checkPosNoWater(Structure.GenerationContext context, BlockPos pos){
         int yWorld = context.chunkGenerator().getBaseHeight(pos.getX(),pos.getZ(), Heightmap.Types.WORLD_SURFACE_WG,context.heightAccessor(),context.randomState());
         return context.chunkGenerator().getBaseColumn(pos.getX(), pos.getZ(),context.heightAccessor(),context.randomState()).getBlock(yWorld-1).getFluidState().isEmpty();
     }
+    @Deprecated
     public static StructurePiece setRotation(List<StructurePiece> list, int num, Direction direction) {
         StructurePiece piece = list.get(num);
         piece.setOrientation(direction);
         return piece;
     }
-
+    @Deprecated
     public static BlockPos getEndPos(BoundingBox box, BlockPos beginPos) {
         int x = beginPos.getX();
         int z = beginPos.getZ();
@@ -44,7 +45,7 @@ public class StructureHelper {
         BlockPos boxCenter = box.getCenter();
         pieceList.forEach((p)->p.move(centerPos.getX()-boxCenter.getX(),0,centerPos.getZ()-boxCenter.getZ()));
     }
-
+    @Deprecated
     public static boolean isEachPlaceAvailable(ChunkGenerator chunkGenerator, Heightmap.Types type, int allowHeightScope, @Nonnull List<BlockPos> pos, LevelHeightAccessor accessor, RandomState randomState) {
         if (pos.size() == 0) return false;
         boolean heightTestFlag = allowHeightScope >= 0;//是否启用高度限制
@@ -76,6 +77,7 @@ public class StructureHelper {
         return true;
     }
 
+    @Deprecated
     public static boolean isEachPlaceWater(ChunkGenerator chunkGenerator, @Nonnull List<BlockPos> posList, LevelHeightAccessor accessor, RandomState randomState){
         for (BlockPos pos : posList){
             int height = chunkGenerator.getBaseHeight(pos.getX(), pos.getZ(), Heightmap.Types.WORLD_SURFACE_WG,accessor,randomState);
@@ -158,5 +160,20 @@ public class StructureHelper {
                 return VARIATION_STRUCTURE[r.nextInt(VARIATION_STRUCTURE.length)];
             }
         }
+    }
+
+    public static BlockPos withPosAtChunkCenter(Structure.GenerationContext context,Heightmap.Types type){
+        ChunkPos chunkpos = context.chunkPos();
+        int i = chunkpos.getMiddleBlockX();
+        int j = chunkpos.getMiddleBlockZ();
+        int k = context.chunkGenerator().getFirstOccupiedHeight(i, j, type, context.heightAccessor(), context.randomState());
+        return new BlockPos(i,k,j);
+    }
+
+    public static void forEachVer(BoundingBox box, Consumer<BlockPos> posConsumer){
+        posConsumer.accept(new BlockPos(box.minX(),box.minY(),box.minZ()));
+        posConsumer.accept(new BlockPos(box.maxX(),box.minY(),box.minZ()));
+        posConsumer.accept(new BlockPos(box.minX(),box.minY(),box.maxZ()));
+        posConsumer.accept(new BlockPos(box.maxX(),box.minY(),box.maxZ()));
     }
 }

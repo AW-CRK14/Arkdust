@@ -1,5 +1,8 @@
 package com.ardc.arkdust.enums;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum BlueprintTypeEnum {
     NULL(BlueprintValueEnum.COMMON),
     ARMOR(BlueprintValueEnum.TREASURE),
@@ -51,6 +54,7 @@ public enum BlueprintTypeEnum {
     OBJ(BlueprintValueEnum.RARE);
 
     public final BlueprintValueEnum maxValue;
+    public static final List<BlueprintTypeEnum> positiveValue = Arrays.stream(values()).skip(1).toList();
     BlueprintTypeEnum(BlueprintValueEnum max){
         this.maxValue = max;
     }

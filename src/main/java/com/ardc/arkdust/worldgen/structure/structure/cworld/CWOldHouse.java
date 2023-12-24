@@ -5,6 +5,7 @@ import com.ardc.arkdust.helper.PosHelper;
 import com.ardc.arkdust.helper.StructureHelper;
 import com.ardc.arkdust.resource.LootTable;
 import com.ardc.arkdust.worldgen.structure.ExtraStructurePieceType;
+import com.ardc.arkdust.worldgen.structure.preobj.AboveWaterStructure;
 import com.ardc.arkdust.worldgen.structure.preobj.CommonCWTemplatePiece;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -26,7 +27,7 @@ import java.util.Optional;
 
 import static com.ardc.arkdust.worldgen.structure.ExtraStructureType.CW$OLD_HOUSE;
 
-public class CWOldHouse extends Structure {
+public class CWOldHouse extends AboveWaterStructure {
 
     public static final StructureHelper.StructureAndVariation H0 = new StructureHelper.StructureAndVariation(new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_0"),0.2F,new ResourceLocation[]{new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_1"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_2"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_3"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_1_4")});
     public static final StructureHelper.StructureAndVariation H1 = new StructureHelper.StructureAndVariation(new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_0"),0.2F,new ResourceLocation[]{new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_1"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_2"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_3"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_4"),new ResourceLocation(Utils.MOD_ID,"cworld/old_house/old_house_2_5")});
@@ -38,19 +39,8 @@ public class CWOldHouse extends Structure {
         super(settings);
     }
 
-    @Override
-    public GenerationStep.Decoration step() {//与生成的位置有关，大概。
-        return GenerationStep.Decoration.SURFACE_STRUCTURES;
-    }
-
-    @Override
-    protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-
-        BlockPos center = PosHelper.randomSkew(context,12);
-        Holder<Biome> biome = context.biomeSource().getNoiseBiome(QuartPos.fromBlock(center.getX()), QuartPos.fromBlock(center.getY()), QuartPos.fromBlock(center.getZ()), context.randomState().sampler());
-        if(StructureHelper.isEachPlaceAvailable(context.chunkGenerator(), Heightmap.Types.WORLD_SURFACE_WG,3, PosHelper.getCenterAndSquareVertexPos(center,6,false,true),context.heightAccessor(),context.randomState()))
-            return Optional.of(new GenerationStub(center,(builder)->builder.addPiece(new Piece(context.structureTemplateManager(),context.random(),center))));
-        return Optional.empty();
+    public Optional<GenerationStub> ifAboveWater(GenerationContext context, BlockPos surfaceCenterPos) {
+        return Optional.of(new GenerationStub(surfaceCenterPos,(builder)->builder.addPiece(new Piece(context,surfaceCenterPos))));
     }
 
     @Override
@@ -69,8 +59,8 @@ public class CWOldHouse extends Structure {
 //        private final LazyValue<BlockIgnoreStructureProcessor> STRUCTURE_BLOCK_AND_ARD_IGNBLOCK = new LazyValue<>(()->new BlockIgnoreStructureProcessor(ImmutableList.of(Blocks.STRUCTURE_BLOCK, BlockRegistry.structure_ignore_block.get()))) ;
 
 
-        public Piece(StructureTemplateManager templateManager, RandomSource random, BlockPos pos) {
-            super(ExtraStructurePieceType.CW$OLD_HOUSE, templateManager, random, pos,randomLocation(random));
+        public Piece(GenerationContext context, BlockPos pos) {
+            super(ExtraStructurePieceType.CW$OLD_HOUSE, context, pos,randomLocation(context.random()),true,-3);
         }
 
         public Piece(StructureTemplateManager manager, CompoundTag tag) {

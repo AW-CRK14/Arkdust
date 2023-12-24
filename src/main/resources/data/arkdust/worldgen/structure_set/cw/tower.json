@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 32846237,
+    "separation": 8,
+    "frequency": 0.7,
+    "spacing": 25
+  },
+  "structures": [
+    {
+      "structure": "arkdust:cw/tower",
+      "weight": 1
+    }
+  ]
+}

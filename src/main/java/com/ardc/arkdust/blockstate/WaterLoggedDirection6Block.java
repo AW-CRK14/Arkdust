@@ -1,19 +1,19 @@
 package com.ardc.arkdust.blockstate;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
-public class WaterLoggedDirection6Block extends Direction6Block implements IWaterLoggable {
+public class WaterLoggedDirection6Block extends Direction6Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public WaterLoggedDirection6Block(Properties properties, boolean drop) {
@@ -21,12 +21,12 @@ public class WaterLoggedDirection6Block extends Direction6Block implements IWate
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder){
-        builder.add(WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder){
         super.createBlockStateDefinition(builder);
+        builder.add(WATERLOGGED);
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext context){
+    public BlockState getStateForPlacement(BlockPlaceContext context){
 //        super.getStateForPlacement(context);
         BlockPos pos = context.getClickedPos();
         BlockState state = super.getStateForPlacement(context);
@@ -39,10 +39,10 @@ public class WaterLoggedDirection6Block extends Direction6Block implements IWate
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos){
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos pos, BlockPos facingPos){
 //        super.updateShape(state,facing,facingState,world,pos,facingPos);
         if(state.getValue(WATERLOGGED)){
-            world.getLiquidTicks().scheduleTick(pos,Fluids.WATER,Fluids.WATER.getTickDelay(world));
+            world.scheduleTick(pos,Fluids.WATER,Fluids.WATER.getTickDelay(world));
         }
         return super.updateShape(state,facing,facingState,world,pos,facingPos);
     }

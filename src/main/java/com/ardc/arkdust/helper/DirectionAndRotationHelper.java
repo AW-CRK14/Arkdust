@@ -97,7 +97,7 @@ public class DirectionAndRotationHelper {
             case CLOCKWISE_90 -> Direction.EAST;
             case CLOCKWISE_180 -> Direction.SOUTH;
             case COUNTERCLOCKWISE_90 -> Direction.WEST;
-            case NONE, default -> Direction.NORTH;
+            case NONE -> Direction.NORTH;
         };
     }
 

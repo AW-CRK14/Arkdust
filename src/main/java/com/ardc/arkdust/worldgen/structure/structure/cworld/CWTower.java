@@ -8,6 +8,7 @@ import com.ardc.arkdust.resource.LootTable;
 import com.ardc.arkdust.resource.Tag;
 import com.ardc.arkdust.worldgen.structure.ExtraStructurePieceType;
 import com.ardc.arkdust.worldgen.structure.ExtraStructureType;
+import com.ardc.arkdust.worldgen.structure.preobj.AboveWaterStructure;
 import com.ardc.arkdust.worldgen.structure.preobj.CommonCWTemplatePiece;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 import java.util.Optional;
 
-public class CWTower extends Structure {
+public class CWTower extends AboveWaterStructure {
     public static final Codec<CWTower> CODEC = simpleCodec(CWTower::new);
 
     public static final ResourceLocation T1 = new ResourceLocation(Utils.MOD_ID,"cworld/tower/tower_1_0");
@@ -48,15 +49,8 @@ public class CWTower extends Structure {
     }
 
     @Override
-    protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-
-        BlockPos center = PosHelper.randomSkew(context,12);
-
-        if(StructureHelper.isEachPlaceAvailable(context.chunkGenerator(), Heightmap.Types.WORLD_SURFACE_WG,3, PosHelper.getCenterAndSquareVertexPos(center,4,false,true),context.heightAccessor(),context.randomState()))
-            return Optional.of(new GenerationStub(center.below(2),(builder)->builder.addPiece(new Piece(context.structureTemplateManager(),context.random(),center.below(2)))));
-        return Optional.empty();
-
-//        TemplateStructurePiece piece =
+    public Optional<GenerationStub> ifAboveWater(GenerationContext context, BlockPos surfaceCenterPos) {
+        return Optional.of(new GenerationStub(surfaceCenterPos,(builder)-> builder.addPiece(new Piece(context,surfaceCenterPos))));
     }
 
 
@@ -72,8 +66,8 @@ public class CWTower extends Structure {
 
     public static class Piece extends CommonCWTemplatePiece {
 
-        public Piece(StructureTemplateManager templateManager, RandomSource random, BlockPos pos) {
-            super(ExtraStructurePieceType.CW$TOWER, templateManager, random, pos,randomLocation(random));
+        public Piece(GenerationContext context, BlockPos pos) {
+            super(ExtraStructurePieceType.CW$TOWER, context, pos,randomLocation(context.random()),true,-3);
         }
 
         public Piece(StructureTemplateManager manager, CompoundTag tag) {

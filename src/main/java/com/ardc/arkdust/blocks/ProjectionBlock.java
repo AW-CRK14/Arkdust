@@ -1,23 +1,19 @@
 package com.ardc.arkdust.blocks;
 
-import com.ardc.arkdust.blockstate.DropSelfBlock;
 import com.ardc.arkdust.registry.BlockRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
-public class ProjectionBlock extends DropSelfBlock {
+@Deprecated
+public class ProjectionBlock{
     public static final List<Block> NOT_ALLOWED = Arrays.asList(Blocks.BROWN_MUSHROOM_BLOCK,Blocks.RED_MUSHROOM_BLOCK,Blocks.MUSHROOM_STEM,Blocks.COMPOSTER, BlockRegistry.blackstone_lamp.get());
-    public ProjectionBlock(){
-        super(Properties.of(Material.STONE).strength(5,40).harvestLevel(3).harvestTool(ToolType.PICKAXE).noCollission());
-    }
+//    public ProjectionBlock(){
+//        super(Properties.of(Material.STONE).strength(5,40).harvestLevel(3).harvestTool(ToolType.PICKAXE).noCollission());
+//        super(Properties.of(Material.STONE).strength(5,40).harvestLevel(3).harvestTool(ToolType.PICKAXE).noCollission());
+//    }
 
 //    public boolean hasTileEntity(BlockState state) {
 //        return true;
@@ -38,17 +34,17 @@ public class ProjectionBlock extends DropSelfBlock {
 //        return ActionResultType.PASS;
 //    }
 
-    public boolean protectByName(ItemStack itemStack){
-        if(itemStack == null) return false;
-        ResourceLocation rl = itemStack.getItem().getRegistryName();
-        if(rl ==null) return false;
-        String itemName = rl.toString();
-        String[] pattern = new String[]{"minecraft:.*","arkdust:.*"};
-        for(String s : pattern){
-            if(Pattern.matches(s,itemName)){
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean protectByName(ItemStack itemStack){
+//        if(itemStack == null) return false;
+//        ResourceLocation rl = itemStack.getItem().getRegistryName();
+//        if(rl ==null) return false;
+//        String itemName = rl.toString();
+//        String[] pattern = new String[]{"minecraft:.*","arkdust:.*"};
+//        for(String s : pattern){
+//            if(Pattern.matches(s,itemName)){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }

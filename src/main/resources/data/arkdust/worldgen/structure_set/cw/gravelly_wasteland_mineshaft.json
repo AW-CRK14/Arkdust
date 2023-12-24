@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 83868293,
+    "separation": 20,
+    "frequency": 0.7,
+    "spacing": 40
+  },
+  "structures": [
+    {
+      "structure": "arkdust:cw/gravelly_wasteland_mineshaft",
+      "weight": 1
+    }
+  ]
+}

@@ -2,18 +2,15 @@ package com.ardc.arkdust.network.blockentity;
 
 import com.ardc.arkdust.Utils;
 import com.ardc.arkdust.block_entity.BlueprintReduceBoxBE;
-import com.ardc.arkdust.registry.CapabilityRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.function.Supplier;
 
@@ -36,7 +33,7 @@ public class BlueprintReduceBoxNetwork {
         INSTANCE.messageBuilder(Pack.class,nextID())
                 .encoder(Pack::toBytes)
                 .decoder(Pack::new)
-                .consumer(Pack::handler)
+                .consumerMainThread(Pack::handler)
                 .add();
     }
 
@@ -46,28 +43,28 @@ public class BlueprintReduceBoxNetwork {
         private final int z;
         private final int count;
 
-        public Pack(BlockPos pos,int count){
+        public Pack(BlockPos pos, int count){
             this.x = pos.getX();
             this.y = pos.getY();
             this.z = pos.getZ();
             this.count = count;
         }
 
-        public Pack(PacketBuffer buffer){
+        public Pack(FriendlyByteBuf buffer){
             this.x = buffer.readInt();
             this.y = buffer.readInt();
             this.z = buffer.readInt();
             this.count = buffer.readInt();
         }
 
-        public void toBytes(PacketBuffer buffer){
+        public void toBytes(FriendlyByteBuf buffer){
             buffer.writeInt(x).writeInt(y).writeInt(z).writeInt(count);
         }
 
         public void handler(Supplier<NetworkEvent.Context> context){
             context.get().enqueueWork(()-> {
-                ClientWorld world = Minecraft.getInstance().level;
-                TileEntity entity = world.getBlockEntity(new BlockPos(x,y,z));
+                ClientLevel world = Minecraft.getInstance().level;
+                BlockEntity entity = world.getBlockEntity(new BlockPos(x,y,z));
                 if(entity instanceof BlueprintReduceBoxBE){
                     ((BlueprintReduceBoxBE) entity).setCount(count);
                 }

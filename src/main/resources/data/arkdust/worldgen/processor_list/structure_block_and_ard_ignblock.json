@@ -1,0 +1,7 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:wasteland_mineshaft_processor"
+    }
+  ]
+}

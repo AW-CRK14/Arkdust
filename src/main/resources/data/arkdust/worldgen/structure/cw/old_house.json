@@ -1,0 +1,6 @@
+{
+  "type": "arkdust:cw/old_house",
+  "biomes": "#arkdust:is_land",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

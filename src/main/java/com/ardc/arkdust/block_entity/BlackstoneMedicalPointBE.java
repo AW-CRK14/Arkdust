@@ -35,15 +35,14 @@ public class BlackstoneMedicalPointBE extends BlockEntity {
     }
 
     public void tick() {
-        if (!level.isClientSide() && level.getBlockState(worldPosition.below()).getBlock().equals(BlockRegistry.blackstone_medical_point.get())) {//前置判断 h
-            //创建治疗范围aabb盒
+        if (!level.isClientSide() && level.getBlockState(worldPosition.below()).getBlock().equals(BlockRegistry.blackstone_medical_point.get())) {
             AABB rangeAABB = new AABB(worldPosition.getX() - 5, worldPosition.getY() - 3, worldPosition.getZ() - 5, worldPosition.getX() + 5, worldPosition.getY() + 3, worldPosition.getZ() + 5);
             List<LivingEntity> entityList = level.getEntitiesOfClass(LivingEntity.class, rangeAABB);
-            for (LivingEntity entity : entityList) {//遍历实体
+            for (LivingEntity entity : entityList) {
                 if (entity.getType().is(Tag.LivingEntities.STRUCTURE$WASTELAND_MINESHAFT_DIRTY_CONCRETE) && entity.getHealth() != entity.getMaxHealth()) {
-                    entity.heal(3);//治疗实体
+                    entity.heal(3);
 //                            System.out.printf("%n  heal after:" + entity.getHealth());
-                    addHappyVillagerParticle(entity.getX(),entity.getY(),entity.getZ());//添加粒子
+                    addHappyVillagerParticle(entity.getX(),entity.getY(),entity.getZ());
                 }
             }
             setChanged();

@@ -101,7 +101,7 @@ public class Tag
 
         private static TagKey<Biome> tag(String name)
         {
-            return TagKey.create(Registries.BIOME, new ResourceLocation(Utils.MOD_ID,name));
+            return TagKey.create(Registries.BIOME, new ResourceLocation(Utils.MOD_ID, name));
         }
 
     }

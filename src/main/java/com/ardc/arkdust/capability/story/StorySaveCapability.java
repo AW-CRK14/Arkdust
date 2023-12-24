@@ -25,6 +25,8 @@ import java.util.stream.IntStream;
 
 @AutoRegisterCapability
 public class StorySaveCapability implements AbsCapabilityProvider.CommonEntityCap {
+
+    public StorySaveCapability(){}
     public void sendToClient(ServerPlayer entity) {
 //        RDIAccountAuthDataNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> entity), new Story(getAExp(),getAExp()));
 //        Utils.LOGGER.debug("[ArdNetwork-RDIAccount]Player#" + entity.getName().getString() + " send pack from server");

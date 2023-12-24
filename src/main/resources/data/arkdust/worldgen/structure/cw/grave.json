@@ -1,0 +1,6 @@
+{
+  "type": "arkdust:cw/grave",
+  "biomes": "#arkdust:is_land",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

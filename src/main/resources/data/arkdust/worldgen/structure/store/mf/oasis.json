@@ -1,0 +1,6 @@
+{
+  "type": "arkdust:cw/test_bridge",
+  "biomes": "#forge:is_desert",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

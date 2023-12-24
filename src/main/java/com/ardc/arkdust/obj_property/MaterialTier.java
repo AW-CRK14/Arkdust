@@ -1,13 +1,14 @@
 package com.ardc.arkdust.obj_property;
 
 import com.ardc.arkdust.registry.ItemRegistry;
+import com.ardc.arkdust.registry.item.Item$CommonWorld;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Supplier;
 
 public enum MaterialTier implements Tier {
-    PURE_GOLD(3,656,4.0F,7.0F,19,()-> Ingredient.of(ItemRegistry.pau_ingot.get()));
+    PURE_GOLD(3,656,4.0F,7.0F,19,()-> Ingredient.of(Item$CommonWorld.pau_ingot.get()));
 
     private final int level;
     private final int uses;

@@ -41,6 +41,7 @@ public class ArdMainInfoScreen extends Screen {
 
     public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks){
         super.render(ms,mouseX,mouseY,partialTicks);
+        doTick();
 //        this.renderBackground(ms);
 //        ms.blit(background,0,0,0,0,this.width,this.height,this.width,this.height);
 
@@ -64,7 +65,7 @@ public class ArdMainInfoScreen extends Screen {
         return false;
     }
 
-    public void tick() {
+    public void doTick() {
         super.tick();
         if(timer < 5)
             timer++;
@@ -82,7 +83,7 @@ public class ArdMainInfoScreen extends Screen {
         stack.pose().scale(scaleFactor,scaleFactor,scaleFactor);
         stack.setColor(1,1,1,0.2F*timer);
         RenderSystem.enableBlend();
-        stack.drawString(this.font,text.getVisualOrderText(),rx*restore,ry*restore,color16,!shadow);
+        stack.drawString(this.font,text.getVisualOrderText(),rx*restore,ry*restore,color16,shadow);
 //            this.font.drawInBatch(stack,text,rx*restore,ry*restore,color16);
         stack.pose().scale(restore,restore,restore);
     }
@@ -96,7 +97,7 @@ public class ArdMainInfoScreen extends Screen {
         stack.setColor(1,1,1,0.2F*timer);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
-        stack.drawString(this.font, ireorderingprocessor, (centerX - font.width(ireorderingprocessor) / 2F) *restore, centerY*restore, color16,!shadow);
+        stack.drawString(this.font, ireorderingprocessor, (centerX - font.width(ireorderingprocessor) / 2F) *restore, centerY*restore, color16,shadow);
         stack.pose().scale(restore,restore,restore);
     }
 

@@ -1,10 +1,5 @@
 package com.ardc.arkdust.worldgen.structure.preobj;
 
-import com.ardc.arkdust.advanced_obj.AATemJigsawPiece;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-
-import java.util.List;
-
 @Deprecated
 public abstract class AAStructureStart{
 //public abstract class AAStructureStart extends StructureStart<NoFeatureConfig> {

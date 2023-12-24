@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 39075237,
+    "separation": 40,
+    "spacing": 70
+  },
+  "structures": [
+    {
+      "structure": "arkdust:cw/pixark_library",
+      "weight": 1
+    }
+  ]
+}

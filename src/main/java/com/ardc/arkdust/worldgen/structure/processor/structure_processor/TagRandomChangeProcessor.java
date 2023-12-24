@@ -21,7 +21,7 @@ public class TagRandomChangeProcessor extends StructureProcessor {
     public static final Codec<TagRandomChangeProcessor> CODEC = RecordCodecBuilder.create((ins) -> ins.group(
             Codec.STRING.fieldOf("tag")         .forGetter((i)->i.tag.location().toString()),
             Codec.BOOL.fieldOf("ignore")        .forGetter((i)->i.ignore),
-            Codec.BOOL.fieldOf("air")           .forGetter((i)->i.changeAir),
+            Codec.BOOL.fieldOf("change_air")           .forGetter((i)->i.changeAir),
             Codec.FLOAT.fieldOf("air")          .forGetter((i)->i.chance),
             BlockState.CODEC.fieldOf("state")   .forGetter((i)->i.block.get())
     ).apply(ins, TagRandomChangeProcessor::new));

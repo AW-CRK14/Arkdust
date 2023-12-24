@@ -1,11 +1,11 @@
 package com.ardc.arkdust.playmethod.oi.OIItem;
 
-import com.ardc.arkdust.preobject.PreItem;
 import com.ardc.arkdust.playmethod.oi.ori_infection.IOIItem;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import com.ardc.arkdust.preobject.PreItem;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -28,7 +28,7 @@ public class PreOIItem extends PreItem implements IOIItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         list.add(infoAddOfOI());
         super.appendHoverText(itemstack, world, list, flag);
     }

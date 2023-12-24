@@ -3,11 +3,12 @@ package com.ardc.arkdust.blocks.orirock;
 import com.ardc.arkdust.playmethod.oi.OIItem.PreOIBlock;
 import com.ardc.arkdust.registry.BlockRegistry;
 import com.ardc.arkdust.resource.Tag;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
 
@@ -23,12 +24,12 @@ public class CreepOIBlock extends PreOIBlock {
         return get >= r.nextInt(32) + 1;
     }
 
-    private void autoSetBlock(World world, BlockPos pos, int randomInt){
+    private void autoSetBlock(Level world, BlockPos pos, int randomInt){
         BlockPos[] posList = new BlockPos[]{pos.above(),pos.below(),pos.north(),pos.east(),pos.south(),pos.west()};
         Random r = new Random();
         int count = r.nextInt(2);
         for(BlockPos posIn : posList) {
-            if (Tag.Blocks.ALLOW_ORIROCK_SPREAD.contains(world.getBlockState(posIn).getBlock())) {
+            if (world.getBlockState(posIn).is(Tag.Blocks.ALLOW_ORIROCK_SPREAD)) {
                 count +=1;
                 if(randomBoolean(randomInt))
                     world.setBlock(posIn, this.defaultBlockState(), 3);
@@ -37,8 +38,8 @@ public class CreepOIBlock extends PreOIBlock {
         if(toOriD && count==0) world.setBlock(pos, BlockRegistry.d_originium_block.get().defaultBlockState(),3);
     }
 
-    public void stepOn(World world,BlockPos pos,Entity entity){
-        super.stepOn(world,pos,entity);
+    public void stepOn(Level world, BlockPos pos, BlockState state, Entity entity){
+        super.stepOn(world,pos ,state,entity);
         if(!world.isClientSide)
             autoSetBlock(world,pos,4);
     }
@@ -48,7 +49,7 @@ public class CreepOIBlock extends PreOIBlock {
 //        autoSetBlock(world,pos,4);
 //    }
 
-    public void onRemove(BlockState state1, World world, BlockPos pos, BlockState state2, boolean b) {
+    public void onRemove(BlockState state1, Level world, BlockPos pos, BlockState state2, boolean b) {
         super.onRemove(state1,world,pos,state2,b);
         if(!world.isClientSide()){
             if(world.getNearestPlayer(pos.getX(),pos.getY(),pos.getZ(),16,false) != null)
@@ -56,7 +57,7 @@ public class CreepOIBlock extends PreOIBlock {
         }
     }
 
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         super.randomTick(state,world,pos,random);
         if(random.nextInt() <= 4) autoSetBlock(world,pos,1);
     }

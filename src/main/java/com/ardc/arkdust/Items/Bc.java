@@ -1,8 +1,8 @@
 package com.ardc.arkdust.Items;
 
-import net.minecraft.item.Item;
+import com.ardc.arkdust.preobject.PreItem;
 
-public class Bc extends Item {
+public class Bc extends PreItem {
     public Bc() {
         super(new Properties());
     }

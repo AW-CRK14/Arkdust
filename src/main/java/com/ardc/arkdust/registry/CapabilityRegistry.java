@@ -12,6 +12,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,13 +22,13 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class CapabilityRegistry {
 //    @CapabilityInject(IStorySaveCapability.class)
-    public static Capability<StorySaveCapability> STORY_CAPABILITY;
+    public static Capability<StorySaveCapability> STORY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 //    @CapabilityInject(IHealthSystemCapability.class)
-    public static Capability<HealthSystemCapability> HEALTH_SYSTEM_CAPABILITY;
+    public static Capability<HealthSystemCapability> HEALTH_SYSTEM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 //    @CapabilityInject(IRDIAccountAuthCapability.class)
-    public static Capability<RDIAccountAuthCapability> RDI_ACCOUNT_AUTH_CAPABILITY;
+    public static Capability<RDIAccountAuthCapability> RDI_ACCOUNT_AUTH_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 //    @CapabilityInject(IRDIDepotCapability.class)
-    public static Capability<RDIDepotCapability> RDI_DEPOT_CAPABILITY;
+    public static Capability<RDIDepotCapability> RDI_DEPOT_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
 
     @SubscribeEvent

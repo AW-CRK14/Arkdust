@@ -2,6 +2,7 @@ package com.ardc.arkdust.helper;
 
 import com.ardc.arkdust.Utils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.*;
 import java.util.function.Function;
@@ -13,9 +14,14 @@ public class ListAndMapHelper {
         return Arrays.stream(l).collect(ArrayList::new,ArrayList::add,ArrayList::addAll);
     }
 
+    public static <T> List<T> joinList(T[]... lists){
+        List<T> cList = new ArrayList<>();
+        Arrays.stream(lists).forEach((l)->cList.addAll(List.of(l)));
+        return cList;
+    }
+
     public static <T> T multiListGetElement(Random random,T[]... lists){
-        List<T> compList = new ArrayList<>();
-        Arrays.stream(lists).forEach((o)->compList.addAll(List.of(o)));
+        List<T> compList = joinList(lists);
         return compList.get(random.nextInt(compList.size()));
     }
 
@@ -23,6 +29,16 @@ public class ListAndMapHelper {
     public static <T> List<T> copyList(List<T> list){
         List<T> newList = new ArrayList<>(list);
         return newList;
+    }
+
+    public static <S> int getIndexFromMap(Map<S,?> map,S key){
+        if (!map.containsKey(key)) return -1;
+        Object[] keySet = map.keySet().toArray();
+        for (int i = 0; i < map.size(); i++) {
+            if(keySet[i].equals(key))
+                return i;
+        }
+        return -1;
     }
 
     //输出列表内容
@@ -34,6 +50,15 @@ public class ListAndMapHelper {
             output.append("\n").append(c).append(":").append(obj);
         }
         Utils.LOGGER.info("[ArdHelper]"+output);
+    }
+
+    public static <T> List<T> resort(List<T> org,int[] index_reflect){
+        if(index_reflect.length != org.size()) return null;
+        List<T> list = new ArrayList<>(org.size());
+        for (int i = 0 ; i < org.size() ; i++){
+            list.set(index_reflect[i],org.get(i));
+        }
+        return list;
     }
 
     //通过字符串创建资源位置列表

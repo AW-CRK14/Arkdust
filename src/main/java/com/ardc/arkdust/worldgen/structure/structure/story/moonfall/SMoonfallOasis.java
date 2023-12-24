@@ -24,6 +24,7 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Optional;
@@ -45,10 +46,8 @@ public class SMoonfallOasis extends Structure {
 
     @Override
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-
-        BlockPos center = PosHelper.randomSkew(context,12);
-
-        return Optional.of(new GenerationStub(center.below(2),(builder)->builder.addPiece(new Piece(context.structureTemplateManager(),context.random(),center.below(2)))));
+        BlockPos center = context.chunkPos().getMiddleBlockPosition(0);
+        return Optional.of(new GenerationStub(center.below(2),(builder)->builder.addPiece(new Piece(context,center))));
     }
 
     @Override
@@ -58,12 +57,15 @@ public class SMoonfallOasis extends Structure {
 
     public static class Piece extends CommonCWTemplatePiece {
 
-        public Piece(StructureTemplateManager templateManager, RandomSource random, BlockPos pos) {
-            super(ExtraStructurePieceType.STORE$MF$OASIS, templateManager, random, pos, new ResourceLocation(Utils.MOD_ID,"story/moonfall/oasis"));
+        public Piece(GenerationContext context, BlockPos pos) {
+            super(ExtraStructurePieceType.STORE$MF$OASIS,context, pos, new ResourceLocation(Utils.MOD_ID,"story/moonfall/oasis"),true,-4);
+            this.placeSettings = this.placeSettings().popProcessor(BlockIgnoreProcessor.STRUCTURE_AND_AIR).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
         }
 
         public Piece(StructureTemplateManager manager, CompoundTag tag) {
             super(ExtraStructurePieceType.STORE$MF$OASIS, manager,tag);
+            this.placeSettings = this.placeSettings().popProcessor(BlockIgnoreProcessor.STRUCTURE_AND_AIR).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
+
         }
 
         @Override

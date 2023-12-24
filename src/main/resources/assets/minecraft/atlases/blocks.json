@@ -1,0 +1,8 @@
+{
+    "sources": [
+        {
+            "type": "single",
+            "resource": "arkdust:blocks/terra_blueprint/blueprint_stack"
+        }
+    ]
+}

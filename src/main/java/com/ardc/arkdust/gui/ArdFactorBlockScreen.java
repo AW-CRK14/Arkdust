@@ -1,14 +1,21 @@
 package com.ardc.arkdust.gui;
 
+
+
 import com.ardc.arkdust.Utils;
-import com.ardc.arkdust.gui.widget.FactorySlot;
+import com.ardc.arkdust.advanced_obj.AdvancedContainerMenu;
+import com.ardc.arkdust.gui.widget.RenderOverrideSlot;
+import com.ardc.arkdust.helper.RenderHelper;
+import com.ardc.arkdust.network.blockentity.NoticeBlockSaveDataNetwork;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,45 +27,85 @@ import net.minecraftforge.common.MinecraftForge;
 
 public abstract class ArdFactorBlockScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
-    public static final ResourceLocation player = new ResourceLocation(Utils.MOD_ID,"textures/gui/abs_factory/player_inventory.png");
+    public static final Font MSYH = RenderHelper.getFontInstance(new ResourceLocation(Utils.MOD_ID,"msyh"));
+    public static final Font BENDER = RenderHelper.getFontInstance(new ResourceLocation(Utils.MOD_ID,"bender"));
 
-    public int yOffset = -40;
-    public ArdFactorBlockScreen(T p_i51105_1_, Inventory p_i51105_2_, Component p_i51105_3_) {
+    public static final ResourceLocation PLAYER = new ResourceLocation(Utils.MOD_ID,"textures/gui/aefi/player_inventory.png");
+    public static final ResourceLocation BACKGROUND = new ResourceLocation(Utils.MOD_ID,"textures/gui/aefi/background.png");
+
+    public record MacInfo(ResourceLocation macTypeId/*TODO*/ , int level , boolean access , boolean project){
+        public MacInfo(ResourceLocation macTypeId , int level ){this(macTypeId,level,false,false);}
+    }
+
+
+    public static final float BACKGROUND_SCALE = 0.0945F;
+
+    public final MacInfo MAC_INFO;
+    public int yOffset = -55;
+    public ArdFactorBlockScreen(T p_i51105_1_, Inventory p_i51105_2_, Component p_i51105_3_,MacInfo macInfo) {
         super(p_i51105_1_, p_i51105_2_, p_i51105_3_);
         initialization();
+        this.MAC_INFO = macInfo;
     }
 
     protected abstract ResourceLocation getUI();
-    public ResourceLocation getPlayerUI(){
-        return player;
+    public ResourceLocation getPlayerUI(){return PLAYER;};
+    public ResourceLocation getMacLogo(){return new ResourceLocation(MAC_INFO.macTypeId.getNamespace(),"textures/gui/aefi/mac_logo/"+ MAC_INFO.macTypeId.getPath() + ".png");}
+    public MutableComponent getTrans(){return Component.translatable("machine."+  MAC_INFO.macTypeId.getNamespace() + ".name." + MAC_INFO.macTypeId.getPath());}
+
+    protected void initialization(){
+//        this.imageWidth = (int) (4410* BACKGROUND_SCALE);
+//        this.imageHeight = (int) (1560* BACKGROUND_SCALE);
+        this.imageWidth = 416;
+        this.imageHeight = 147;
     };
 
-    protected abstract void initialization();
+    private static final float oversample = 0.1F;
+    private static final float oversampleScale = 1/ oversample;
+
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        if(this.getMenu() instanceof AdvancedContainerMenu menu && menu.tileEntity != null){
+            menu.tileEntity.setChanged();
+//            NoticeBlockSaveDataNetwork.INSTANCE.sendToServer(new NoticeBlockSaveDataNetwork.Pack(menu.pos));
+        }
+    }
 
     @Override
     protected void renderBg(GuiGraphics stack, float tick, int x, int y) {
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
 
         this.leftPos = (this.width - imageWidth)/2;
         this.topPos = (this.height - imageHeight)/2 + yOffset;
-        stack.blit(getUI(),leftPos,topPos,0,0, imageWidth, imageHeight, imageWidth, imageHeight);
 
         renderPlayerInventoryBackground(stack);
-
-        RenderSystem.disableBlend();
+        renderAEFIBackground(stack);
+        stack.pose().pushPose();
+        stack.pose().translate(126,24,0);
+        stack.pose().scale(oversample,oversample,1);
+//        stack.blit(getUI(), (int) (leftPos + imageWidth * 0.256F + UIRenderOffset(false)), (int) (topPos + imageHeight * 0.142F + UIRenderOffset(false)),0,0, (int) (imageWidth * 0.747F), (int)(imageHeight*0.725F),  (int) (imageWidth * 0.747F), (int)(imageHeight*0.725F));
+        stack.blit(getUI(), (int) (leftPos*oversampleScale+UIRenderOffset(false) -204), (int) (topPos*oversampleScale+UIRenderOffset(true)-34),0,0,(int) ((311 * oversampleScale - 6) * UIRenderScale()),(int) ((106 * oversampleScale - 5)* UIRenderScale()),(int) ((311 * oversampleScale -6) * UIRenderScale()),(int) ((106 * oversampleScale -5)* UIRenderScale()));
+        stack.pose().popPose();
     }
 
     public void renderPlayerInventoryBackground(GuiGraphics stack){
-        stack.blit(getPlayerUI(),this.width/2-82,topPos+92,0,0, 166, 82, 166, 82);
+        stack.blit(getPlayerUI(),this.width/2-99,topPos+150,0,0, 198, 104, 198, 104);
+    }
+
+    public void renderAEFIBackground(GuiGraphics stack){
+        stack.blit(BACKGROUND,leftPos,topPos,0,0, imageWidth, imageHeight, imageWidth, imageHeight);
     }
 
     @Override
     protected void renderLabels(GuiGraphics p_230451_1_, int p_230451_2_, int p_230451_3_) {
 
     }
+    @Deprecated
+    public int UIRenderOffset(boolean isY){return 0;}
+    public float UIRenderScale(){return 1;}
 
-    public void renderFacSlot(GuiGraphics stack, FactorySlot slot, int mouseX, int mouseY, float alpha) {
+    public void renderFacSlot(GuiGraphics stack, RenderOverrideSlot slot, int mouseX, int mouseY, float alpha) {
         int i = slot.x;
         int j = slot.y;
         ItemStack itemstack = slot.getItem();
@@ -92,26 +139,25 @@ public abstract class ArdFactorBlockScreen<T extends AbstractContainerMenu> exte
 
 
         stack.pose().pushPose();
-        stack.pose().translate(0.0F, 0.0F, 100.0F);
+//        stack.pose().translate(0.0F, 0.0F, 100.0F);
 
+        stack.setColor(1,1,1,alpha);
+        RenderSystem.enableBlend();
+//        RenderSystem.disableDepthTest();
         slot.renderBackground(stack,i,j,alpha,itemstack);
 
         if (itemstack.isEmpty() && slot.isActive()) {
             slot.renderWhenEmpty(stack,i,j,alpha);
         }
 
-//        if(isHovering(slot,mouseX,mouseY) && slot.isActive()){
-//            slot.renderWhenOn(stack,i,j,0.4F,itemstack);
-//        }
-
         if (!flag1) {
             if (flag) {
                 slot.renderWhenDrag(stack,i,j,alpha,itemstack);
             }
 
-            RenderSystem.enableDepthTest();
-            stack.renderItem(itemstack, i, j);
-            //TODO
+            if(!itemstack.isEmpty() && slot.isActive()){
+                slot.renderWhenNotEmpty(stack,i, j,mouseX,mouseY,itemstack,this.font,s,alpha);
+            }
         }
 
         stack.pose().popPose();
@@ -124,25 +170,43 @@ public abstract class ArdFactorBlockScreen<T extends AbstractContainerMenu> exte
     public void render(GuiGraphics stack, int mouseX, int mouseY, float tick) {
         renderTick();
         float alpha = counter/10F;
-
-//        stack.pose().pushPose();
-
+//        float alpha = 1;
         RenderSystem.enableBlend();
+        RenderSystem.enableDepthTest();
         stack.setColor(1,1,1,alpha);
+        stack.flush();
 
-        renderBackground(stack);
 
-        //±³¾°äÖÈ¾
+        //render background
+//        renderBackground(stack);
         this.renderBg(stack, tick, mouseX, mouseY);
         MinecraftForge.EVENT_BUS.post(new ContainerScreenEvent.Render.Background(this, stack, mouseX, mouseY));
-        RenderSystem.disableDepthTest();
 
         int i = this.leftPos;
         int j = this.topPos;
 
 
-        RenderSystem.enableBlend();
-        stack.setColor(1,1,1,alpha);
+        //render title
+        stack.pose().pushPose();
+        stack.pose().translate(i,j,0);
+        stack.blit(getMacLogo(),1,1,0,0,18,18,18,18);
+        stack.pose().translate(23,13,0);
+        stack.pose().scale(1.25F,1.25F,1);
+        stack.drawString(MSYH,getTrans(),0,0,0x2E2E2E,false);
+        if(MAC_INFO.level > 0){
+            stack.pose().translate(MSYH.width(getTrans()) + 1.5F,2.5F,0);
+            stack.pose().scale(0.8F,0.8F,1);
+            stack.pose().pushPose();
+            stack.pose().scale(0.4F,0.4F,1);
+
+            stack.fill(0,-12,1,0,0xFF8C8C8C);
+            stack.pose().popPose();
+            stack.pose().translate(2,-2.5F,0);
+            stack.drawString(BENDER,"Lv." + MAC_INFO.level,0,0,0xFF8C8C8C,false);
+        }
+        stack.pose().popPose();
+
+
 
         //super
         for(Renderable renderable : this.renderables) {
@@ -152,31 +216,31 @@ public abstract class ArdFactorBlockScreen<T extends AbstractContainerMenu> exte
 
         stack.pose().pushPose();
         stack.pose().translate((float)i, (float)j, 0.0F);
+        stack.setColor(1,1,1,alpha);
+
         this.hoveredSlot = null;
 
 
         for(int i1 = 0; i1 < this.menu.slots.size(); ++i1) {
             Slot slot = this.menu.slots.get(i1);
-            boolean facFlag = slot instanceof FactorySlot;
+            boolean facFlag = slot instanceof RenderOverrideSlot;
 
             if (slot.isActive()) {
                 if(facFlag){
-                    this.renderFacSlot(stack, (FactorySlot) slot,mouseX,mouseY,alpha);
+                    this.renderFacSlot(stack, (RenderOverrideSlot) slot,mouseX,mouseY,alpha);
                 } else {
                     this.renderSlot(stack, slot);
                 }
             }
 
-            if (this.isHovering(slot, mouseX, mouseY) && slot.isActive()) {
+
+            if (this.hoveredSlot == null && this.isHovering(slot, mouseX, mouseY) && slot.isActive()) {
+//            if (slot.isActive()) {
                 this.hoveredSlot = slot;
                 if(facFlag){
-                    ((FactorySlot) slot).renderWhenOn(stack,slot.x,slot.y,0.4F * alpha,slot.getItem());
-                }else {
-                    int l = slot.x;
-                    int i2 = slot.y;
-                    if (this.hoveredSlot.isHighlightable()) {
-                        renderSlotHighlight(stack, l, i2, 0, getSlotColor(i1));
-                    }
+                    ((RenderOverrideSlot) slot).renderWhenOn(stack,slot.x,slot.y,alpha,slot.getItem(),getSlotColor(i1),mouseX, mouseY);
+                }else if (this.hoveredSlot.isHighlightable()){
+                    renderSlotHighlight(stack, slot.x, slot.y, 0, getSlotColor(i1));
                 }
             }
         }
@@ -209,16 +273,10 @@ public abstract class ArdFactorBlockScreen<T extends AbstractContainerMenu> exte
                 f = 1.0F;
                 this.snapbackItem = ItemStack.EMPTY;
             }
-
-            int j2 = this.snapbackEnd.x - this.snapbackStartX;
-            int k2 = this.snapbackEnd.y - this.snapbackStartY;
-            int j1 = this.snapbackStartX + (int)((float)j2 * f);
-            int k1 = this.snapbackStartY + (int)((float)k2 * f);
-            this.renderFloatingItem(stack, this.snapbackItem, j1, k1, (String)null);
+            this.renderFloatingItem(stack, this.snapbackItem, (int) (this.snapbackStartX * (1-f) + this.snapbackEnd.x* f), (int) (this.snapbackStartY * (1-f) + this.snapbackEnd.y* f), (String)null);
         }
 
-        stack .pose().popPose();
-        RenderSystem.enableDepthTest();
+        stack.pose().popPose();
     }
 
 //    @Override

@@ -38,7 +38,7 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
         ItemStack itemStack = event.getItem().getItem();
         Player player = event.getEntity();
         Level world = player.level();
-        LazyOptional<IHealthSystemCapability> cap = player.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY);
+        LazyOptional<HealthSystemCapability> cap = player.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY);
 
         if (itemStack.getItem() instanceof IOIItem && !player.isCreative()) {//判断是否为感染性物品
             AdvancementHelper.tryAddAdvancementToPlayer(player, new ResourceLocation("arkdust:world_began/ah"));
@@ -50,16 +50,14 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
                 int point = item.guaranteePlayerOIPointAdd();
                 float damage = item.guaranteeDamage();
 
-                if (item.getOILevel() > i.ORI$getRLevel()) {
+                if (item.getOILevel() > i.ORI$point2Level().first) {
                     damage += item.doDamage();
-                    point += item.playerOIPointAdd() * (item.getOILevel() - i.ORI$getRLevel());
+                    point += item.playerOIPointAdd() * (item.getOILevel() - i.ORI$point2Level().first);
                     if (item.ifThrow()) {
                         AdvancementHelper.tryAddAdvancementToPlayer(player, new ResourceLocation("arkdust:world_began/i_cry"));
                         player.displayClientMessage(Component.translatable("pma.oi.getOIItem").withStyle(ChatFormatting.RED), false);//发送信息
-                        ItemEntity reItem = new ItemEntity(world, player.getX(), player.getY(), player.getZ(),itemStack.copy());//创建掉落物实体
-                        reItem.setPickUpDelay(300);//设置拾取延时（十五秒）
-                        itemStack.setCount(0);//清除原物品
-                        world.addFreshEntity(reItem);//添加掉落物实体
+                        event.setCanceled(true);
+                        event.getItem().setPickUpDelay(200);
                     }
                 } else {
                     AdvancementHelper.tryAddAdvancementToPlayer(player, new ResourceLocation("arkdust:world_began/i_camouflage"));
@@ -68,7 +66,7 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
                 i.ORI$addPoint(point);
                 player.hurt(new DamageSource(DamageTypes.createDamageSource(player,DamageTypes.ORIROCK_INFECTION)), damage * countFac);
 
-                i.sendPackToClient((ServerPlayer)event.getEntity());
+                i.sendToClient((ServerPlayer)event.getEntity());
             });
 
         }
@@ -77,7 +75,7 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
 
 
     @Deprecated//TODO
-    @SubscribeEvent//实体死于环境源石（弱源石感染）扩散源石事件zzzzz
+    @SubscribeEvent//实体死于环境源石（弱源石感染）扩散源石事件
     public static void onEntityDieBecauseOfOI(LivingDeathEvent event) {
         LivingEntity entity = event.getEntity();
         if (entity instanceof Player && event.getSource().is(DamageTypes.ORIROCK_INFECTION)) {//如果死亡原因为源石
@@ -99,11 +97,13 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
         Random r = new Random();
         ResourceLocation rtest = event.getAdvancement().getId();
 
-        if (rtest.equals(new ResourceLocation("arkdust:world_began/world_began"))) {
-            event.getEntity().getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent(IHealthSystemCapability::ORI$addRLevel);
-        }
+        boolean configFlag = true;//TODO 配置文件设置
 
-        if (!event.getEntity().isCreative() && !event.getEntity().isSpectator()) {
+//        if (rtest.equals(new ResourceLocation("arkdust:world_began/world_began"))) {
+//            event.getEntity().getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent(HealthSystemCapability::ORI$addRLevel);
+//        }
+
+        if (!event.getEntity().isCreative() && !event.getEntity().isSpectator() && configFlag) {
 
             BlockPos pos = PosHelper.entityPosToBlock(event.getEntity());
             int blockCount = world.getDifficulty().getId() + 1;
@@ -123,16 +123,7 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
 
     @SubscribeEvent//玩家重生时的源石变动
     public static void onPlayerRebirth(PlayerEvent.PlayerRespawnEvent event) {
-        Player entity = event.getEntity();
-        entity.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i)->{
-            if(i.ORI$getRLevel() <= 3){
-                i.ORI$resetPoint();
-            }else if(i.ORI$getPoint() < HealthSystemCapability.ORI$level2Point(i.ORI$getRLevel()/3)){
-                i.ORI$addPoint(20);
-            }else {
-                i.ORI$addPoint(-20);
-            }
-        });
+        event.getEntity().getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent(HealthSystemCapability::rebirth);
     }
 
     @SubscribeEvent//玩家感染量阈值系统
@@ -141,14 +132,13 @@ public class OISubscriber {//此文件用于监视和源石感染有关的数据
         if (entity instanceof Player player && event.getSource().is(DamageTypes.ORIROCK_INFECTION)) {
             player.getCapability(CapabilityRegistry.HEALTH_SYSTEM_CAPABILITY).ifPresent((i) -> {
                 Block block = entity.level().getBlockState(PosHelper.entityPosToBlock(player)).getBlock();
-                if(block instanceof IOIBlock && new Random().nextFloat() <= 0.1F && ((IOIBlock)block).needOIRLevel() > i.ORI$getRLevel())
+                if(block instanceof IOIBlock && new Random().nextFloat() <= 0.1F && ((IOIBlock)block).needOIRLevel() < i.ORI$point2Level().first)
                      i.ORI$addPoint(((IOIBlock)block).tickPlayerOIPointAdd());
 
 
-                if (i.ORI$getPoint() >= HealthSystemCapability.ORI$level2Point(i.ORI$getRLevel())) {
-                    player.hurt(new DamageSource(DamageTypes.createDamageSource(player,DamageTypes.ORIROCK_DEATH)), Float.MAX_VALUE);
-                    //TODO 创建结晶
-                }
+//                if (i.ORI$getPoint() >= HealthSystemCapability.ORI$level2Point(i.ORI$getRLevel())) {
+//                    player.hurt(new DamageSource(DamageTypes.createDamageSource(player,DamageTypes.ORIROCK_DEATH)), Float.MAX_VALUE);
+//                }
 //                else if (i.getORIPoint() >= ORICapability.level2Point(i.getORIRLevel() / 2 + 1)) {
 //                    //TODO 随机debuff
 //                }

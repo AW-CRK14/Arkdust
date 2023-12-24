@@ -1,0 +1,10 @@
+{
+  "type": "arkdust:abs/single_block_on",
+  "config": {
+    "state": [
+      {
+        "Name": "arkdust:mycelium_pile"
+      }
+    ]
+  }
+}

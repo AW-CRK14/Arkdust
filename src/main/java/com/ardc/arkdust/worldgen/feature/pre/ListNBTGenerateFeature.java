@@ -2,15 +2,16 @@ package com.ardc.arkdust.worldgen.feature.pre;
 
 import com.ardc.arkdust.worldgen.config.ListNBTFeatureConfig;
 import com.mojang.serialization.Codec;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.template.*;
-
-import java.util.Random;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockRotProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 public class ListNBTGenerateFeature extends Feature<ListNBTFeatureConfig> {
     public ListNBTGenerateFeature(Codec<ListNBTFeatureConfig> configCodec) {
@@ -18,19 +19,14 @@ public class ListNBTGenerateFeature extends Feature<ListNBTFeatureConfig> {
     }
 
     @Override
-    public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos pos, ListNBTFeatureConfig config) {
-        pos = world.getHeightmapPos(Heightmap.Type.WORLD_SURFACE,pos);
-        if(config.allowOn.isEmpty() || config.allowOn.contains(world.getBlockState(pos.below()).getBlock())){
-
-            Template template = world.getLevel().getStructureManager().get(config.getRandomResource(random));
-            PlacementSettings settings = new PlacementSettings().setRotation(Rotation.getRandom(random)).addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK).addProcessor(new IntegrityProcessor(config.complete));
-            if(template!=null) {
-                if (config.moveToCenter)
-                    settings.setRotationPivot(template.getSize().offset(-template.getSize().getX() / 2, 0, -template.getSize().getZ() / 2));
-                pos = pos.offset(-template.getSize().getX() / 2, config.yOffset, -template.getSize().getZ() / 2);
-                return template.placeInWorld(world,pos,pos,settings,random,2);
+    public boolean place(FeaturePlaceContext<ListNBTFeatureConfig> context) {
+        BlockPos pos = context.origin();
+            StructureTemplate template = context.level().getLevel().getStructureManager().getOrCreate(context.config().getRandomResource(context.random()));
+            StructurePlaceSettings settings = new StructurePlaceSettings().setRotation(Rotation.getRandom(context.random())).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK).addProcessor(new BlockRotProcessor(Mth.clamp(context.config().complete, 0.0F, 1.0F))).setRandom(context.random());
+            if (context.config().moveToCenter) {
+                settings.setRotationPivot(new BlockPos(template.getSize()).offset(-template.getSize().getX() / 2, 0, -template.getSize().getZ() / 2));
+                pos = pos.offset(-template.getSize().getX() / 2, 0, -template.getSize().getZ() / 2);
             }
-        }
-        return false;
+            return template.placeInWorld(context.level(),pos,pos,settings,context.random(),2);
     }
 }
